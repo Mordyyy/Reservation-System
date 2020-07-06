@@ -63,3 +63,9 @@ body{
     cursor: pointer;
     margin: 12px 0;
 }
+.freeuniImage{
+    width: 100px;
+    height: 100px;
+    background: url(../images/pic.jpg) no-repeat;
+    background-size: 100%;
+}

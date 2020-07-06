@@ -9,6 +9,7 @@
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
 <body>
+    <div class="freeuniImage"></div>
     <div class="loginbox">
         <h1>Login</h1>
         <div class="textbox">
