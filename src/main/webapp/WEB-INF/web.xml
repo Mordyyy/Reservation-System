@@ -38,7 +38,11 @@
   </context-param>
 
   <listener>
-    <listener-class>Listeners.ContextListener</listener-class>
+    <listener-class>ge.edu.freeuni.Listeners.ContextListener</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>ge.edu.freeuni.Listeners.EmailListener</listener-class>
   </listener>
 
 </web-app>

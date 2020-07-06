@@ -2,7 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <head>
-    <title>Hello World</title>
+    <title>Reservation System</title>
     <spring:url value="/resources/css/style.css" var="mainCss" />
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
