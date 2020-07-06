@@ -1,6 +1,8 @@
 h1{
     color: blue;
 }
-div {
-    background: red;
+.bd{
+    background-image: url(../images/homepage_background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
 }

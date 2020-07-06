@@ -6,10 +6,7 @@
     <spring:url value="/resources/css/style.css" var="mainCss" />
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
-<body>
-    <div class="background">
+<body class="bd">
 
-    </div>
-    <h1>Hello World</h1>
 </body>
 </html>
