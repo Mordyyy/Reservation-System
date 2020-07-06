@@ -14,10 +14,14 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">
-            <value>/WEB-INF/View/</value>
+            <value>View/</value>
         </property>
         <property name="suffix">
             <value>.jsp</value>
         </property>
     </bean>
+    <mvc:resources mapping="/resources/**" location="/resources/theme1/"
+                   cache-period="31556926"/>
+
+    <mvc:annotation-driven />
 </beans>

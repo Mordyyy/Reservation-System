@@ -7,7 +7,7 @@
         xmlns:xsi="w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="java.sun.com/xml/ns/javaee java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
         version="3.0">
-  <display-name>Notes App</display-name>
+  <display-name>Reservation System</display-name>
 
   <servlet>
     <servlet-name>dispatcher</servlet-name>
@@ -19,4 +19,5 @@
     <servlet-name>dispatcher</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+
 </web-app>
