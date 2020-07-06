@@ -21,13 +21,12 @@ public class UsersDAO {
     public boolean addUser(User user) {
         PreparedStatement st = null;
         try {
-            st = con.prepareStatement("Insert into users (username, password, mail, gender, avatar) " +
-                    "values (?, ?, ?, ?, ?)");
+            st = con.prepareStatement("Insert into users (username, password, mail, avatar) " +
+                    "values (?, ?, ?, ?)");
             st.setString(1, user.getUsername());
             st.setString(2, user.getPassword());
             st.setString(3, user.getMail());
-            st.setString(4, user.getGender());
-            st.setString(5, user.getAvatar());
+            st.setString(4, user.getAvatar());
             int res = st.executeUpdate();
             st.close();
             return (res == 1);
@@ -48,7 +47,7 @@ public class UsersDAO {
                 return null;
             }
             User user = new User(res.getString("username"), res.getString("password")
-                    ,res.getString("mail"), res.getString("gender"), res.getString("avatar"));
+                    ,res.getString("mail"), res.getString("avatar"));
             st.close();
             return user;
         } catch (SQLException throwables) {
@@ -82,11 +81,11 @@ public class UsersDAO {
             }
             List<User> users = new ArrayList<>();
             User user = new User(res.getString("username"), res.getString("password")
-                    ,res.getString("mail"), res.getString("gender"), res.getString("avatar"));
+                    ,res.getString("mail"), res.getString("avatar"));
             users.add(user);
             while (res.next()) {
                 user = new User(res.getString("username"), res.getString("password")
-                        ,res.getString("mail"), res.getString("gender"), res.getString("avatar"));
+                        ,res.getString("mail"), res.getString("avatar"));
                 users.add(user);
             }
             st.close();
