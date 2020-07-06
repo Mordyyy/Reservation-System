@@ -1,6 +1,7 @@
 package ge.edu.freeuni.Listeners;
 
 import ge.edu.freeuni.DAO.UsersDAO;
+import ge.edu.freeuni.Models.Email;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -15,7 +16,10 @@ public class ContextListener implements ServletContextListener {
         String password = sc.getInitParameter("password");
         String database = sc.getInitParameter("database");
         UsersDAO db = new UsersDAO(url + database, user_name, password);
+        Email mail = new Email();
+        sc.setAttribute("email", mail);
         sc.setAttribute("db", db);
+
     }
 
     @Override
