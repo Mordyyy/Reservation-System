@@ -129,3 +129,7 @@
 0:0:0:0:0:0:0:1 - - [06/Jul/2020:20:01:27 +0400] "GET /resources/images/homepage_background1.jpg HTTP/1.1" 200 355536 http-bio-8088-exec-4 66
 >>>>>>> master
 0:0:0:0:0:0:0:1 - - [06/Jul/2020:20:12:09 +0400] "GET / HTTP/1.1" 200 667 http-bio-8088-exec-2 263
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:20:33:19 +0400] "GET / HTTP/1.1" 200 787 http-bio-8088-exec-2 836
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:20:33:30 +0400] "GET / HTTP/1.1" 200 831 http-bio-8088-exec-4 0
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:20:33:30 +0400] "GET /resources/css/LoginStyle.css;jsessionid=D38E61BB01966E06A81C09497F4F71F0 HTTP/1.1" 200 1175 http-bio-8088-exec-6 32
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:20:33:30 +0400] "GET /resources/images/Background.jpg HTTP/1.1" 200 3745122 http-bio-8088-exec-7 63

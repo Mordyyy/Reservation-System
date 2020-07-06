@@ -1,6 +1,7 @@
-C:\Users\user\Desktop\OOP Project\Reservation-System\src\main\java\ge\edu\freeuni\Models\User.java
-C:\Users\user\Desktop\OOP Project\Reservation-System\src\main\java\ge\edu\freeuni\DAO\UsersDAO.java
-C:\Users\user\Desktop\OOP Project\Reservation-System\src\main\java\ge\edu\freeuni\Models\Email.java
-C:\Users\user\Desktop\OOP Project\Reservation-System\src\main\java\ge\edu\freeuni\Listeners\ContextListener.java
-C:\Users\user\Desktop\OOP Project\Reservation-System\src\main\java\ge\edu\freeuni\Controllers\RegisterController.java
-C:\Users\user\Desktop\OOP Project\Reservation-System\src\main\java\ge\edu\freeuni\Controllers\HomepageController.java
+C:\Users\Pio\Desktop\Project\Reservation-System\src\main\java\ge\edu\freeuni\Models\Email.java
+C:\Users\Pio\Desktop\Project\Reservation-System\src\main\java\ge\edu\freeuni\DAO\UsersDAO.java
+C:\Users\Pio\Desktop\Project\Reservation-System\src\main\java\ge\edu\freeuni\Mail\JavaMailUtil.java
+C:\Users\Pio\Desktop\Project\Reservation-System\src\main\java\ge\edu\freeuni\Controllers\HomepageController.java
+C:\Users\Pio\Desktop\Project\Reservation-System\src\main\java\ge\edu\freeuni\Models\User.java
+C:\Users\Pio\Desktop\Project\Reservation-System\src\main\java\ge\edu\freeuni\Controllers\RegisterController.java
+C:\Users\Pio\Desktop\Project\Reservation-System\src\main\java\ge\edu\freeuni\Listeners\ContextListener.java
