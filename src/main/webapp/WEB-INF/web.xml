@@ -26,7 +26,7 @@
   </context-param>
   <context-param>
     <param-name>database</param-name>
-    <param-value>/hw05</param-value>
+    <param-value>/Reservation</param-value>
   </context-param>
   <context-param>
     <param-name>user_name</param-name>

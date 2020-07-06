@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.POST;
+import java.io.IOException;
 
 @Controller
 public class RegisterController {
@@ -25,9 +26,9 @@ public class RegisterController {
                                  @RequestParam String Password1,
                                  @RequestParam String Password2,
                                  @RequestParam String eMail,
-                                 @RequestParam String avatar,
+                                 @RequestParam String Avatar,
                                  HttpServletRequest req,
-                                 HttpServletResponse resp){
+                                 HttpServletResponse resp) throws IOException {
         UsersDAO users = (UsersDAO)req.getServletContext().getAttribute("db");
         User user =  users.getUser(Username);
         ModelAndView modelAndView = new ModelAndView("register");
@@ -39,9 +40,12 @@ public class RegisterController {
             modelAndView.addObject("error", "Passwords do not match!");
             return modelAndView;
         }
-        User realUser = new User(Username, Password1, eMail, avatar);
-        Email email = new Email();
-        email.sendRandomCode(realUser);
-        
+
+        User realUser = new User(Username, Password1, eMail, Avatar);
+        users.addUser(realUser);
+        resp.sendRedirect("");
+        return modelAndView;
+//        Email email = (Email)req.getServletContext().getAttribute("email");
+//        email.sendRandomCode(eMail);
     }
 }
