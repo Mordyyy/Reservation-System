@@ -23,9 +23,9 @@ public class Email{
         sendCode(email,"Email Verification Code", Integer.toString(randomCode));
     }
 
-    public int getUsersCode(String userName){
-        if(!randomCodes.containsKey(userName)) return -1;
-        return randomCodes.get(userName);
+    public int getUsersCode(String email){
+        if(!randomCodes.containsKey(email)) return -1;
+        return randomCodes.get(email);
     }
 
     private int getRandomInteger(){
