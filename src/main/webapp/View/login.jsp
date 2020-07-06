@@ -17,7 +17,7 @@
         </div>
         <div class="textbox">
             <i class="fa fa-lock" aria-hidden="true"></i>
-            <input type="text" placeholder="Password" name="password" value="">
+            <input type="password" placeholder="Password" name="password" value="">
         </div>
         <input class="buton" type="button" name="Login" value="Login">
         <input class="buton" type="button" name="Register" value="Register">

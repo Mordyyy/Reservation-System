@@ -133,3 +133,16 @@
 0:0:0:0:0:0:0:1 - - [06/Jul/2020:20:33:30 +0400] "GET / HTTP/1.1" 200 831 http-bio-8088-exec-4 0
 0:0:0:0:0:0:0:1 - - [06/Jul/2020:20:33:30 +0400] "GET /resources/css/LoginStyle.css;jsessionid=D38E61BB01966E06A81C09497F4F71F0 HTTP/1.1" 200 1175 http-bio-8088-exec-6 32
 0:0:0:0:0:0:0:1 - - [06/Jul/2020:20:33:30 +0400] "GET /resources/images/Background.jpg HTTP/1.1" 200 3745122 http-bio-8088-exec-7 63
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:20:42:56 +0400] "GET / HTTP/1.1" 200 761 http-bio-8088-exec-1 1559
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:20:42:56 +0400] "GET /resources/css/LoginStyle.css HTTP/1.1" 200 1111 http-bio-8088-exec-2 20
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:20:42:56 +0400] "GET /resources/images/Background.jpg HTTP/1.1" 200 3745122 http-bio-8088-exec-3 43
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:21:10:22 +0400] "GET / HTTP/1.1" 200 805 http-bio-8088-exec-1 230
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:21:10:22 +0400] "GET /resources/css/LoginStyle.css;jsessionid=3FFCD696A75BFA57189A061D64EC219A HTTP/1.1" 200 1111 http-bio-8088-exec-2 24
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:21:10:22 +0400] "GET /resources/images/Background.jpg HTTP/1.1" 200 3745122 http-bio-8088-exec-3 67
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:21:10:23 +0400] "GET /favicon.ico HTTP/1.1" 404 949 http-bio-8088-exec-4 2
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:23:49:30 +0400] "GET / HTTP/1.1" 200 805 http-bio-8088-exec-1 188
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:23:49:30 +0400] "GET /resources/css/LoginStyle.css;jsessionid=42EF01EADA5C6202732321CCECA96A66 HTTP/1.1" 200 1111 http-bio-8088-exec-2 25
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:23:49:30 +0400] "GET /resources/images/Background.jpg HTTP/1.1" 200 3745122 http-bio-8088-exec-3 45
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:23:49:30 +0400] "GET /favicon.ico HTTP/1.1" 404 949 http-bio-8088-exec-4 3
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:23:51:48 +0400] "GET / HTTP/1.1" 200 765 http-bio-8088-exec-1 2391
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:23:51:48 +0400] "GET /resources/css/LoginStyle.css HTTP/1.1" 200 1111 http-bio-8088-exec-2 34
