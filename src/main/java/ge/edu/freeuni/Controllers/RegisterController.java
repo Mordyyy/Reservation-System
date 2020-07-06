@@ -25,6 +25,7 @@ public class RegisterController {
                                  @RequestParam String Password1,
                                  @RequestParam String Password2,
                                  @RequestParam String eMail,
+                                 @RequestParam String avatar,
                                  HttpServletRequest req,
                                  HttpServletResponse resp){
         UsersDAO users = (UsersDAO)req.getServletContext().getAttribute("db");
@@ -34,7 +35,13 @@ public class RegisterController {
             modelAndView.addObject("error", "Account with username: " + Username + " Already exists!");
             return modelAndView;
         }
+        if(!Password1.equals(Password2)){
+            modelAndView.addObject("error", "Passwords do not match!");
+            return modelAndView;
+        }
+        User realUser = new User(Username, Password1, eMail, avatar);
         Email email = new Email();
-
+        email.sendRandomCode(realUser);
+        
     }
 }
