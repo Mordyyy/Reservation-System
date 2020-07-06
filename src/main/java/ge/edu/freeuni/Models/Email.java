@@ -1,5 +1,8 @@
 package ge.edu.freeuni.Models;
 
+import ge.edu.freeuni.Mail.JavaMailUtil;
+
+import javax.mail.MessagingException;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -13,18 +16,19 @@ public class Email{
         return randomCodes.get(email) == code;
     }
 
-    public void sendCode(String email, String message){
-
+    public void sendCode(String email, String subject, String message) throws MessagingException {
+        JavaMailUtil.sendMail(email, subject, message);
     }
 
-    public void sendRandomCode(String email){
+    public void sendRandomCode(String email) throws MessagingException {
         int randomCode = getRandomInteger();
         randomCodes.put(email,randomCode);
-        sendCode(email,Integer.toString(randomCode));
+        sendCode(email,"Email Verification Code", Integer.toString(randomCode));
     }
 
-    public int getUsersCode(String userName){
-        return randomCodes.get(userName);
+    public int getUsersCode(String email){
+        if(!randomCodes.containsKey(email)) return -1;
+        return randomCodes.get(email);
     }
 
     private int getRandomInteger(){

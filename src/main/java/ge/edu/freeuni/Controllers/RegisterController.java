@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.POST;
@@ -30,7 +31,7 @@ public class RegisterController {
                                  @RequestParam String Avatar,
                                  @RequestParam String Button,
                                  HttpServletRequest req,
-                                 HttpServletResponse resp) throws IOException {
+                                 HttpServletResponse resp) throws IOException, MessagingException {
         Email email = (Email)req.getServletContext().getAttribute("email");
         if(Button.equals("Button1")) {
             UsersDAO users = (UsersDAO) req.getServletContext().getAttribute("db");
