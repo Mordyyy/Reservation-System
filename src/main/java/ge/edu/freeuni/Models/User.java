@@ -1,14 +1,12 @@
 package ge.edu.freeuni.Models;
 
 public class User {
-    private String username, password, mail;
-    private String gender, avatar;
+    private String username, password, mail, avatar;
 
-    public User(String username, String password, String mail, String gender, String avatar) {
+    public User(String username, String password, String mail, String avatar) {
         this.username = username;
         this.password = password;
         this.mail = mail;
-        this.gender = gender;
         this.avatar = avatar;
     }
 
@@ -34,14 +32,6 @@ public class User {
 
     public void setMail(String mail) {
         this.mail = mail;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public String getAvatar() {
