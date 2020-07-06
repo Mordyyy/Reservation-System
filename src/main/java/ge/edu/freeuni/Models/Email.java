@@ -13,17 +13,18 @@ public class Email{
         return randomCodes.get(email) == code;
     }
 
-    public void sendCode(String email, String message){
+    public void sendCode(String email, String subject, String message){
 
     }
 
     public void sendRandomCode(String email){
         int randomCode = getRandomInteger();
         randomCodes.put(email,randomCode);
-        sendCode(email,Integer.toString(randomCode));
+        sendCode(email,"Email Verification Code", Integer.toString(randomCode));
     }
 
     public int getUsersCode(String userName){
+        if(!randomCodes.containsKey(userName)) return -1;
         return randomCodes.get(userName);
     }
 
