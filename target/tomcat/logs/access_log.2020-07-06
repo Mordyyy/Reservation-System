@@ -101,3 +101,6 @@
 0:0:0:0:0:0:0:1 - - [06/Jul/2020:15:50:15 +0400] "GET / HTTP/1.1" 200 207 http-bio-8088-exec-1 130
 0:0:0:0:0:0:0:1 - - [06/Jul/2020:15:50:15 +0400] "GET /resources/css/style.css HTTP/1.1" 200 160 http-bio-8088-exec-2 16
 0:0:0:0:0:0:0:1 - - [06/Jul/2020:15:50:15 +0400] "GET /resources/images/homepage_background.jpg HTTP/1.1" 304 - http-bio-8088-exec-3 46
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:16:00:42 +0400] "GET / HTTP/1.1" 200 171 http-bio-8088-exec-1 1178
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:16:00:42 +0400] "GET /resources/css/style.css HTTP/1.1" 200 153 http-bio-8088-exec-2 22
+0:0:0:0:0:0:0:1 - - [06/Jul/2020:16:00:42 +0400] "GET /resources/images/homepage_background.jpg HTTP/1.1" 200 1056989 http-bio-8088-exec-3 13
