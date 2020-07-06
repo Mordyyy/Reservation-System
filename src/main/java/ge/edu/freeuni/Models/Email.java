@@ -4,23 +4,27 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Email{
-    private HashMap<String,Integer> randomCodes;
+    private HashMap<String,Integer> randomCodes;    // key = email, value = random integer
     public Email(){
         randomCodes = new HashMap<>();
     }
-    public boolean verifyRandomCode(User user, int code){
-        if(!randomCodes.containsKey(user.getUsername())) return false;
-        return randomCodes.get(user.getUsername()) == code;
+    public boolean verifyRandomCode(String email, int code){
+        if(!randomCodes.containsKey(email)) return false;
+        return randomCodes.get(email) == code;
     }
 
-    public void sendCode(User user, String message){
+    public void sendCode(String email, String message){
 
     }
 
-    public void sendRandomCode(User user){
+    public void sendRandomCode(String email){
         int randomCode = getRandomInteger();
-        randomCodes.put(user.getUsername(),randomCode);
-        sendCode(user,Integer.toString(randomCode));
+        randomCodes.put(email,randomCode);
+        sendCode(email,Integer.toString(randomCode));
+    }
+
+    public int getUsersCode(String userName){
+        return randomCodes.get(userName);
     }
 
     private int getRandomInteger(){
