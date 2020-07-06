@@ -20,4 +20,25 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
+  <context-param>
+    <param-name>url</param-name>
+    <param-value>jdbc:mysql://localhost</param-value>
+  </context-param>
+  <context-param>
+    <param-name>database</param-name>
+    <param-value>/hw05</param-value>
+  </context-param>
+  <context-param>
+    <param-name>user_name</param-name>
+    <param-value>root</param-value>
+  </context-param>
+  <context-param>
+    <param-name>password</param-name>
+    <param-value>Otoemnadze234</param-value>
+  </context-param>
+
+  <listener>
+    <listener-class>Listeners.ContextListener</listener-class>
+  </listener>
+
 </web-app>
