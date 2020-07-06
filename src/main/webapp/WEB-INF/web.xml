@@ -34,7 +34,7 @@
   </context-param>
   <context-param>
     <param-name>password</param-name>
-    <param-value>Otoemnadze234</param-value>
+    <param-value>4546</param-value>
   </context-param>
 
   <listener>
