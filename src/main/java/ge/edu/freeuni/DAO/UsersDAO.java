@@ -37,11 +37,32 @@ public class UsersDAO {
         return false;
     }
 
-    public User getUser(String username) {
+    public User getUserByUsername(String username) {
         PreparedStatement st = null;
         try {
             st = con.prepareStatement("Select * from users where username = ?");
             st.setString(1, username);
+            ResultSet res = st.executeQuery();
+            if (!res.next()) {
+                st.close();
+                return null;
+            }
+            User user = new User(res.getString("username"), res.getString("password")
+                    ,res.getString("mail"), res.getString("avatar")
+                    ,res.getInt("cancelledOrders"));
+            st.close();
+            return user;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public User getUserByeMail(String eMail) {
+        PreparedStatement st = null;
+        try {
+            st = con.prepareStatement("Select * from users where mail = ?");
+            st.setString(1, eMail);
             ResultSet res = st.executeQuery();
             if (!res.next()) {
                 st.close();

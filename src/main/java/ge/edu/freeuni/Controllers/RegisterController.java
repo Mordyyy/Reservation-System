@@ -33,9 +33,9 @@ public class RegisterController {
                                  HttpServletRequest req,
                                  HttpServletResponse resp) throws IOException, MessagingException {
         Email email = (Email)req.getServletContext().getAttribute("email");
-        if(Button.equals("Button1")) {
+        if(Button.equals("Register")) {
             UsersDAO users = (UsersDAO) req.getServletContext().getAttribute("db");
-            User user = users.getUser(Username);
+            User user = users.getUserByUsername(Username);
             ModelAndView modelAndView = new ModelAndView("register");
             if (user != null) {
                 modelAndView.addObject("error", "Account with username: " + Username + " Already exists!");

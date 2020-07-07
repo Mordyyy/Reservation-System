@@ -34,8 +34,15 @@ public class HomepageController {
         if(Button.equals("Login")) {
             System.out.println("logini");
             UsersDAO users = (UsersDAO) req.getServletContext().getAttribute("db");
-            User user = users.getUser(Username);
+            User userUsername = users.getUserByUsername(Username);
+            User userEmail = users.getUserByeMail(Username);
             ModelAndView modelAndView = new ModelAndView("login");
+            User user = null;
+            if(userUsername != null){
+                user = userUsername;
+            }else if(userEmail != null){
+                user = userEmail;
+            }
             if (user == null) {
                 modelAndView.addObject("Error", "Account Does not exist!");
                 System.out.println("ararsebobs");
