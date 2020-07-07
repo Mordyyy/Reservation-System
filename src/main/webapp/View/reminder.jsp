@@ -12,7 +12,7 @@
 <div class="loginbox">
     <h1>Forget Password</h1>
     <div class="textbox">
-        <i class="fa fa-user" aria-hidden="true"></i>
+        <i class="fa fa-envelope" aria-hidden="true"></i>
         <input type="text" placeholder="Enter your email" name="emailadress" value="">
     </div>
     <a href="/">Main Page</a>

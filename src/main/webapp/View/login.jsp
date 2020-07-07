@@ -9,7 +9,6 @@
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
 <body>
-    <div class="freeuniImage"></div>
     <c:if test="${Error != null}">
         Authentication failed: ${Error}
     </c:if>
@@ -24,10 +23,9 @@
                 <i class="fa fa-lock" aria-hidden="true"></i>
                 <input type="password" placeholder="Password" name="Password" value="">
             </div>
+                <a href="/reminder">Remind me password</a>
                 <button class = "buton" type ="submit" name = "Button" value = "Login">Login</button>
                 <button class = "buton" type ="submit" name = "Button" value = "Register">Register</button>
-<%--            <input class="buton" type="button" name="Button" value="Login">--%>
-<%--            <input class="buton" type="button" name="Button" value="Register">--%>
             </form>
         </div>
 </body>
