@@ -9,26 +9,31 @@
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
 <body>
+<c:if test="${Error != null}">
+    Authentication failed: ${Error}
+</c:if>
 <div class="loginbox">
-    <h1>Register</h1>
-    <div class="textbox">
-        <i class="fa fa-user" aria-hidden="true"></i>
-        <input type="text" placeholder="Username" name="Username" value="">
-    </div>
-    <div class="textbox">
-        <i class="fa fa-lock" aria-hidden="true"></i>
-        <input type="password" placeholder="Password" name="Password1" value="">
-    </div>
-    <div class="textbox">
-        <i class="fa fa-lock" aria-hidden="true"></i>
-        <input type="password" placeholder="Re-Enter Password" name="Password2" value="">
-    </div>
-    <div class="textbox">
-        <i class="fa fa-envelope" aria-hidden="true"></i>
-        <input type="text" placeholder="E-mail" name="eMail" value="">
-    </div>
-
-    <input class="buton" type="button" name="Button" value="Register">
+    <form action = "/register" method = "POST">
+        <h1>Register</h1>
+        <div class="textbox">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <input type="text" placeholder="Username" name="Username" value="">
+        </div>
+        <div class="textbox">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+            <input type="password" placeholder="Password" name="Password1" value="">
+        </div>
+        <div class="textbox">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+            <input type="password" placeholder="Re-Enter Password" name="Password2" value="">
+        </div>
+        <div class="textbox">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            <input type="text" placeholder="E-mail" name="eMail" value="">
+        </div>
+        <button class = "buton" type="submit" name = "Button" value="Register">Register</button>
+    </form>
 </div>
+<%--    <input class="buton" type="button" name="Button" value="Register">--%>
 </body>
 </html>

@@ -30,9 +30,7 @@ public class HomepageController {
                                 HttpServletRequest req,
                                 HttpServletResponse resp,
                                 HttpSession ses) throws IOException {
-        System.out.println("zogadi");
         if(Button.equals("Login")) {
-            System.out.println("logini");
             UsersDAO users = (UsersDAO) req.getServletContext().getAttribute("db");
             User userUsername = users.getUserByUsername(Username);
             User userEmail = users.getUserByeMail(Username);
@@ -45,11 +43,9 @@ public class HomepageController {
             }
             if (user == null) {
                 modelAndView.addObject("Error", "Account Does not exist!");
-                System.out.println("ararsebobs");
                 return modelAndView;
             }
             if (!user.getPassword().equals(Password)) {
-                System.out.println("araswori paroli");
                 modelAndView.addObject("Error", "Username or Password incorrect!");
                 return modelAndView;
             }
@@ -58,7 +54,6 @@ public class HomepageController {
             resp.sendRedirect("/home");
             return modelAndView;
         }else {
-            System.out.println("registracia");
             resp.sendRedirect("/register");
             return new ModelAndView("register");
         }

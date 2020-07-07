@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.POST;
@@ -18,7 +20,7 @@ import java.io.IOException;
 @Controller
 public class RegisterController {
     @GetMapping("/register")
-    public String display(){
+    public String display() {
         return "register";
     }
 
@@ -27,38 +29,52 @@ public class RegisterController {
                                  @RequestParam String Password1,
                                  @RequestParam String Password2,
                                  @RequestParam String eMail,
-                                 @RequestParam String Code,
-                                 @RequestParam String Avatar,
                                  @RequestParam String Button,
                                  HttpServletRequest req,
-                                 HttpServletResponse resp) throws IOException, MessagingException {
-        Email email = (Email)req.getServletContext().getAttribute("email");
-        if(Button.equals("Register")) {
-            UsersDAO users = (UsersDAO) req.getServletContext().getAttribute("db");
-            User user = users.getUserByUsername(Username);
-            ModelAndView modelAndView = new ModelAndView("register");
-            if (user != null) {
-                modelAndView.addObject("error", "Account with username: " + Username + " Already exists!");
-                return modelAndView;
-            }
-            if (!Password1.equals(Password2)) {
-                modelAndView.addObject("error", "Passwords do not match!");
-                return modelAndView;
-            }
-
-            int sentCode = email.getUsersCode(eMail);
-            if(sentCode != Integer.parseInt(Code)){
-                modelAndView.addObject("error", "Email Confirmation Failed!!");
-                return modelAndView;
-            }
-
-            User realUser = new User(Username, Password1, eMail, Avatar, 0);
-            users.addUser(realUser);
-            resp.sendRedirect("");
+                                 HttpServletResponse resp) throws IOException, MessagingException, ServletException {
+        boolean registerClickedSuccessfully = false;
+        UsersDAO users = (UsersDAO) req.getServletContext().getAttribute("db");
+        User user = users.getUserByUsername(Username);
+        ModelAndView modelAndView = new ModelAndView("register");
+        if (Username.length() < 4) {
+            System.out.println("1");
+            modelAndView.addObject("error", "Username Should Contain At Least 4 Symbols");
             return modelAndView;
-        }else{
-            email.sendRandomCode(eMail);
-            return new ModelAndView("register");
         }
+        if (Password1.length() < 6) {
+            System.out.println("2");
+            modelAndView.addObject("error", "Password Should Contain At Least 6 Symbols");
+            return modelAndView;
+        }
+        if (eMail.length() == 0) {
+            System.out.println("3");
+            modelAndView.addObject("error", "Enter Email!");
+            return modelAndView;
+        }
+        if (user != null) {
+            System.out.println("4");
+            modelAndView.addObject("error", "Account with username: " + Username + " Already exists!");
+            return modelAndView;
+        }
+        if (!Password1.equals(Password2)) {
+            System.out.println("5");
+            modelAndView.addObject("error", "Passwords do not match!");
+            return modelAndView;
+        }
+        System.out.println("success in FIELDS!!");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/sendcode");
+        dispatcher.forward(req, resp);
+
+//            int sentCode = email.getUsersCode(eMail);
+//            if(sentCode != Integer.parseInt(Code)){
+//                modelAndView.addObject("error", "Email Confirmation Failed!!");
+//                return modelAndView;
+//            }
+
+//        User realUser = new User(Username, Password1, eMail, "", 0);
+//        users.addUser(realUser);
+//        resp.sendRedirect("");
+        return modelAndView;
+
     }
 }

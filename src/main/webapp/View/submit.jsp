@@ -9,14 +9,19 @@
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
 <body>
+<c:if test="${error != null}">
+    Authentication failed: ${error}
+</c:if>
 <div class="loginbox">
-    <h1>Confirm Registration</h1>
-    <div class="textbox">
-        <i class="fa fa-ambulance" aria-hidden="true"></i>
-        <input type="text" placeholder="Code" name="Code" value="">
-    </div>
-    <a href="/">Main Page</a>
-    <input class="buton" type="button" name="Button" value="Register">
+    <form action = "/sendcode" method="POST">
+        <h1>Confirm Registration</h1>
+        <div class="textbox">
+            <i class="fa fa-ambulance" aria-hidden="true"></i>
+            <input type="text" placeholder="Code" name="Code" value="">
+        </div>
+        <a href="/">Main Page</a>
+        <button class="buton" type="submit" name = "Button" value = "Submit">Submit Code</button>
+    </form>
 </div>
 </body>
 </html>
