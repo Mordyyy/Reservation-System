@@ -1,4 +1,5 @@
 package ge.edu.freeuni.Controllers;
+import ge.edu.freeuni.DAO.UsersDAO;
 import ge.edu.freeuni.Models.Email;
 import ge.edu.freeuni.Models.User;
 import org.springframework.stereotype.Controller;
@@ -23,27 +24,26 @@ public class SendCodeController {
 //    }
 
     @PostMapping("/sendcode")
-    public ModelAndView sendCode(@RequestParam String Username,
-                                 @RequestParam String Password1,
-                                 @RequestParam String eMail,
-                                 @RequestParam String Avatar,
-                                 @RequestParam String Button,
-                                 @RequestParam String Code,
+    public ModelAndView sendCode(@RequestParam String Button,
                                  HttpServletResponse resp,
                                  HttpServletRequest req) throws MessagingException, IOException {
         Email email = (Email) req.getServletContext().getAttribute("email");
         ModelAndView modelAndView = new ModelAndView("submit");
-        if (Button.equals("Register")) {
+        if (Button.equals("Submit")) {
+            String Code = (String)req.getParameter("Code");
+            System.out.println(user);
             int sentCode = email.getUsersCode(user.getMail());
             if (Integer.parseInt(Code) == sentCode) {
+                ((UsersDAO)req.getServletContext().getAttribute("db")).addUser(user);
                 resp.sendRedirect("");
             } else {
                 modelAndView.addObject("error", "Wrong Code!");
             }
             return modelAndView;
         } else {
-            email.sendRandomCode(eMail);
-            user = new User(Username, Password1, eMail, Avatar, 0);
+            email.sendRandomCode((String)req.getParameter("eMail"));
+            user = new User((String)req.getParameter("Username"), (String)req.getParameter("Password1"),
+                    (String)req.getParameter("eMail"), "", 0);
             return modelAndView;
         }
     }

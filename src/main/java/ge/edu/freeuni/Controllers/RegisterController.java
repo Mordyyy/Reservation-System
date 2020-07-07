@@ -29,8 +29,6 @@ public class RegisterController {
                                  @RequestParam String Password1,
                                  @RequestParam String Password2,
                                  @RequestParam String eMail,
-                                 @RequestParam String Code,
-                                 @RequestParam String Avatar,
                                  @RequestParam String Button,
                                  HttpServletRequest req,
                                  HttpServletResponse resp) throws IOException, MessagingException, ServletException {
@@ -39,27 +37,31 @@ public class RegisterController {
         User user = users.getUserByUsername(Username);
         ModelAndView modelAndView = new ModelAndView("register");
         if (Username.length() < 4) {
+            System.out.println("1");
             modelAndView.addObject("error", "Username Should Contain At Least 4 Symbols");
             return modelAndView;
         }
         if (Password1.length() < 6) {
+            System.out.println("2");
             modelAndView.addObject("error", "Password Should Contain At Least 6 Symbols");
             return modelAndView;
         }
         if (eMail.length() == 0) {
+            System.out.println("3");
             modelAndView.addObject("error", "Enter Email!");
             return modelAndView;
         }
         if (user != null) {
+            System.out.println("4");
             modelAndView.addObject("error", "Account with username: " + Username + " Already exists!");
             return modelAndView;
         }
         if (!Password1.equals(Password2)) {
+            System.out.println("5");
             modelAndView.addObject("error", "Passwords do not match!");
             return modelAndView;
         }
-        //   registerClickedSuccessfully = true;
-
+        System.out.println("success in FIELDS!!");
         RequestDispatcher dispatcher = req.getRequestDispatcher("/sendcode");
         dispatcher.forward(req, resp);
 
@@ -69,9 +71,9 @@ public class RegisterController {
 //                return modelAndView;
 //            }
 
-        User realUser = new User(Username, Password1, eMail, Avatar, 0);
-        users.addUser(realUser);
-        resp.sendRedirect("");
+//        User realUser = new User(Username, Password1, eMail, "", 0);
+//        users.addUser(realUser);
+//        resp.sendRedirect("");
         return modelAndView;
 
     }
