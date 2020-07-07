@@ -1791,6 +1791,7 @@
 0:0:0:0:0:0:0:1 - - [07/Jul/2020:15:02:04 +0400] "GET /home HTTP/1.1" 200 107 http-bio-8088-exec-9 11
 0:0:0:0:0:0:0:1 - - [07/Jul/2020:15:05:22 +0400] "GET / HTTP/1.1" 200 1021 http-bio-8088-exec-1 6417
 >>>>>>> master
+<<<<<<< HEAD
 0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:32:06 +0400] "GET / HTTP/1.1" 200 1033 http-bio-8088-exec-1 1401
 0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:32:07 +0400] "GET /resources/css/LoginStyle.css;jsessionid=C9EBB50E46610A042ACEDD7CFB124D3E HTTP/1.1" 200 1242 http-bio-8088-exec-2 45
 0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:32:07 +0400] "GET /resources/images/pic.jpg HTTP/1.1" 200 45317 http-bio-8088-exec-4 3
@@ -1803,3 +1804,5 @@
 0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:36:26 +0400] "GET / HTTP/1.1" 200 1009 http-bio-8088-exec-1 1252
 0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:36:27 +0400] "GET /reminder HTTP/1.1" 200 550 http-bio-8088-exec-2 10
 0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:36:30 +0400] "GET / HTTP/1.1" 200 1009 http-bio-8088-exec-3 5
+=======
+>>>>>>> ca34c1fb73d02dd92ba8d9ba3aaf6af4fd59df08
