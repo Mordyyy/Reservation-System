@@ -9,9 +9,6 @@
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
 <body>
-    <c:if test="${Error != null}">
-        Authentication failed: ${Error}
-    </c:if>
         <div class="loginbox">
             <form action = "/" method = "POST">
             <h1>Login</h1>
@@ -27,6 +24,14 @@
                 <button class = "buton" type ="submit" name = "Button" value = "Login">Login</button>
                 <button class = "buton" type ="submit" name = "Button" value = "Register">Register</button>
             </form>
+            <c:if test="${Error != null}">
+                <div class="errorico">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                </div> <br>
+                <div class="eror">
+                    Authentication failed: ${Error}
+                </div>
+            </c:if>
         </div>
 </body>
 </html>

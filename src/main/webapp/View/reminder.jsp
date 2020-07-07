@@ -9,9 +9,6 @@
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
 <body>
-<c:if test="${error != null}">
-    Error: ${error}
-</c:if>
 <div class="loginbox">
     <form action="/reminder" method="post">
         <h1>Forget Password</h1>
@@ -21,6 +18,14 @@
         </div>
         <a href="/">Main Page</a>
         <button class="buton" type="submit" name="CodeSender">Send Password</button>
+        <c:if test="${error != null}">
+            <div class="errorico">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </div> <br><br>
+            <div class="eror">
+                Error: ${error}
+            </div>
+        </c:if>
     </form>
 </div>
 </body>

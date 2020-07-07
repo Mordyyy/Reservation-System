@@ -70,3 +70,16 @@ body{
     background: url(../images/pic.jpg) no-repeat;
     background-size: 100%;
 }
+
+.errorico{
+    position: absolute;
+    left: 48%;
+    color: red;
+}
+
+.eror{
+    position:  center;
+    text-align: center;
+    color: red;
+    left: 48%;
+}

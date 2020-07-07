@@ -9,9 +9,6 @@
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
 <body>
-<c:if test="${error != null}">
-    Error: ${error}
-</c:if>
 <div class="loginbox">
     <form action = "/register" method = "POST">
         <h1>Register</h1>
@@ -32,6 +29,14 @@
             <input type="text" placeholder="E-mail" name="eMail" value="">
         </div>
         <button class = "buton" type="submit" name = "Button" value="Register">Register</button>
+        <c:if test="${error != null}">
+        <div class="errorico">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        </div> <br><br>
+        <div class="eror">
+            Error: ${error}
+        </div>
+        </c:if>
     </form>
 </div>
 <%--    <input class="buton" type="button" name="Button" value="Register">--%>

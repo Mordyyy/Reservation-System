@@ -9,9 +9,6 @@
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
 <body>
-<c:if test="${error != null}">
-    Error: ${error}
-</c:if>
 <div class="loginbox">
     <form action = "/sendcode" method="POST">
         <h1>Confirm Registration</h1>
@@ -21,6 +18,14 @@
         </div>
         <a href="/">Main Page</a>
         <button class="buton" type="submit" name = "Button" value = "Submit">Submit Code</button>
+        <c:if test="${Error != null}">
+            <div class="errorico">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </div> <br>
+            <div class="eror">
+                Authentication failed: ${Error}
+            </div>
+        </c:if>
     </form>
 </div>
 </body>
