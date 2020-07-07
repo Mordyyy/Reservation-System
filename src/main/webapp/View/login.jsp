@@ -10,18 +10,25 @@
 </head>
 <body>
     <div class="freeuniImage"></div>
-    <div class="loginbox">
-        <h1>Login</h1>
-        <div class="textbox">
-            <i class="fa fa-user" aria-hidden="true"></i>
-            <input type="text" placeholder="Username" name="username" value="">
+    <c:if test="${Error != null}">
+        Authentication failed: ${Error}
+    </c:if>
+        <div class="loginbox">
+            <form action = "/" method = "POST">
+            <h1>Login</h1>
+            <div class="textbox">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <input type="text" placeholder="Username" name="Username" value="">
+            </div>
+            <div class="textbox">
+                <i class="fa fa-lock" aria-hidden="true"></i>
+                <input type="password" placeholder="Password" name="Password" value="">
+            </div>
+                <button class = "buton" type ="submit" name = "Button" value = "Login">Login</button>
+                <button class = "buton" type ="submit" name = "Button" value = "Register">Register</button>
+<%--            <input class="buton" type="button" name="Button" value="Login">--%>
+<%--            <input class="buton" type="button" name="Button" value="Register">--%>
+            </form>
         </div>
-        <div class="textbox">
-            <i class="fa fa-lock" aria-hidden="true"></i>
-            <input type="password" placeholder="Password" name="password" value="">
-        </div>
-        <input class="buton" type="button" name="Login" value="Login">
-        <input class="buton" type="button" name="Register" value="Register">
-    </div>
 </body>
 </html>
