@@ -26,7 +26,7 @@ public class SendCodeController {
     @PostMapping("/sendcode")
     public ModelAndView sendCode(@RequestParam String Button,
                                  HttpServletResponse resp,
-                                 HttpServletRequest req) throws MessagingException, IOException {
+                                 HttpServletRequest req) throws IOException {
         Email email = (Email) req.getServletContext().getAttribute("email");
         ModelAndView modelAndView = new ModelAndView("submit");
         if (Button.equals("Submit")) {
@@ -41,7 +41,13 @@ public class SendCodeController {
             }
             return modelAndView;
         } else {
-            email.sendRandomCode((String)req.getParameter("eMail"));
+            try {
+                email.sendRandomCode((String)req.getParameter("eMail"));
+            } catch (MessagingException e) {
+                ModelAndView mv = new ModelAndView("register");
+                mv.addObject("error", "Wrong Mail Address!");
+                return mv;
+            }
             user = new User((String)req.getParameter("Username"), (String)req.getParameter("Password1"),
                     (String)req.getParameter("eMail"), "", 0);
             return modelAndView;

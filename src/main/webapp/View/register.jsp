@@ -9,8 +9,8 @@
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
 <body>
-<c:if test="${Error != null}">
-    Authentication failed: ${Error}
+<c:if test="${error != null}">
+    Authentication failed: ${error}
 </c:if>
 <div class="loginbox">
     <form action = "/register" method = "POST">

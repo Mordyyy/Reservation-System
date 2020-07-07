@@ -65,16 +65,6 @@ public class RegisterController {
         RequestDispatcher dispatcher = req.getRequestDispatcher("/sendcode");
         dispatcher.forward(req, resp);
 
-//            int sentCode = email.getUsersCode(eMail);
-//            if(sentCode != Integer.parseInt(Code)){
-//                modelAndView.addObject("error", "Email Confirmation Failed!!");
-//                return modelAndView;
-//            }
-
-//        User realUser = new User(Username, Password1, eMail, "", 0);
-//        users.addUser(realUser);
-//        resp.sendRedirect("");
         return modelAndView;
-
     }
 }
