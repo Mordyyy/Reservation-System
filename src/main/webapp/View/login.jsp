@@ -18,7 +18,7 @@
             <h1>Login</h1>
             <div class="textbox">
                 <i class="fa fa-user" aria-hidden="true"></i>
-                <input type="text" placeholder="Username" name="Username" value="">
+                <input type="text" placeholder="Username/Email" name="Username" value="">
             </div>
             <div class="textbox">
                 <i class="fa fa-lock" aria-hidden="true"></i>

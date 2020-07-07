@@ -52,7 +52,7 @@ public class RegisterController {
                 return modelAndView;
             }
 
-            User realUser = new User(Username, Password1, eMail, Avatar);
+            User realUser = new User(Username, Password1, eMail, Avatar, 0);
             users.addUser(realUser);
             resp.sendRedirect("");
             return modelAndView;
