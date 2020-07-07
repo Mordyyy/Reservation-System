@@ -26,11 +26,6 @@
     <div class="textbox">
         <i class="fa fa-envelope" aria-hidden="true"></i>
         <input type="text" placeholder="E-mail" name="eMail" value="">
-        <input class="bt" type="button" name="Button" value="Send">
-    </div>
-    <div class="textbox">
-        <i class="fa fa-ambulance" aria-hidden="true"></i>
-        <input type="text" placeholder="Code" name="Code" value="">
     </div>
 
     <input class="buton" type="button" name="Button" value="Register">
