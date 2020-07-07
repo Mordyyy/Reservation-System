@@ -64,14 +64,9 @@ body{
     margin: 12px 0;
 }
 
-.bt{
-    width: 20%;
-    /*background: blueviolet;*/
-    /*border: 2px solid blueviolet;*/
-    /*color: white;*/
-    /*padding: 5px;*/
-    /*font-size: 5px;*/
-    /*cursor: pointer;*/
-    /*margin: 12px 0;*/
+.freeuniImage{
+    width: 100px;
+    height: 100px;
+    background: url(../images/pic.jpg) no-repeat;
+    background-size: 100%;
 }
-

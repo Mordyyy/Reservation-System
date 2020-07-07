@@ -1,5 +1,4 @@
 package ge.edu.freeuni.Controllers;
-
 import ge.edu.freeuni.Models.Email;
 import ge.edu.freeuni.Models.User;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,6 @@ import java.io.IOException;
 
 @Controller
 public class SendCodeController {
-
     private User user;
 //    @GetMapping("/sendcode")
 //    public ModelAndView display(@RequestParam String Code){
@@ -33,19 +31,19 @@ public class SendCodeController {
                                  @RequestParam String Code,
                                  HttpServletResponse resp,
                                  HttpServletRequest req) throws MessagingException, IOException {
-        Email email = (Email)req.getServletContext().getAttribute("email");
+        Email email = (Email) req.getServletContext().getAttribute("email");
         ModelAndView modelAndView = new ModelAndView("submit");
-        if(Button.equals("Register")){
+        if (Button.equals("Register")) {
             int sentCode = email.getUsersCode(user.getMail());
-            if(Integer.parseInt(Code) == sentCode){
+            if (Integer.parseInt(Code) == sentCode) {
                 resp.sendRedirect("");
-            }else{
+            } else {
                 modelAndView.addObject("error", "Wrong Code!");
             }
             return modelAndView;
-        }else{
+        } else {
             email.sendRandomCode(eMail);
-            user = new User(Username,Password1, eMail, Avatar, 0);
+            user = new User(Username, Password1, eMail, Avatar, 0);
             return modelAndView;
         }
     }
