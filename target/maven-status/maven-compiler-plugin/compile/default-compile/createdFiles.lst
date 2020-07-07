@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-ge\edu\freeuni\Controllers\BlacklistController.class
-ge\edu\freeuni\Controllers\RemindPasswordController.class
-ge\edu\freeuni\DAO\BlacklistDAO.class
-=======
 ge\edu\freeuni\Controllers\WelcomeController.class
 ge\edu\freeuni\Controllers\RemindPasswordController.class
 ge\edu\freeuni\DAO\BlacklistDAO.class
+ge\edu\freeuni\Controllers\AdminController.class
 ge\edu\freeuni\Controllers\SendCodeController.class
->>>>>>> master

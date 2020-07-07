@@ -65,12 +65,13 @@ public class BlacklistDAO {
 
     public List<String> getAll() {
         PreparedStatement st = null;
+        List<String> lst = new ArrayList<>();
         try {
             st = con.prepareStatement("Select * from blacklist");
             ResultSet res = st.executeQuery();
             if (!res.next()) {
                 st.close();
-                return null;
+                return lst;
             }
             List<String> blacklist = new ArrayList<>();
             String username = res.getString("username");
@@ -84,7 +85,7 @@ public class BlacklistDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
+        return lst;
     }
 
 }

@@ -95,12 +95,13 @@ public class UsersDAO {
 
     public List<User> getAll() {
         PreparedStatement st = null;
+        List<User> lst = new ArrayList<>();
         try {
             st = con.prepareStatement("Select * from users");
             ResultSet res = st.executeQuery();
             if (!res.next()) {
                 st.close();
-                return null;
+                return lst;
             }
             List<User> users = new ArrayList<>();
             User user = new User(res.getString("username"), res.getString("password")
@@ -118,7 +119,7 @@ public class UsersDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
+        return lst;
     }
 
 }

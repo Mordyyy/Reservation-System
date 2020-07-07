@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class BlacklistController {
+public class AdminController {
 
-    @GetMapping("/blacklist")
+    @GetMapping("/admin")
     public String render() {
-        return "blacklist";
+        return "admin";
     }
 }
