@@ -1,3 +1,5 @@
+/Users/test/Desktop/Project-git/Reservation-System/src/main/java/ge/edu/freeuni/Controllers/ResetPasswordController.java
+/Users/test/Desktop/Project-git/Reservation-System/src/main/java/ge/edu/freeuni/Controllers/SendCodeController.java
 /Users/test/Desktop/Project-git/Reservation-System/src/main/java/ge/edu/freeuni/DAO/UsersDAO.java
 /Users/test/Desktop/Project-git/Reservation-System/src/main/java/ge/edu/freeuni/Controllers/RemindPasswordController.java
 /Users/test/Desktop/Project-git/Reservation-System/src/main/java/ge/edu/freeuni/Controllers/HomepageController.java
@@ -8,5 +10,4 @@
 /Users/test/Desktop/Project-git/Reservation-System/src/main/java/ge/edu/freeuni/Models/Email.java
 /Users/test/Desktop/Project-git/Reservation-System/src/main/java/ge/edu/freeuni/Models/User.java
 /Users/test/Desktop/Project-git/Reservation-System/src/main/java/ge/edu/freeuni/Controllers/AdminController.java
-/Users/test/Desktop/Project-git/Reservation-System/src/main/java/ge/edu/freeuni/Controllers/SendCodeController.java
 /Users/test/Desktop/Project-git/Reservation-System/src/main/java/ge/edu/freeuni/DAO/BlacklistDAO.java
