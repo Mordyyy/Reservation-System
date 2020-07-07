@@ -58,6 +58,22 @@ public class UsersDAO {
         return null;
     }
 
+    public void changePassword(String username, String newPassword){
+        PreparedStatement st = null;
+        try {
+            st = con.prepareStatement("update users set password = " + newPassword +
+                    " where password = ?");
+            st.setString(2, username);
+            ResultSet res = st.executeQuery();
+            if (!res.next()) {
+                st.close();
+            }
+            st.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     public User getUserByeMail(String eMail) {
         PreparedStatement st = null;
         try {

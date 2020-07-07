@@ -27,7 +27,7 @@
             <i class="fa fa-lock" aria-hidden="true"></i>
             <input type="password" placeholder="Re-enter Password" name="password2" value="">
         </div>
-        <a href="/">Go Back</a>
+        <a href="/">Go Back</a>      <%-- instead of / there should be /user--%>
         <button class="buton" type="submit">Reset Password</button>
     </form>
 </div>
