@@ -20,6 +20,7 @@
             <i class="fa fa-lock" aria-hidden="true"></i>
             <input type="password" placeholder="Password" name="password" value="">
         </div>
+        <a href="/reminder">Remind me password</a>
         <input class="buton" type="button" name="Login" value="Login">
         <input class="buton" type="button" name="Register" value="Register">
     </div>
