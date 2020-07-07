@@ -28,6 +28,7 @@
             <i class="fa fa-envelope" aria-hidden="true"></i>
             <input type="text" placeholder="E-mail" name="eMail" value="">
         </div>
+        <a href="/">Main Page</a>
         <button class = "buton" type="submit" name = "Button" value="Register">Register</button>
         <c:if test="${error != null}">
         <div class="errorico">
