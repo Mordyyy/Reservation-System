@@ -1,5 +1,6 @@
 package ge.edu.freeuni.Listeners;
 
+import ge.edu.freeuni.DAO.BlacklistDAO;
 import ge.edu.freeuni.DAO.UsersDAO;
 import ge.edu.freeuni.Models.Email;
 
@@ -16,10 +17,11 @@ public class ContextListener implements ServletContextListener {
         String password = sc.getInitParameter("password");
         String database = sc.getInitParameter("database");
         UsersDAO db = new UsersDAO(url + database, user_name, password);
+        BlacklistDAO blacklist = new BlacklistDAO(url + database, user_name, password);
         Email mail = new Email();
         sc.setAttribute("email", mail);
         sc.setAttribute("db", db);
-
+        sc.setAttribute("blacklist", blacklist);
     }
 
     @Override

@@ -7,3 +7,7 @@ create table users (
     avatar varchar(60),
     cancelledOrders int
 );
+
+create table blacklist(
+	username varchar(60)
+);
