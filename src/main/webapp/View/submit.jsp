@@ -15,6 +15,7 @@
         <i class="fa fa-ambulance" aria-hidden="true"></i>
         <input type="text" placeholder="Code" name="Code" value="">
     </div>
+    <a href="/">Main Page</a>
     <input class="buton" type="button" name="Button" value="Register">
 </div>
 </body>

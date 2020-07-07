@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-ge\edu\freeuni\DAO\BlacklistDAO.class
 ge\edu\freeuni\Controllers\WelcomeController.class
-ge\edu\freeuni\Controllers\abc.class
-=======
-ge/edu/freeuni/DAO/BlacklistDAO.class
-ge/edu/freeuni/Controllers/RemindPasswordController.class
->>>>>>> 0f2ec5b8d5521dc083dd0fe655fef238efadc7d0
+ge\edu\freeuni\Controllers\RemindPasswordController.class
+ge\edu\freeuni\DAO\BlacklistDAO.class
+ge\edu\freeuni\Controllers\SendCodeController.class
