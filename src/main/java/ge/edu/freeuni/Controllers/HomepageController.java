@@ -26,20 +26,41 @@ public class HomepageController {
     @PostMapping("")
     public ModelAndView Authenticate(@RequestParam String Username,
                                @RequestParam String Password,
+                                @RequestParam String Button,
                                 HttpServletRequest req,
-                                HttpServletResponse resp) throws IOException {
-        UsersDAO users = (UsersDAO)req.getServletContext().getAttribute("db");
-        User user = users.getUser(Username);
-        ModelAndView modelAndView = new ModelAndView("");
-        if(user == null){
-            modelAndView.addObject("Error", "Account Does not exist!");
+                                HttpServletResponse resp,
+                                HttpSession ses) throws IOException {
+        System.out.println("zogadi");
+        if(Button.equals("Login")) {
+            System.out.println("logini");
+            UsersDAO users = (UsersDAO) req.getServletContext().getAttribute("db");
+            User userUsername = users.getUserByUsername(Username);
+            User userEmail = users.getUserByeMail(Username);
+            ModelAndView modelAndView = new ModelAndView("login");
+            User user = null;
+            if(userUsername != null){
+                user = userUsername;
+            }else if(userEmail != null){
+                user = userEmail;
+            }
+            if (user == null) {
+                modelAndView.addObject("Error", "Account Does not exist!");
+                System.out.println("ararsebobs");
+                return modelAndView;
+            }
+            if (!user.getPassword().equals(Password)) {
+                System.out.println("araswori paroli");
+                modelAndView.addObject("Error", "Username or Password incorrect!");
+                return modelAndView;
+            }
+            //modelAndView.setViewName("home");
+            ses.setAttribute("user", user);
+            resp.sendRedirect("/home");
             return modelAndView;
+        }else {
+            System.out.println("registracia");
+            resp.sendRedirect("/register");
+            return new ModelAndView("register");
         }
-        if(user.getPassword().equals(Password)){
-            modelAndView.addObject("error", "Username or Password incorrect!");
-            return modelAndView;
-        }
-        resp.sendRedirect("/home");
-        return modelAndView;
     }
 }
