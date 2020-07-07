@@ -30,7 +30,10 @@ public class RemindPasswordController {
         Email mail = (Email) req.getServletContext().getAttribute("email");
         if(usersDAO.getUserByeMail(email) != null){
             User user = usersDAO.getUserByeMail(email);
-            mail.sendCode(email,"Your Password",user.getPassword());
+            String passwordMessagePref = "Your password is: " + user.getPassword() + "\n";
+            String passwordMessageSuf = "Please log in if you want to change password";
+            String passwordMessage = passwordMessagePref + passwordMessageSuf;
+            mail.sendCode(email,"Password reminder",passwordMessage);
             return modelAndView;
         }else{
             modelAndView.setViewName("reminder");

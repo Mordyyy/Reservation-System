@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Email{
+    private final String verificationString = "Your verification code is :";
     private HashMap<String,Integer> randomCodes;    // key = email, value = random integer
     public Email(){
         randomCodes = new HashMap<>();
@@ -23,7 +24,7 @@ public class Email{
     public void sendRandomCode(String email) throws MessagingException {
         int randomCode = getRandomInteger();
         randomCodes.put(email,randomCode);
-        sendCode(email,"Email Verification Code", Integer.toString(randomCode));
+        sendCode(email,"Email Verification Code", verificationString + Integer.toString(randomCode));
     }
 
     public int getUsersCode(String email){
