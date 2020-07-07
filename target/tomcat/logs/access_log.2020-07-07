@@ -1806,3 +1806,16 @@
 0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:36:30 +0400] "GET / HTTP/1.1" 200 1009 http-bio-8088-exec-3 5
 =======
 >>>>>>> ca34c1fb73d02dd92ba8d9ba3aaf6af4fd59df08
+0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:54:22 +0400] "GET / HTTP/1.1" 200 1053 http-bio-8088-exec-1 169
+0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:54:22 +0400] "GET /resources/css/LoginStyle.css;jsessionid=4BAB7A60DAAE499DACFED13A3BEA7B0D HTTP/1.1" 200 1177 http-bio-8088-exec-3 41
+0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:54:23 +0400] "GET /resources/images/Background.jpg HTTP/1.1" 200 3745122 http-bio-8088-exec-4 77
+0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:54:26 +0400] "GET /blacklist.jsp HTTP/1.1" 404 977 http-bio-8088-exec-5 3
+0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:55:39 +0400] "GET / HTTP/1.1" 200 1053 http-bio-8088-exec-1 282
+0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:55:40 +0400] "GET /resources/css/LoginStyle.css;jsessionid=3B5F98EDF0C82B408F2FA72A854ACB06 HTTP/1.1" 200 1177 http-bio-8088-exec-3 22
+0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:55:40 +0400] "GET /resources/images/Background.jpg HTTP/1.1" 200 3745122 http-bio-8088-exec-4 71
+0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:55:45 +0400] "GET /blacklist HTTP/1.1" 500 5183 http-bio-8088-exec-5 819
+0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:56:43 +0400] "GET / HTTP/1.1" 200 1053 http-bio-8088-exec-1 231
+0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:56:43 +0400] "GET /resources/css/LoginStyle.css;jsessionid=D3C961C71437B820F69EFC5BD711CF8B HTTP/1.1" 200 1177 http-bio-8088-exec-3 22
+0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:56:43 +0400] "GET /resources/images/Background.jpg HTTP/1.1" 200 3745122 http-bio-8088-exec-4 22
+0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:56:46 +0400] "GET /blacklist HTTP/1.1" 200 512 http-bio-8088-exec-5 767
+0:0:0:0:0:0:0:1 - - [07/Jul/2020:16:56:46 +0400] "GET /resources/css/BlacklistStyle.css HTTP/1.1" 200 - http-bio-8088-exec-6 7
