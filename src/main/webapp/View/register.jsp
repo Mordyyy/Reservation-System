@@ -10,7 +10,7 @@
 </head>
 <body>
 <c:if test="${error != null}">
-    Authentication failed: ${error}
+    Error: ${error}
 </c:if>
 <div class="loginbox">
     <form action = "/register" method = "POST">

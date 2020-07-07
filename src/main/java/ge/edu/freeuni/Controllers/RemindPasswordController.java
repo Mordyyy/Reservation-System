@@ -22,9 +22,21 @@ public class RemindPasswordController {
     }
 
     @PostMapping("/reminder")
-    public ModelAndView register(@RequestParam String email,
+    public ModelAndView remainder(@RequestParam String email,
                                  HttpServletRequest req,
                                  HttpServletResponse resp) throws IOException, MessagingException {
-        return null;
+        ModelAndView modelAndView = new ModelAndView("login");
+        UsersDAO usersDAO = (UsersDAO) req.getServletContext().getAttribute("db");
+        Email mail = (Email) req.getServletContext().getAttribute("email");
+        if(usersDAO.getUserByeMail(email) != null){
+            User user = usersDAO.getUserByeMail(email);
+            mail.sendCode(email,"Your Password",user.getPassword());
+            return modelAndView;
+        }else{
+            modelAndView.setViewName("reminder");
+            modelAndView.addObject("error", "This mail is not registered");
+            return modelAndView;
+        }
+
     }
 }

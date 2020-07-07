@@ -9,14 +9,19 @@
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
 <body>
+<c:if test="${error != null}">
+    Error: ${error}
+</c:if>
 <div class="loginbox">
-    <h1>Forget Password</h1>
-    <div class="textbox">
-        <i class="fa fa-envelope" aria-hidden="true"></i>
-        <input type="text" placeholder="Enter your email" name="emailadress" value="">
-    </div>
-    <a href="/">Main Page</a>
-    <input class="buton" type="button" name="CodeSender" value="Send Password">
+    <form action="/reminder" method="post">
+        <h1>Forget Password</h1>
+        <div class="textbox">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            <input type="text" placeholder="Enter your email" name="email" value="">
+        </div>
+        <a href="/">Main Page</a>
+        <button class="buton" type="submit" name="CodeSender">Send Password</button>
+    </form>
 </div>
 </body>
 </html>
