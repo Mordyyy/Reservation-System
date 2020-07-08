@@ -1,6 +1,7 @@
 package ge.edu.freeuni.Controllers;
 
 import ge.edu.freeuni.DAO.UsersDAO;
+import ge.edu.freeuni.Hash.GenerateHash;
 import ge.edu.freeuni.Models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,7 @@ public class HomepageController {
                                 HttpServletRequest req,
                                 HttpServletResponse resp,
                                 HttpSession ses) throws IOException {
+        GenerateHash hasher = new GenerateHash();
         if(Button.equals("Login")) {
             UsersDAO users = (UsersDAO) req.getServletContext().getAttribute("db");
             User userUsername = users.getUserByUsername(Username);
@@ -45,7 +47,7 @@ public class HomepageController {
                 modelAndView.addObject("Error", "Account Does not exist!");
                 return modelAndView;
             }
-            if (!user.getPassword().equals(Password)) {
+            if (!user.getPassword().equals(hasher.generateHash(Password))) {
                 modelAndView.addObject("Error", "Username or Password incorrect!");
                 return modelAndView;
             }

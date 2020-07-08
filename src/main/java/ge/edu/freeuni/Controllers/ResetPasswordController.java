@@ -1,6 +1,7 @@
 package ge.edu.freeuni.Controllers;
 
 import ge.edu.freeuni.DAO.UsersDAO;
+import ge.edu.freeuni.Hash.GenerateHash;
 import ge.edu.freeuni.Models.Email;
 import ge.edu.freeuni.Models.User;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,7 @@ public class ResetPasswordController {
                                   HttpServletRequest req,
                                   HttpServletResponse resp,
                                   HttpSession ses) throws IOException, MessagingException {
+        GenerateHash hasher = new GenerateHash();
         ModelAndView modelAndView = new ModelAndView("home"); // there should be user page
         UsersDAO usersDAO = (UsersDAO) req.getServletContext().getAttribute("db");
         String userName = ((User)ses.getAttribute("user")).getUsername();
@@ -39,10 +41,10 @@ public class ResetPasswordController {
             modelAndView.setViewName("reset");
             modelAndView.addObject("error", "Dude, Serious?");
             return modelAndView;
-        }else if(oldpassword.equals(user.getPassword()) &&  password1.equals(password2) && password1.length() >= 6){
-            usersDAO.changePassword(userName,password1);
+        }else if(hasher.generateHash(oldpassword).equals(user.getPassword()) &&  password1.equals(password2) && password1.length() >= 6){
+            usersDAO.changePassword(userName,hasher.generateHash(password1));
             return modelAndView;
-        }else if (!oldpassword.equals(user.getPassword())){
+        }else if (!hasher.generateHash(oldpassword).equals(user.getPassword())){
             modelAndView.setViewName("reset");
             modelAndView.addObject("error", "Your current password is not correct");
             return modelAndView;

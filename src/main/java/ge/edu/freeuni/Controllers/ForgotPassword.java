@@ -1,6 +1,7 @@
 package ge.edu.freeuni.Controllers;
 
 import ge.edu.freeuni.DAO.UsersDAO;
+import ge.edu.freeuni.Hash.GenerateHash;
 import ge.edu.freeuni.Models.Email;
 import ge.edu.freeuni.Models.User;
 import org.springframework.stereotype.Controller;
@@ -13,33 +14,38 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Random;
 
 @Controller
-public class RemindPasswordController {
-    @GetMapping("/reminder")
+public class ForgotPassword {
+    @GetMapping("/forgot")
     public String display(){
-        return "reminder";
+        return "forgot";
     }
 
-    @PostMapping("/reminder")
+    @PostMapping("/forgot")
     public ModelAndView remainder(@RequestParam String email,
                                  HttpServletRequest req,
                                  HttpServletResponse resp) throws IOException, MessagingException {
+        GenerateHash hasher = new GenerateHash();
         ModelAndView modelAndView = new ModelAndView("login");
         UsersDAO usersDAO = (UsersDAO) req.getServletContext().getAttribute("db");
         Email mail = (Email) req.getServletContext().getAttribute("email");
+        Random rand = new Random();
+        int randInteger = rand.nextInt(1000000) + 100000;
         if(usersDAO.getUserByeMail(email) != null){
-            User user = usersDAO.getUserByeMail(email);
-            String passwordMessagePref = "Your password is: " + user.getPassword() + "\n";
+            UsersDAO db = (UsersDAO)req.getServletContext().getAttribute("db");
+            String passwordMessagePref = "Your new password is: " + randInteger + "\n";
             String passwordMessageSuf = "Please log in if you want to change password";
             String passwordMessage = passwordMessagePref + passwordMessageSuf;
-            mail.sendCode(email,"Password reminder",passwordMessage);
+            mail.sendCode(email,"New password", passwordMessage);
+            db.changePassword(db.getUserByeMail(email).getUsername(),
+                    hasher.generateHash(Integer.toString(randInteger)));
             return modelAndView;
         }else{
-            modelAndView.setViewName("reminder");
+            modelAndView.setViewName("forgot");
             modelAndView.addObject("error", "This mail is not registered");
             return modelAndView;
         }
-
     }
 }
