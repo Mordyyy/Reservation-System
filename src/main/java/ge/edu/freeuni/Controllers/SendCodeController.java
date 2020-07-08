@@ -1,5 +1,6 @@
 package ge.edu.freeuni.Controllers;
 import ge.edu.freeuni.DAO.UsersDAO;
+import ge.edu.freeuni.Hash.GenerateHash;
 import ge.edu.freeuni.Models.Email;
 import ge.edu.freeuni.Models.User;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ public class SendCodeController {
     public ModelAndView sendCode(@RequestParam String Button,
                                  HttpServletResponse resp,
                                  HttpServletRequest req) throws IOException {
+        GenerateHash hasher = new GenerateHash();
         Email email = (Email) req.getServletContext().getAttribute("email");
         ModelAndView modelAndView = new ModelAndView("submit");
         if (Button.equals("Submit")) {
@@ -48,7 +50,8 @@ public class SendCodeController {
                 mv.addObject("error", "Wrong Mail Address!");
                 return mv;
             }
-            user = new User((String)req.getParameter("Username"), (String)req.getParameter("Password1"),
+            user = new User((String)req.getParameter("Username"),
+                    hasher.generateHash((String)req.getParameter("Password1")),
                     (String)req.getParameter("eMail"), "", 0);
             return modelAndView;
         }
