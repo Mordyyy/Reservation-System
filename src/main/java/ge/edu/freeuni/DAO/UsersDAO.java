@@ -64,11 +64,11 @@ public class UsersDAO {
             st = con.prepareStatement("update users set password = ? where username = ?");
             st.setString(1, newPassword);
             st.setString(2, username);
-            ResultSet res = st.executeQuery();
-            if (!res.next()) {
-                st.close();
-                return false;
-            }
+            st.executeUpdate();
+//            if (!res.next()) {
+//                st.close();
+//                return false;
+//            }
             st.close();
             return true;
         } catch (SQLException throwables) {

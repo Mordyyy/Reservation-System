@@ -12,5 +12,6 @@
 </head>
 <body>
     <h1>Hello <%=((User)session.getAttribute("user")).getUsername()%></h1>
+    <a href = "/reset">Reset Password!</a>
 </body>
 </html>
