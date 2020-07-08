@@ -10,6 +10,25 @@
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
 <body>
+
+    <div class="sendmailbox">
+        <h1>Send Mail</h1>
+        <div class="Trio">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            <input type="email" placeholder="E-mail(s)" name="emailstosend" value="">
+        </div>
+        <div class="Trio">
+            <i class="fa fa-address-book" aria-hidden="true"></i>
+            <input type="text" placeholder="Subject" name="subject" value="">
+        </div>
+        <div class="trio">
+            <div class="textfield">
+                <textarea type="text" placeholder="Text" name="text" value=""></textarea>
+            </div>
+            <button type="submit" class="send">Send</button>
+            <button type="submit" class="send">Send To All</button>
+        </div>
+    </div>
     <div class="blacklist">
         <h1>Blacklist</h1>
         <div class="Trio">
