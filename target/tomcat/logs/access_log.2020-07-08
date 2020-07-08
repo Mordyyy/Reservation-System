@@ -625,3 +625,16 @@
 0:0:0:0:0:0:0:1 - - [08/Jul/2020:03:04:40 +0400] "GET / HTTP/1.1" 200 1047 http-bio-8088-exec-7 8
 0:0:0:0:0:0:0:1 - - [08/Jul/2020:03:04:43 +0400] "GET /reminder HTTP/1.1" 200 663 http-bio-8088-exec-7 0
 0:0:0:0:0:0:0:1 - - [08/Jul/2020:03:04:48 +0400] "GET / HTTP/1.1" 200 1047 http-bio-8088-exec-7 0
+0:0:0:0:0:0:0:1 - - [08/Jul/2020:13:19:56 +0400] "GET / HTTP/1.1" 200 1091 http-bio-8088-exec-1 854
+0:0:0:0:0:0:0:1 - - [08/Jul/2020:13:19:56 +0400] "GET /resources/css/LoginStyle.css;jsessionid=739F3F3B5D94E42A4E4285E775CEEE52 HTTP/1.1" 200 1347 http-bio-8088-exec-3 62
+0:0:0:0:0:0:0:1 - - [08/Jul/2020:13:19:57 +0400] "GET /resources/images/Background.jpg HTTP/1.1" 200 3745122 http-bio-8088-exec-4 69
+0:0:0:0:0:0:0:1 - - [08/Jul/2020:13:20:03 +0400] "POST / HTTP/1.1" 302 - http-bio-8088-exec-5 205
+0:0:0:0:0:0:0:1 - - [08/Jul/2020:13:20:03 +0400] "GET /register HTTP/1.1" 200 1235 http-bio-8088-exec-6 0
+0:0:0:0:0:0:0:1 - - [08/Jul/2020:13:20:03 +0400] "GET /resources/css/RegisterStyle.css HTTP/1.1" 200 1571 http-bio-8088-exec-7 16
+0:0:0:0:0:0:0:1 - - [08/Jul/2020:13:20:31 +0400] "POST /register HTTP/1.1" 200 736 http-bio-8088-exec-8 7488
+0:0:0:0:0:0:0:1 - - [08/Jul/2020:13:20:31 +0400] "GET /resources/css/SubmitStyle.css HTTP/1.1" 200 1484 http-bio-8088-exec-9 16
+0:0:0:0:0:0:0:1 - - [08/Jul/2020:13:20:50 +0400] "POST /sendcode HTTP/1.1" 302 - http-bio-8088-exec-10 16
+0:0:0:0:0:0:0:1 - - [08/Jul/2020:13:20:50 +0400] "GET / HTTP/1.1" 200 1047 http-bio-8088-exec-10 12
+0:0:0:0:0:0:0:1 - - [08/Jul/2020:13:20:50 +0400] "GET /resources/css/LoginStyle.css HTTP/1.1" 200 1347 http-bio-8088-exec-10 0
+0:0:0:0:0:0:0:1 - - [08/Jul/2020:13:21:03 +0400] "POST / HTTP/1.1" 302 - http-bio-8088-exec-10 3
+0:0:0:0:0:0:0:1 - - [08/Jul/2020:13:21:04 +0400] "GET /home HTTP/1.1" 200 109 http-bio-8088-exec-10 47
