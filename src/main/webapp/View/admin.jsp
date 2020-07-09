@@ -49,7 +49,7 @@
     </div>
     </form>
     <div class="logout">
-        <a href="/login">Log Out</a>
+        <a href="">Log Out</a>
     </div>
 </body>
 </html>

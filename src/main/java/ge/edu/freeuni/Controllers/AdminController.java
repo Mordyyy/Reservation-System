@@ -24,9 +24,9 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String render(HttpSession ses) {
-        if (!ses.getAttribute("user").equals("admin")) {
-            return null;
-        }
+        User user = (User)ses.getAttribute("user");
+        if (user == null || !user.getUsername().equals("admin"))
+            return "fail";
         return "admin";
     }
 
