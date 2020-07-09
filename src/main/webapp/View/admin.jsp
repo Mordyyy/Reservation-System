@@ -35,7 +35,8 @@
         <h1>Blacklist</h1>
         <div class="Trio">
             <input type="text" placeholder="Username">
-            <button type="submit" class="unblock">Unblock</button>
+            <button type="submit" class="block" value="unblock">Unblock</button>
+            <button type="submit" class="block" value="block">Block</button>
         </div>
         <nav>
             <ul>
