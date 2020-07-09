@@ -9,6 +9,7 @@
     <spring:url value="/resources/css/AdminStyle.css" var="mainCss" />
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
+<div id="wrapper">
 <body>
 
     <form action="/admin" method="post">
@@ -52,4 +53,5 @@
         <a href="/login">Log Out</a>
     </div>
 </body>
+</div>
 </html>
