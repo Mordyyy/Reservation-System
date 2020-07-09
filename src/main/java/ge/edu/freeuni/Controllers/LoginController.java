@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSessionListener;
 import java.io.IOException;
 
 @Controller
-public class HomepageController {
+public class LoginController {
 
     @GetMapping("")
     public String login(HttpSession ses) {

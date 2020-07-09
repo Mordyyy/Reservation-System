@@ -1,5 +1,6 @@
 package ge.edu.freeuni.Controllers;
 
+import ge.edu.freeuni.DAO.BlacklistDAO;
 import ge.edu.freeuni.DAO.UsersDAO;
 import ge.edu.freeuni.Models.Email;
 import ge.edu.freeuni.Models.User;
@@ -34,10 +35,12 @@ public class AdminController {
                                  @RequestParam String subject,
                                  @RequestParam String text,
                                  @RequestParam String Button,
+                                 @RequestParam String toBlock,
                                  HttpServletRequest req) {
         ModelAndView mv = new ModelAndView("admin");
         Email email = (Email) req.getServletContext().getAttribute("email");
         UsersDAO db = (UsersDAO) req.getServletContext().getAttribute("db");
+        BlacklistDAO blackDB = (BlacklistDAO)req.getServletContext().getAttribute("blacklist");
         if (Button.equals("sendall")) {
             List<User> users = db.getAll();
             for (User user: users) {
@@ -64,6 +67,14 @@ public class AdminController {
                         e.printStackTrace();
                     }
                 }
+            }
+        } else if (Button.equals("block")) {
+            if (!blackDB.getUser(toBlock) && !toBlock.equals("admin")) {
+                blackDB.addUser(toBlock);
+            }
+        } else if (Button.equals("unblock")) {
+            if (blackDB.getUser(toBlock)) {
+                blackDB.removeUser(toBlock);
             }
         }
         return mv;
