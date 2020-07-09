@@ -31,12 +31,17 @@ public class HomepageController {
                                 HttpServletRequest req,
                                 HttpServletResponse resp,
                                 HttpSession ses) throws IOException {
+        ses.setAttribute("user", null);
         GenerateHash hasher = new GenerateHash();
         if(Button.equals("Login")) {
             UsersDAO users = (UsersDAO) req.getServletContext().getAttribute("db");
             User userUsername = users.getUserByUsername(Username);
             User userEmail = users.getUserByeMail(Username);
-            ModelAndView modelAndView = new ModelAndView("login");
+            ModelAndView modelAndView;
+            if (Username.equals("admin"))
+                modelAndView = new ModelAndView("admin");
+            else
+                modelAndView = new ModelAndView("home");
             User user = null;
             if(userUsername != null){
                 user = userUsername;
@@ -45,15 +50,14 @@ public class HomepageController {
             }
             if (user == null) {
                 modelAndView.addObject("Error", "Account Does not exist!");
-                return modelAndView;
+                resp.sendRedirect("");
             }
             if (!user.getPassword().equals(hasher.generateHash(Password))) {
                 modelAndView.addObject("Error", "Username or Password incorrect!");
-                return modelAndView;
+                resp.sendRedirect("");
             }
             //modelAndView.setViewName("home");
             ses.setAttribute("user", user);
-            resp.sendRedirect("/home");
             return modelAndView;
         }else {
             resp.sendRedirect("/register");

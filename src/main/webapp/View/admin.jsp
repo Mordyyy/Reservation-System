@@ -13,21 +13,23 @@
 
     <div class="sendmailbox">
         <h1>Send Mail</h1>
-        <div class="Trio">
-            <i class="fa fa-envelope" aria-hidden="true"></i>
-            <input type="email" placeholder="E-mail(s)" name="emailstosend" value="">
-        </div>
-        <div class="Trio">
-            <i class="fa fa-address-book" aria-hidden="true"></i>
-            <input type="text" placeholder="Subject" name="subject" value="">
-        </div>
-        <div class="trio">
-            <div class="textfield">
-                <textarea type="text" placeholder="Text" name="text" value=""></textarea>
+        <form action="/admin" method="post">
+            <div class="Trio">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <input type="email" placeholder="E-mail(s)" name="emailstosend" value="" multiple>
             </div>
-            <button type="submit" class="send">Send</button>
-            <button type="submit" class="send">Send To All</button>
-        </div>
+            <div class="Trio">
+                <i class="fa fa-address-book" aria-hidden="true"></i>
+                <input type="text" placeholder="Subject" name="subject" value="">
+            </div>
+            <div class="trio">
+                <div class="textfield">
+                    <textarea type="text" placeholder="Text" name="text" value=""></textarea>
+                </div>
+                <button type="submit" class="send" name="Button" value="send">Send</button>
+                <button type="submit" class="send" name="Button" value="sendall">Send To All</button>
+            </div>
+        </form>
     </div>
     <div class="blacklist">
         <h1>Blacklist</h1>
