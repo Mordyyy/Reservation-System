@@ -24,6 +24,9 @@ ul{
     top: -80px;
 }
 nav ul{
+    padding: 6px 8px;
+    border-radius: 20px;
+    border: 2px solid blueviolet;
     height:400px;
     width:100%;
 }
