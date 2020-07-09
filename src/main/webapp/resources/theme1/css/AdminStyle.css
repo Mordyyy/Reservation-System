@@ -30,6 +30,13 @@ ul li{
     transition: .5s;
 }
 
+.logout{
+    /*float: right;*/
+    position: absolute;
+    padding: 0 20px;
+    color: white;
+}
+
 .sendmailbox{
     width: 280px;
     position: sticky;

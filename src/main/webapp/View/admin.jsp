@@ -47,5 +47,8 @@
             </ul>
         </nav>
     </div>
+    <div class="logout">
+        <a href="/login">Log Out</a>
+    </div>
 </body>
 </html>
