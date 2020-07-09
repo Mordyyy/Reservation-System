@@ -49,12 +49,15 @@ public class LoginController {
                 user = userEmail;
             }
             if (user == null) {
+                System.out.println("useri nali");
                 modelAndView.addObject("Error", "Account Does not exist!");
-                resp.sendRedirect("");
+                modelAndView.setViewName("login");
+                return modelAndView;
             }
             if (!user.getPassword().equals(hasher.generateHash(Password))) {
                 modelAndView.addObject("Error", "Username or Password incorrect!");
-                resp.sendRedirect("");
+                modelAndView.setViewName("login");
+                return modelAndView;
             }
             //modelAndView.setViewName("home");
             ses.setAttribute("user", user);
