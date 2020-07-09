@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Random;
 
 @Controller
-public class ForgotPassword {
+public class ForgotPasswordController {
     @GetMapping("/forgot")
     public String display(){
         return "forgot";
