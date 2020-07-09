@@ -11,9 +11,9 @@
 </head>
 <body>
 
+    <form action="/admin" method="post">
     <div class="sendmailbox">
         <h1>Send Mail</h1>
-        <form action="/admin" method="post">
             <div class="Trio">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 <input type="email" placeholder="E-mail(s)" name="emailstosend" value="" multiple>
@@ -29,15 +29,14 @@
                 <button type="submit" class="send" name="Button" value="send">Send</button>
                 <button type="submit" class="send" name="Button" value="sendall">Send To All</button>
             </div>
-        </form>
     </div>
     <div class="blacklist">
         <h1>Blacklist</h1>
-        <div class="Trio">
-            <input type="text" placeholder="Username">
-            <button type="submit" class="block" value="unblock">Unblock</button>
-            <button type="submit" class="block" value="block">Block</button>
-        </div>
+            <div class="Trio">
+                <input type="text" placeholder="Username" name="toBlock">
+                <button type="submit" class="block" name="Button" value="unblock">Unblock</button>
+                <button type="submit" class="block" name="Button" value="block">Block</button>
+            </div>
         <nav>
             <ul>
                 <% BlacklistDAO dao = (BlacklistDAO)request.getServletContext().getAttribute("blacklist");
@@ -48,6 +47,7 @@
             </ul>
         </nav>
     </div>
+    </form>
     <div class="logout">
         <a href="/login">Log Out</a>
     </div>
