@@ -111,7 +111,7 @@ textarea{
     text-align: center;
 }
 
-.unblock{
+.block{
     width: 100%;
     background: blueviolet;
     border: 3px solid blueviolet;
