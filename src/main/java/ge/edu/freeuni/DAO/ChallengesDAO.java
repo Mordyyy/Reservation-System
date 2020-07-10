@@ -19,6 +19,25 @@ public class ChallengesDAO {
         }
     }
 
+    public Challenge getChallenge(int id) {
+        PreparedStatement st;
+        try {
+            st = con.prepareStatement("select * from challenges where id = ?");
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (!rs.next()) {
+                st.close();
+                return null;
+            }
+            Challenge toRet = new Challenge(rs.getInt("id"), rs.getString("fromUser"),
+                    rs.getString("toUSer"), rs.getInt("meeting_time"), rs.getInt("computerID"));
+            return toRet;
+        } catch (SQLException throwables) {
+            return null;
+        }
+
+    }
+
     public boolean addChallenge(Challenge challenge) {
         PreparedStatement st = null;
         try {
@@ -37,7 +56,20 @@ public class ChallengesDAO {
         return false;
     }
 
-    public boolean deleteChallenge(Challenge chall){
+    public boolean deleteChallenge(int id) {
+        PreparedStatement st;
+        try {
+            st = con.prepareStatement("Delete from challenges where id = ?");
+            st.setInt(1, id);
+            int res = st.executeUpdate();
+            return res == 1;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteChallenge(Challenge chall) {
         PreparedStatement st;
         try {
             st = con.prepareStatement("Delete from challenges where fromUSer = ? and toUser = ?" +
@@ -54,8 +86,8 @@ public class ChallengesDAO {
         return false;
     }
 
-    public boolean removeChallengesByChallenge(Challenge chall){
-       return removeAllForFromUser(chall) && removeAllForToUser(chall) && removeAllForComputerTime(chall);
+    public boolean removeChallengesByChallenge(Challenge chall) {
+        return removeAllForFromUser(chall) && removeAllForToUser(chall) && removeAllForComputerTime(chall);
     }
 
     private boolean removeAllForComputerTime(Challenge chall) {
@@ -119,11 +151,11 @@ public class ChallengesDAO {
                 return lst;
             }
             List<Challenge> challenges = new ArrayList<>();
-            Challenge chall = new Challenge(res.getString("fromUser"), res.getString("toUser"),
+            Challenge chall = new Challenge(res.getInt("id"), res.getString("fromUser"), res.getString("toUser"),
                     res.getInt("meeting_time"), res.getInt("computerID"));
             challenges.add(chall);
             while (res.next()) {
-                chall = new Challenge(res.getString("fromUser"), res.getString("toUser"),
+                chall = new Challenge(res.getInt("id"),res.getString("fromUser"), res.getString("toUser"),
                         res.getInt("meeting_time"), res.getInt("computerID"));
                 challenges.add(chall);
             }
@@ -147,11 +179,11 @@ public class ChallengesDAO {
                 return lst;
             }
             List<Challenge> challenges = new ArrayList<>();
-            Challenge chall = new Challenge(res.getString("fromUser"), res.getString("toUser"),
+            Challenge chall = new Challenge(res.getInt("id"), res.getString("fromUser"), res.getString("toUser"),
                     res.getInt("meeting_time"), res.getInt("computerID"));
             challenges.add(chall);
             while (res.next()) {
-                chall = new Challenge(res.getString("fromUser"), res.getString("toUser"),
+                chall = new Challenge(res.getInt("id"),res.getString("fromUser"), res.getString("toUser"),
                         res.getInt("meeting_time"), res.getInt("computerID"));
                 challenges.add(chall);
             }
@@ -164,7 +196,7 @@ public class ChallengesDAO {
     }
 
     public List<Challenge> getAllReceived(String toUser) {
-        PreparedStatement st = null;
+        PreparedStatement st;
         List<Challenge> lst = new ArrayList<>();
         try {
             st = con.prepareStatement("Select * from challenges where toUser = ?");
@@ -175,11 +207,11 @@ public class ChallengesDAO {
                 return lst;
             }
             List<Challenge> challenges = new ArrayList<>();
-            Challenge chall = new Challenge(res.getString("fromUser"), res.getString("toUser"),
-                        res.getInt("meeting_time"), res.getInt("computerID"));
+            Challenge chall = new Challenge(res.getInt("id"),res.getString("fromUser"), res.getString("toUser"),
+                    res.getInt("meeting_time"), res.getInt("computerID"));
             challenges.add(chall);
             while (res.next()) {
-                chall = new Challenge(res.getString("fromUser"), res.getString("toUser"),
+                chall = new Challenge(res.getInt("id"),res.getString("fromUser"), res.getString("toUser"),
                         res.getInt("meeting_time"), res.getInt("computerID"));
                 challenges.add(chall);
             }
