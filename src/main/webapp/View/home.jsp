@@ -1,4 +1,6 @@
-<%@ page import="ge.edu.freeuni.Models.User" %><%--
+<%@ page import="ge.edu.freeuni.Models.User" %>
+<%@ page import="ge.edu.freeuni.DAO.UsersDAO" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 7/7/2020
@@ -14,24 +16,19 @@
     <img src = "../resources/theme1/images/lock.png" width = "150" height="150"/>
     <h1>Hello <%=((User)session.getAttribute("user")).getUsername()%></h1>
     <a href="">Received Challenges</a>
-    <form>
+    <form action="/home" method="post">
         <select name = "avatar">
-            <option value="1" selected>"unknown"</option>
-            <option value="2">"unknown"</option>
-            <option value="3">"unknown"</option>
-            <option value="4">"unknown"</option>
-            <option value="5">"unknown"</option>
-            <option value="6">"unknown"</option>
-            <option value="7">"unknown"</option>
-            <option value="8">"unknown"</option>
-            <option value="9">"unknown"</option>
-            <option value="10">"unknown"</option>
-            <option value="11">"unknown"</option>
+            <% UsersDAO db = (UsersDAO)request.getServletContext().getAttribute("db");
+               List<User> users = db.getAll();
+               for (int i = 0; i < users.size(); i++) {
+                   String curUser = users.get(i).getUsername();
+                   if (curUser.equals("admin"))
+                       continue;%>
+                   <option value="<%=i%>"><%=curUser%></option>
+                <%}%>
         </select>
         <button type="submit" name = "Button" value = "Change avatar">Change Avatar</button>
-    </form>
     <a href = "/reset">Reset Password!</a> <br>
-    <form>
         <select name = "time">
             <option value="10" selected>10:00 - 11:00</option>
             <option value="11">11:00 - 12:00</option>
