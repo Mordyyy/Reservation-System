@@ -1,0 +1,29 @@
+@import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+
+#wrapper {
+    margin-left:auto;
+    margin-right:auto;
+    width:1920px;
+}
+
+body{
+    width: inherit;
+    overflow: hidden;
+    position: relative;
+    padding:0 0 0 0;
+    font-family: sans-serif;
+    background: url(../images/Background.jpg) repeat-x;
+    background-size: cover;
+}
+
+.timetable{
+    width: 52%;
+    position: absolute;
+    top: 10%;
+    right: 21%;
+    color: white;
+}
+
+th {
+    height: 30px;
+}

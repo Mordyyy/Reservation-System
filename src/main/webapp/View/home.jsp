@@ -3,6 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="ge.edu.freeuni.DAO.ImageDAO" %>
 <%@ page import="ge.edu.freeuni.Models.Image" %>
+<%@ page import="ge.edu.freeuni.Models.Cell" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -55,6 +56,31 @@
     <div class="hrefs">
         <a href = "/reset">Reset Password!</a><br>
         <a href="/">Log Out</a>
+    </div>
+    <div class="timetable">
+        <table class="table table-stripped table-bordered">
+            <% Cell[][] table = (Cell[][]) request.getSession().getAttribute("table");
+                for (int i = 0; i < table.length; i++) {%>
+            <tr style="background-color: blueviolet; color: white">
+                <%
+                    for (int j = 0; j < table[i].length; j++) {
+                        if (i == 0 && j == 0) {%>
+                <th>Time</th>
+                <%}
+                else if (i == 0) {%>
+                <th>Comp<%=j - 1%>
+                </th>
+                <%} else if (j == 0) {%>
+                <th style="background-color: blueviolet">1<%=i - 1%>:00-1<%=i %>:00</th>
+                <%} else {%>
+                <th id="c<%=i + Integer.toString(j - 1)%>" style="background-color: <%=table[i][j].getColor()%>">
+                    <%=table[i][j].getText()%>
+                </th>
+                <%}%>
+                <%}%>
+            </tr>
+            <%}%>
+        </table>
     </div>
 </body>
 </html>
