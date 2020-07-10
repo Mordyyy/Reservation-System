@@ -15,7 +15,7 @@
 <body>
     <img src = "../resources/theme1/images/pic.jpg" width = "150" height="150"/>
     <h1>Hello <%=((User)session.getAttribute("user")).getUsername()%></h1>
-    <a href="">Received Challenges</a>
+    <a href="/recChallenges">Received Challenges</a>
     <form action="/home" method="post">
         <select name = "avatar">
             <% ImageDAO db = (ImageDAO) request.getServletContext().getAttribute("images");

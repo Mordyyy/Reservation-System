@@ -18,6 +18,7 @@ create table blacklist(
 );
 
 create table challenges(
+	id int unique auto_increment,
 	fromUser varchar(60) ,
     toUser varchar(60),
     meeting_time int,
