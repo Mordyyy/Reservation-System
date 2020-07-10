@@ -221,8 +221,9 @@
         </nav>
     </div>
     </form>
-    <div class="logout">
-        <a href="">Log Out</a>
+    <div class="hrefs">
+        <a href = "/reset">Reset Password!</a> <br>
+        <a href="/">Log Out</a>
     </div>
 </body>
 </div>

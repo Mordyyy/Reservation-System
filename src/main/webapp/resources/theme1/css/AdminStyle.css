@@ -41,7 +41,7 @@ ul li{
     transition: .5s;
 }
 
-.logout{
+.hrefs{
     /*float: right;*/
     position: absolute;
     padding: 0 20px;
@@ -154,7 +154,7 @@ textarea{
     margin: 12px 12px;
 }
 
-.logout{
+.hrefs{
     /*float: right;*/
     position: absolute;
     padding: 0 20px;

@@ -24,7 +24,7 @@
             <i class="fa fa-lock" aria-hidden="true"></i>
             <input type="password" placeholder="Re-enter Password" name="password2" value="">
         </div>
-        <a href="/">Go Back</a>      <%-- instead of / there should be /user--%>
+        <a href="/home">Go Back</a>      <%-- instead of / there should be /user--%>
         <button class="buton" type="submit">Reset Password</button>
         <c:if test="${error != null}">
             <div class="errorico">
