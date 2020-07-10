@@ -11,8 +11,25 @@
     <title>Home Page</title>
 </head>
 <body>
-    <img src = "" width = "150" height="150"/>
+    <img src = "../resources/theme1/images/lock.png" width = "150" height="150"/>
     <h1>Hello <%=((User)session.getAttribute("user")).getUsername()%></h1>
+    <a href="">Received Challenges</a>
+    <form>
+        <select name = "avatar">
+            <option value="1" selected>"unknown"</option>
+            <option value="2">"unknown"</option>
+            <option value="3">"unknown"</option>
+            <option value="4">"unknown"</option>
+            <option value="5">"unknown"</option>
+            <option value="6">"unknown"</option>
+            <option value="7">"unknown"</option>
+            <option value="8">"unknown"</option>
+            <option value="9">"unknown"</option>
+            <option value="10">"unknown"</option>
+            <option value="11">"unknown"</option>
+        </select>
+        <button type="submit" name = "Button" value = "Change avatar">Change Avatar</button>
+    </form>
     <a href = "/reset">Reset Password!</a> <br>
     <form>
         <select name = "time">
