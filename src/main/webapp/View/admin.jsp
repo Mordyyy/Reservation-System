@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Blacklist</title>
+    <title>Admin</title>
     <spring:url value="/resources/css/AdminStyle.css" var="mainCss" />
     <link type="text/css" rel="stylesheet" href="${mainCss}">
 </head>
