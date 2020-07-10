@@ -1,6 +1,8 @@
 <%@ page import="ge.edu.freeuni.Models.User" %>
 <%@ page import="ge.edu.freeuni.DAO.UsersDAO" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="ge.edu.freeuni.DAO.ImageDAO" %>
+<%@ page import="ge.edu.freeuni.Models.Image" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 7/7/2020
@@ -18,13 +20,11 @@
     <a href="">Received Challenges</a>
     <form action="/home" method="post">
         <select name = "avatar">
-            <% UsersDAO db = (UsersDAO)request.getServletContext().getAttribute("db");
-               List<User> users = db.getAll();
-               for (int i = 0; i < users.size(); i++) {
-                   String curUser = users.get(i).getUsername();
-                   if (curUser.equals("admin"))
-                       continue;%>
-                   <option value="<%=i%>"><%=curUser%></option>
+            <% ImageDAO db = (ImageDAO) request.getServletContext().getAttribute("images");
+               List<Image> images = db.getAll();
+               for (int i = 0; i < images.size(); i++) {
+                   String curImage = images.get(i).getName();%>
+                   <option value="<%=i%>"><%=curImage%></option>
                 <%}%>
         </select>
         <button type="submit" name = "Button" value = "Change avatar">Change Avatar</button>

@@ -2,6 +2,7 @@ package ge.edu.freeuni.Listeners;
 
 import ge.edu.freeuni.DAO.BlacklistDAO;
 import ge.edu.freeuni.DAO.ChallengesDAO;
+import ge.edu.freeuni.DAO.ImageDAO;
 import ge.edu.freeuni.DAO.UsersDAO;
 import ge.edu.freeuni.Models.Email;
 
@@ -20,13 +21,13 @@ public class ContextListener implements ServletContextListener {
         UsersDAO db = new UsersDAO(url + database, user_name, password);
         BlacklistDAO blacklist = new BlacklistDAO(url + database, user_name, password);
         Email mail = new Email();
-
         ChallengesDAO challenges = new ChallengesDAO(url + database, user_name, password);
-
+        ImageDAO images = new ImageDAO(url + database, user_name, password);
         sc.setAttribute("challenges", challenges);
         sc.setAttribute("email", mail);
         sc.setAttribute("db", db);
         sc.setAttribute("blacklist", blacklist);
+        sc.setAttribute("images", images);
     }
 
     @Override

@@ -3,6 +3,7 @@ use Reservation;
 drop table if exists users;
 drop table if exists blacklist;
 drop table if exists challenges;
+drop table if exists images;
 
 create table users (
 	username varchar(60) primary key,
@@ -21,4 +22,9 @@ create table challenges(
     toUser varchar(60),
     meeting_time int,
     computerID int
+);
+
+create table images(
+	url varchar(60) primary key,
+    name varchar(60)
 );
