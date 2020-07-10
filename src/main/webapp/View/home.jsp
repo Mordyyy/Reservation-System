@@ -2,20 +2,17 @@
 <%@ page import="ge.edu.freeuni.DAO.UsersDAO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ge.edu.freeuni.DAO.ImageDAO" %>
-<%@ page import="ge.edu.freeuni.Models.Image" %><%--
-  Created by IntelliJ IDEA.
-  User: user
-  Date: 7/7/2020
-  Time: 2:05 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="ge.edu.freeuni.Models.Image" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <spring:url value="/resources/css/HomeStyle.css" var="mainCss" />
+    <link type="text/css" rel="stylesheet" href="${mainCss}">
     <title>Home Page</title>
 </head>
 <body>
-    <img src = "../resources/theme1/images/lock.png" width = "150" height="150"/>
+    <img src = "../resources/theme1/images/pic.jpg" width = "150" height="150"/>
     <h1>Hello <%=((User)session.getAttribute("user")).getUsername()%></h1>
     <a href="">Received Challenges</a>
     <form action="/home" method="post">
@@ -28,7 +25,6 @@
                 <%}%>
         </select>
         <button type="submit" name = "Button" value = "Change avatar">Change Avatar</button>
-    <a href = "/reset">Reset Password!</a> <br>
         <select name = "time">
             <option value="10" selected>10:00 - 11:00</option>
             <option value="11">11:00 - 12:00</option>
@@ -56,7 +52,8 @@
         </select>
         <button type="submit" name = "Button" value = "reserve">Reserve a seat</button>
     </form>
-    <div class="logout">
+    <div class="hrefs">
+        <a href = "/reset">Reset Password!</a><br>
         <a href="/">Log Out</a>
     </div>
 </body>
