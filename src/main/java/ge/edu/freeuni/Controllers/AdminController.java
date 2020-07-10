@@ -45,6 +45,8 @@ public class AdminController {
             List<User> users = db.getAll();
             for (User user: users) {
                 try {
+                    if (user.getUsername().equals("admin"))
+                        continue;
                     email.sendCode(user.getMail(), subject, text);
                 } catch (MessagingException e) {
                     e.printStackTrace();
@@ -54,11 +56,11 @@ public class AdminController {
         else if (Button.equals("send")) {
             StringTokenizer tokenizer = new StringTokenizer(emailstosend, " ,");
             while (tokenizer.hasMoreElements()) {
-                String mail = tokenizer.nextToken();
-                User user = db.getUserByeMail(mail);
+                String username = tokenizer.nextToken();
+                User user = db.getUserByUsername(username);
                 Set<String> st = new HashSet<>();
-                if (user != null) {
-                    st.add(mail);
+                if (user != null && !user.getUsername().equals("admin")) {
+                    st.add(user.getMail());
                 }
                 for (String curMail: st) {
                     try {

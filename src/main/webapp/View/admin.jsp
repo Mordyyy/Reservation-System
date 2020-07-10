@@ -17,7 +17,7 @@
             <h1>Send Mail</h1>
             <div class="Trio">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
-                <input type="email" placeholder="E-mail(s)" name="emailstosend" value="" multiple>
+                <input type="text" placeholder="E-mail(s)" name="emailstosend" value="" multiple>
             </div>
             <div class="Trio">
                 <i class="fa fa-address-book" aria-hidden="true"></i>
