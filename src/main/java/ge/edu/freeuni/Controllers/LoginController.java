@@ -38,10 +38,13 @@ public class LoginController {
             User userUsername = users.getUserByUsername(Username);
             User userEmail = users.getUserByeMail(Username);
             ModelAndView modelAndView;
+            String url = "/admin";
             if (Username.equals("admin"))
                 modelAndView = new ModelAndView("admin");
-            else
+            else{
+                url = "/home";
                 modelAndView = new ModelAndView("home");
+            }
             User user = null;
             if(userUsername != null){
                 user = userUsername;
@@ -49,7 +52,6 @@ public class LoginController {
                 user = userEmail;
             }
             if (user == null) {
-                System.out.println("useri nali");
                 modelAndView.addObject("Error", "Account Does not exist!");
                 modelAndView.setViewName("login");
                 return modelAndView;
@@ -61,6 +63,7 @@ public class LoginController {
             }
             //modelAndView.setViewName("home");
             ses.setAttribute("user", user);
+            resp.sendRedirect(url);
             return modelAndView;
         }else {
             resp.sendRedirect("/register");

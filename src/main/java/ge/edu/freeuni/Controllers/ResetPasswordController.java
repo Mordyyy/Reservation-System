@@ -32,17 +32,23 @@ public class ResetPasswordController {
                                   HttpServletResponse resp,
                                   HttpSession ses) throws IOException, MessagingException {
         GenerateHash hasher = new GenerateHash();
+        String url = "/home";
+        User user = (User)ses.getAttribute("user");
         ModelAndView modelAndView = new ModelAndView("home"); // there should be user page
+        if (user.getUsername().equals("admin")) {
+            url = "/admin";
+            modelAndView.setViewName("admin");
+        }
         UsersDAO usersDAO = (UsersDAO) req.getServletContext().getAttribute("db");
-        String userName = ((User)ses.getAttribute("user")).getUsername();
         Email mail = (Email) req.getServletContext().getAttribute("email");
-        User user = usersDAO.getUserByUsername(userName);
+        String userName = user.getUsername();
         if(oldpassword.equals(password1)){
             modelAndView.setViewName("reset");
             modelAndView.addObject("error", "Dude, Serious?");
             return modelAndView;
         }else if(hasher.generateHash(oldpassword).equals(user.getPassword()) &&  password1.equals(password2) && password1.length() >= 6){
             usersDAO.changePassword(userName,hasher.generateHash(password1));
+            resp.sendRedirect(url);
             return modelAndView;
         }else if (!hasher.generateHash(oldpassword).equals(user.getPassword())){
             modelAndView.setViewName("reset");
