@@ -4,11 +4,13 @@ import ge.edu.freeuni.DAO.BlacklistDAO;
 import ge.edu.freeuni.DAO.ChallengesDAO;
 import ge.edu.freeuni.DAO.ImageDAO;
 import ge.edu.freeuni.DAO.UsersDAO;
+import ge.edu.freeuni.Models.Cell;
 import ge.edu.freeuni.Models.Email;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import java.awt.*;
 
 public class ContextListener implements ServletContextListener {
 
