@@ -13,20 +13,28 @@
     <title>Home Page</title>
 </head>
 <body>
-    <img src = "../resources/theme1/images/pic.jpg" width = "150" height="150"/>
-    <h1>Hello <%=((User)session.getAttribute("user")).getUsername()%></h1>
-    <a href="/recChallenges">Received Challenges</a>
-    <form action="/home" method="post">
-        <select name = "avatar">
+    <div class="info">
+        <h1 class="nameval">Hello <%=((User)session.getAttribute("user")).getUsername()%></h1>
+        <a href="/recChallenges">Received Challenges</a><br><br>
+        <div class="hrefs">
+            <a href = "/reset">Reset Password!</a><br>
+        </div><br>
+        <a href="/">Log Out</a>
+
+    </div>
+        <form action="/home" method="post">
+        <div class="changeavatar">
+            <select name = "avatar">
             <% ImageDAO db = (ImageDAO) request.getServletContext().getAttribute("images");
                List<Image> images = db.getAll();
                for (int i = 0; i < images.size(); i++) {
                    String curImage = images.get(i).getName();%>
                    <option value="<%=i%>"><%=curImage%></option>
                 <%}%>
-        </select>
-        <button type="submit" name = "Button" value = "Change avatar">Change Avatar</button>
-        <select name = "time">
+            </select>
+            <button type="submit" name = "Button" value = "Change avatar">Change Avatar</button>
+        </div>
+            <select name = "time">
             <option value="10" selected>10:00 - 11:00</option>
             <option value="11">11:00 - 12:00</option>
             <option value="12">12:00 - 13:00</option>
@@ -53,10 +61,6 @@
         </select>
         <button type="submit" name = "Button" value = "reserve">Reserve a seat</button>
     </form>
-    <div class="hrefs">
-        <a href = "/reset">Reset Password!</a><br>
-        <a href="/">Log Out</a>
-    </div>
     <div class="timetable">
         <table class="table table-stripped table-bordered">
             <% Cell[][] table = (Cell[][]) request.getSession().getAttribute("table");

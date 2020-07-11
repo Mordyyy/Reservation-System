@@ -19,11 +19,32 @@ body{
 .timetable{
     width: 52%;
     position: absolute;
-    top: 10%;
-    right: 21%;
+    top: 0%;
+    right: 0%;
     color: white;
 }
 
 th {
     height: 30px;
+}
+
+.info{
+    background: url("../images/pic.jpg") no-repeat;
+    background-size: 200px 200px;
+    width: 700px;
+    height: 250px;
+}
+
+.info h1, a{
+    padding: 0 250px;
+}
+
+
+.nameval{
+    color: darkorange;
+    font-size: 25px;
+}
+
+.submit{
+    background-color: blueviolet;
 }
