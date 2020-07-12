@@ -69,6 +69,10 @@ public class HomeController {
                     table[i][j].setText("Taken");
                 }
                 else {
+                    if (WannaChallenge == null) {
+                        mv.addObject("error", "None of the checkboxes checked!");
+                        return mv;
+                    }
                     table[i][j].setColor("yellow");
                     table[i][j].setText("Waiting");
                 }
