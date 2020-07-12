@@ -172,3 +172,16 @@ textarea{
 th {
     height: 30px;
 }
+
+.errorico{
+    position: absolute;
+    left: 48%;
+    color: red;
+}
+
+.eror{
+    position:  center;
+    text-align: center;
+    color: red;
+    left: 48%;
+}

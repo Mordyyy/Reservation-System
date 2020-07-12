@@ -1,7 +1,10 @@
 package ge.edu.freeuni.Controllers;
 
 import ge.edu.freeuni.DAO.BlacklistDAO;
+import ge.edu.freeuni.DAO.ChallengesDAO;
 import ge.edu.freeuni.DAO.UsersDAO;
+import ge.edu.freeuni.Models.Cell;
+import ge.edu.freeuni.Models.Challenge;
 import ge.edu.freeuni.Models.Email;
 import ge.edu.freeuni.Models.User;
 import org.springframework.stereotype.Controller;
@@ -31,11 +34,13 @@ public class AdminController {
     }
 
     @PostMapping("/admin")
-    public ModelAndView sendMail(@RequestParam String emailstosend,
+    public ModelAndView adminActions(@RequestParam String emailstosend,
                                  @RequestParam String subject,
                                  @RequestParam String text,
                                  @RequestParam String Button,
                                  @RequestParam String toBlock,
+                                 @RequestParam String time,
+                                 @RequestParam String computer,
                                  HttpServletRequest req) {
         ModelAndView mv = new ModelAndView("admin");
         Email email = (Email) req.getServletContext().getAttribute("email");
@@ -77,6 +82,22 @@ public class AdminController {
         } else if (Button.equals("unblock")) {
             if (blackDB.getUser(toBlock)) {
                 blackDB.removeUser(toBlock);
+            }
+        } else if (Button.equals("reserve")) {
+            Cell[][] table = (Cell[][]) req.getSession().getAttribute("table");
+            int curTime = Integer.parseInt(time.substring(0, 2));
+            int compIndx = Integer.parseInt(computer.substring(computer.length() - 1));
+            int i = curTime - 9;
+            int j = compIndx + 1;
+            if (!table[i][j].getColor().equals("red")) {
+                table[i][j].setColor("red");
+                table[i][j].setText("Taken");
+                ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
+                Challenge challenge = new Challenge(0, "", "", curTime, compIndx);
+                challengesDAO.removeAllForComputerTime(challenge);
+            }
+            else {
+                mv.addObject("error", "Already taken!");
             }
         }
         return mv;
