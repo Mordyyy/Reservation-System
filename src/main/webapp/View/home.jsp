@@ -10,10 +10,15 @@
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <html>
 <head>
-    <spring:url value="/resources/css/HomeStyle.css" var="mainCss" />
-    <link type="text/css" rel="stylesheet" href="${mainCss}">
+    <spring:url value="/resources/css/HomeStyle.css" var="bla" />
+    <link type="text/css" rel="stylesheet" href="${bla}">
     <title>Home Page</title>
 </head>
+<%--<style>--%>
+<%--    #bla{--%>
+<%--        font-family: Apple Chancery, cursive;--%>
+<%--    }--%>
+<%--</style>--%>
 <form action="/home" method="post">
     <body>
     <% UsersDAO usersDAO = (UsersDAO)request.getServletContext().getAttribute("db");
@@ -28,9 +33,10 @@
         <a href = "/reset">Reset Password!</a><br><br>
         <a href="/">Log Out</a>
 
-    </div><br>
-    <div class="changeavatar">
-        <select name = "avatar">
+    </div> <br>
+        <div class="changeavatar">
+            <select name = "avatar" id = "cars">
+                <option value="" selected disabled hidden> -- Select Avatar --</option>
             <% ImageDAO db = (ImageDAO) request.getServletContext().getAttribute("images");
                 List<Image> images = db.getAll();
                 for (int i = 0; i < images.size(); i++) {

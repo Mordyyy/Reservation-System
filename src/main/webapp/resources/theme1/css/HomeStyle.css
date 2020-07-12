@@ -11,7 +11,6 @@ body{
     overflow: hidden;
     position: relative;
     padding:0 0 0 0;
-    font-family: sans-serif;
     background: url(../images/Background.jpg) repeat-x;
     background-size: cover;
 }
@@ -24,8 +23,10 @@ body{
     color: white;
 }
 
-th {
+.timetable th {
     height: 30px;
+    font-family: "Marker Felt",fantasy;
+
 }
 
 .info{
@@ -33,7 +34,9 @@ th {
     padding: 0 230px;
 }
 
+
 .info a{
+    font-family: "Arial Narrow", sans-serif;
     font-size: 16px;
     color: deepskyblue;
 }
@@ -42,6 +45,7 @@ th {
     color: darkorange;
     float: left;
     font-size: 30px;
+    font-family: "American Typewriter", serif;
     border-bottom: 5px solid blueviolet;
     /*padding: 13px 0*/
 }
@@ -80,14 +84,32 @@ th {
 }
 
 .changeavatar select{
-    width: 10%;
+    width: 12%;
     background: none;
     border: 2px solid blueviolet;
     border-bottom: none;
     color: white;
     padding: 5px;
     font-size: 15px;
+    font-family: Georgia, serif;
     cursor: pointer;
     margin: 12px 12px;
     border-radius: 15px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
 }
+
+/*.changeavatar select option{*/
+/*    background-color: yellow;*/
+/*    font-family: fantasy;*/
+/*}*/
+
+
+
+
+/*!*#cars {*!*/
+/*!*    background-color: yellow !important;*!*/
+/*!*}*!*/
