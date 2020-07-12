@@ -60,7 +60,6 @@ public class RegisterController {
             modelAndView.addObject("error", "Account with email: " + eMail + " Already exists!");
             return modelAndView;
         }
-        System.out.println("success in FIELDS!!");
         RequestDispatcher dispatcher = req.getRequestDispatcher("/sendcode");
         dispatcher.forward(req, resp);
 

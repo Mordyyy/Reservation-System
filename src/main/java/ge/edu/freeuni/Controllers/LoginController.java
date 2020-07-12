@@ -64,10 +64,10 @@ public class LoginController {
             }
             //modelAndView.setViewName("home");
             ses.setAttribute("user", user);
-            resp.sendRedirect(url);
+            //resp.sendRedirect(url);
             return modelAndView;
         }else {
-            resp.sendRedirect("/register");
+           // resp.sendRedirect("/register");
             return new ModelAndView("register");
         }
     }

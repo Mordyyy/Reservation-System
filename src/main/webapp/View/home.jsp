@@ -20,7 +20,8 @@
         User curUser = (User)session.getAttribute("user");
         String imgfile = curUser.getAvatar();
     %>
-    <img style="float: left" width="200px" height="200px" src="<spring:url value="/resources/images/<%=imgfile%>"/>"/>
+    <img style="float: left" width="200px" height="200px"
+         src="<spring:url value="/resources/images/<%=imgfile%>.jpg"/>"/>
     <div class="info">
         <h1 class="nameval">Hello <%=((User)session.getAttribute("user")).getUsername()%></h1><br><br><br><br><br>
         <a href="/recChallenges">Received Challenges</a><br><br>

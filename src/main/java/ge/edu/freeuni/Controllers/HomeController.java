@@ -29,8 +29,7 @@ public class HomeController {
     }
 
     @PostMapping("/home")
-    public ModelAndView actions(ModelMap modelMap,
-                                @RequestParam String Button,
+    public ModelAndView actions(@RequestParam String Button,
                                 @RequestParam String time,
                                 @RequestParam String computer,
                                 @RequestParam String avatar,
@@ -42,13 +41,14 @@ public class HomeController {
         ModelAndView mv = new ModelAndView("home");
         ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
         BlacklistDAO blacklistDAO = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
+        UsersDAO usersDAO = (UsersDAO)  req.getServletContext().getAttribute("db");
+        User curUser = (User)ses.getAttribute("user");
         if (Button.equals("reserve")) {
             Cell[][] table = (Cell[][]) req.getSession().getAttribute("table");
             int curTime = Integer.parseInt(time.substring(0, 2));
             int compIndx = Integer.parseInt(computer.substring(computer.length() - 1));
             int i = curTime - 9;
             int j = compIndx + 1;
-            User curUser = (User)ses.getAttribute("user");
             if (blacklistDAO.getUser(curUser.getUsername())) {
                 mv.addObject("error", "You are in a blacklist, you can't reserve!");
                 return mv;
@@ -84,7 +84,8 @@ public class HomeController {
             }
         }
         else if (Button.equals("Change avatar")) {
-            mv.addObject("avatar", avatar);
+            curUser.setAvatar(avatar);
+            usersDAO.changeAvatar(curUser);
         }
         return mv;
     }

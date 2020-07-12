@@ -35,7 +35,7 @@ public class SendCodeController {
             String Code = (String)req.getParameter("Code");
             int sentCode = email.getUsersCode(user.getMail());
             if (Integer.parseInt(Code) == sentCode) {
-                user.setAvatar("noimage.jpg");
+                user.setAvatar("noimage");
                 ((UsersDAO)req.getServletContext().getAttribute("db")).addUser(user);
                 resp.sendRedirect("");
             } else {

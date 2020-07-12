@@ -77,6 +77,19 @@ public class UsersDAO {
         return false;
     }
 
+    public void changeAvatar(User user) {
+        PreparedStatement st = null;
+        try {
+            st = con.prepareStatement("update users set avatar = ? where username = ?");
+            st.setString(1, user.getAvatar());
+            st.setString(2, user.getUsername());
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     public User getUserByeMail(String eMail) {
         PreparedStatement st = null;
         try {
