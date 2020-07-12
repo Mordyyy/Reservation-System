@@ -10,12 +10,17 @@
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <html>
 <head>
-    <spring:url value="/resources/css/HomeStyle.css" var="mainCss" />
-    <link type="text/css" rel="stylesheet" href="${mainCss}">
+    <spring:url value="/resources/css/HomeStyle.css" var="bla" />
+    <link type="text/css" rel="stylesheet" href="${bla}">
     <title>Home Page</title>
 </head>
+<%--<style>--%>
+<%--    #bla{--%>
+<%--        font-family: Apple Chancery, cursive;--%>
+<%--    }--%>
+<%--</style>--%>
 <form action="/home" method="post">
-<body>
+<body id="bla">
     <img style="float: left" width="200px" height="200px" src="<spring:url value="/resources/images/pic.jpg"/>"/>
     <div class="info">
         <h1 class="nameval">Hello <%=((User)session.getAttribute("user")).getUsername()%></h1><br><br><br><br><br>
@@ -23,9 +28,10 @@
         <a href = "/reset">Reset Password!</a><br><br>
         <a href="/">Log Out</a>
 
-    </div><br>
+    </div> <br>
         <div class="changeavatar">
-            <select name = "avatar">
+            <select name = "avatar" id = "cars">
+                <option value="" selected disabled hidden> -- Select Avatar --</option>
             <% ImageDAO db = (ImageDAO) request.getServletContext().getAttribute("images");
                List<Image> images = db.getAll();
                for (int i = 0; i < images.size(); i++) {
