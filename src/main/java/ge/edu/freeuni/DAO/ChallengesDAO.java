@@ -90,7 +90,7 @@ public class ChallengesDAO {
         return removeAllForFromUser(chall) && removeAllForToUser(chall) && removeAllForComputerTime(chall);
     }
 
-    private boolean removeAllForComputerTime(Challenge chall) {
+    public boolean removeAllForComputerTime(Challenge chall) {
         PreparedStatement st;
         try {
             st = con.prepareStatement("Delete from challenges where meeting_time = ? and computerID = ?");

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BlacklistDAOTest {
-    private final String url = "jdbc:mysql://localhost";
+    private final String url = "jdbc:mysql://localhost/Reservation";
     private final String username = "root";
     private final String password = "4546";
     @Test

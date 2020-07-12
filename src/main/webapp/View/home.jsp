@@ -6,6 +6,7 @@
 <%@ page import="ge.edu.freeuni.Models.Cell" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <spring:url value="/resources/css/HomeStyle.css" var="mainCss" />
@@ -46,6 +47,7 @@
             <option value="18">18:00 - 19:00</option>
             <option value="19">19:00 - 20:00</option>
             <option value="20">20:00 - 21:00</option>
+                <option value="21">21:00 - 22:00</option>
         </select>
         <select name = "computer">
             <option value = "comp 0" selected>Computer 0</option>
@@ -93,6 +95,14 @@
             </tr>
             <%}%>
         </table>
+        <c:if test="${error != null}">
+            <div class="errorico">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </div> <br>
+            <div class="eror">
+                ${error}
+            </div>
+        </c:if>
     </div>
 </body>
 </html>

@@ -48,3 +48,16 @@ th {
 .submit{
     background-color: blueviolet;
 }
+
+.errorico{
+    position: absolute;
+    left: 48%;
+    color: red;
+}
+
+.eror{
+    position:  center;
+    text-align: center;
+    color: red;
+    left: 48%;
+}

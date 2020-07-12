@@ -14,7 +14,7 @@ public class SessionListener implements HttpSessionListener {
         Cell[][] table = new Cell[13][11];
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[i].length; j++) {
-                table[i][j] = new Cell("Free", "gray");
+                table[i][j] = new Cell("Free", "green");
             }
         }
         session.setAttribute("table", table);
