@@ -39,13 +39,21 @@
                     <%
                         for (int j = 0; j < table[i].length; j++) {
                             if (i == 0 && j == 0) {%>
-                            <th>Time</th>
+                    <th>Time</th>
                     <%}
-                        else if (i == 0) {%>
+                    else if (i == 0) {%>
                     <th>Comp<%=j - 1%>
                     </th>
                     <%} else if (j == 0) {%>
-                    <th style="background-color: blueviolet">1<%=i - 1%>:00-1<%=i %>:00</th>
+                    <%if (i < 10) {%>
+                    <th style="background-color: blueviolet">1<%=i - 1%>:00-1<%=i%>:00</th>
+                    <%}
+                    else if (i == 10){%>
+                    <th style="background-color: blueviolet">19:00-20:00</th>
+                    <%}
+                    else {%>
+                    <th style="background-color: blueviolet">2<%=i - 11%>:00-2<%=i - 10%>:00</th>
+                    <%}%>
                     <%} else {%>
                     <th id="c<%=i + Integer.toString(j - 1)%>" style="background-color: <%=table[i][j].getColor()%>">
                         <%=table[i][j].getText()%>
