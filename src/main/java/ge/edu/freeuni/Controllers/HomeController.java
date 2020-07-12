@@ -60,15 +60,21 @@ public class HomeController {
                         mv.addObject("error", "Your opponent is in a blacklist, you can't reserve!");
                         return mv;
                     }
+                    challengesDAO.removeAllForComputerTime(challenge);
                     Challenge challenge1 = new Challenge(curUser.getUsername(), user, curTime, compIndx);
                     challengesDAO.addChallenge(challenge1);
                 }
-                challengesDAO.removeAllForComputerTime(challenge);
                 if (PlayAlone != null) {
                     table[i][j].setColor("red");
                     table[i][j].setText("Taken");
+                    if (WannaChallenge == null)
+                        challengesDAO.removeAllForComputerTime(challenge);
                 }
                 else {
+                    if (WannaChallenge == null) {
+                        mv.addObject("error", "None of the checkboxes checked!");
+                        return mv;
+                    }
                     table[i][j].setColor("yellow");
                     table[i][j].setText("Waiting");
                 }

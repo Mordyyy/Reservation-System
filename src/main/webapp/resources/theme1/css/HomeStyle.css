@@ -29,20 +29,21 @@ th {
 }
 
 .info{
-    background: url("../images/pic.jpg") no-repeat;
-    background-size: 200px 200px;
-    width: 700px;
-    height: 250px;
+    font-size: 14px;
+    padding: 0 230px;
 }
 
-.info h1, a{
-    padding: 0 250px;
+.info a{
+    font-size: 16px;
+    color: deepskyblue;
 }
-
 
 .nameval{
     color: darkorange;
-    font-size: 25px;
+    float: left;
+    font-size: 30px;
+    border-bottom: 5px solid blueviolet;
+    /*padding: 13px 0*/
 }
 
 .submit{
@@ -51,7 +52,7 @@ th {
 
 .errorico{
     position: absolute;
-    left: 48%;
+    left: 40%;
     color: red;
 }
 
@@ -59,5 +60,34 @@ th {
     position:  center;
     text-align: center;
     color: red;
-    left: 48%;
+}
+
+.changeavatar{
+    padding: 50px 0;
+}
+
+.changeavatar button{
+    width: 10%;
+    background: blueviolet;
+    border: 2px solid blueviolet;
+    border-bottom: none;
+    color: white;
+    padding: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    margin: 12px 12px;
+
+}
+
+.changeavatar select{
+    width: 10%;
+    background: none;
+    border: 2px solid blueviolet;
+    border-bottom: none;
+    color: white;
+    padding: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    margin: 12px 12px;
+    border-radius: 15px;
 }

@@ -21,8 +21,6 @@ public class LoginController {
 
     @GetMapping("")
     public String login(HttpSession ses, HttpServletRequest req) {
-        ChallengesDAO challengesDAO = (ChallengesDAO)req.getServletContext().getAttribute("challenges");
-        challengesDAO.removeAll();
         ses.setAttribute("user", null);
         return "login";
     }
