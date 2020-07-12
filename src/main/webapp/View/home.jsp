@@ -7,6 +7,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <html>
 <head>
     <spring:url value="/resources/css/HomeStyle.css" var="mainCss" />
@@ -47,7 +48,7 @@
             <option value="18">18:00 - 19:00</option>
             <option value="19">19:00 - 20:00</option>
             <option value="20">20:00 - 21:00</option>
-                <option value="21">21:00 - 22:00</option>
+            <option value="21">21:00 - 22:00</option>
         </select>
         <select name = "computer">
             <option value = "comp 0" selected>Computer 0</option>
@@ -61,7 +62,20 @@
             <option value = "comp 8">Computer 8</option>
             <option value = "comp 9">Computer 9</option>
         </select>
-        <button type="submit" name = "Button" value = "reserve">Reserve a seat</button>
+        <button type="submit" name = "Button" value = "reserve">Reserve a seat</button><br>
+        <select name = "user">
+            <% UsersDAO usersDAO = (UsersDAO)request.getServletContext().getAttribute("db");
+               List<User> users = usersDAO.getAll();
+               User curUser = (User)session.getAttribute("user");
+               for (User user:users) {
+                   String username = user.getUsername();
+                   if (!username.equals("admin") && !username.equals(curUser.getUsername())) {%>
+                        <option value = "<%=username%>"><%=username%></option>
+                   <%}
+               }%>
+        </select>
+        <input type="checkbox" name="WannaChallenge"><label>Wanna Challenge</label>
+        <input type="checkbox" name="PlayAlone"/><label>Play Alone</label>
     </form>
     <div class="timetable">
         <table class="table table-stripped table-bordered">

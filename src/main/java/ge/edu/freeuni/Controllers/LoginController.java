@@ -1,5 +1,6 @@
 package ge.edu.freeuni.Controllers;
 
+import ge.edu.freeuni.DAO.ChallengesDAO;
 import ge.edu.freeuni.DAO.UsersDAO;
 import ge.edu.freeuni.Hash.GenerateHash;
 import ge.edu.freeuni.Models.User;
@@ -19,7 +20,9 @@ import java.io.IOException;
 public class LoginController {
 
     @GetMapping("")
-    public String login(HttpSession ses) {
+    public String login(HttpSession ses, HttpServletRequest req) {
+        ChallengesDAO challengesDAO = (ChallengesDAO)req.getServletContext().getAttribute("challenges");
+        challengesDAO.removeAll();
         ses.setAttribute("user", null);
         return "login";
     }

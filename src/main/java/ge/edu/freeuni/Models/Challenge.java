@@ -12,6 +12,13 @@ public class Challenge {
         this.computerID = computerID;
     }
 
+    public Challenge(String fromUser, String toUser, int time, int computerID) {
+        this.fromUser = fromUser;
+        this.toUser = toUser;
+        this.time = time;
+        this.computerID = computerID;
+    }
+
     @Override
     public String toString() {
         return "Challenge{" +

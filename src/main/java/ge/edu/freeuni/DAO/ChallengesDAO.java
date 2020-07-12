@@ -41,8 +41,8 @@ public class ChallengesDAO {
     public boolean addChallenge(Challenge challenge) {
         PreparedStatement st = null;
         try {
-            st = con.prepareStatement("Insert into callenges " +
-                    "values (?, ?, ?, ?)");
+            st = con.prepareStatement("Insert into challenges (fromUser, toUser, meeting_time," +
+                    " computerID) values (?, ?, ?, ?)");
             st.setString(1, challenge.getFromUser());
             st.setString(2, challenge.getToUser());
             st.setInt(3, challenge.getTime());
@@ -135,6 +135,16 @@ public class ChallengesDAO {
             return true;
         } catch (SQLException throwables) {
             return false;
+        }
+    }
+
+    public void removeAll() {
+        PreparedStatement st;
+        try {
+            st = con.prepareStatement("Delete from challenges");
+            st.executeUpdate();
+        } catch (SQLException throwables) {
+
         }
     }
 
