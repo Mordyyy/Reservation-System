@@ -31,4 +31,12 @@ public class User {
     public int getCancelledOrders() {
         return cancelledOrders;
     }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setCancelledOrders(int cancelledOrders) {
+        this.cancelledOrders = cancelledOrders;
+    }
 }

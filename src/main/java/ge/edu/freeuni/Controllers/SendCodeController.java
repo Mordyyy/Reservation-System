@@ -33,9 +33,9 @@ public class SendCodeController {
         ModelAndView modelAndView = new ModelAndView("submit");
         if (Button.equals("Submit")) {
             String Code = (String)req.getParameter("Code");
-            System.out.println(user);
             int sentCode = email.getUsersCode(user.getMail());
             if (Integer.parseInt(Code) == sentCode) {
+                user.setAvatar("noimage.jpg");
                 ((UsersDAO)req.getServletContext().getAttribute("db")).addUser(user);
                 resp.sendRedirect("");
             } else {
