@@ -1,0 +1,10 @@
+.errorico{
+    position: absolute;
+    left: 48%;
+    color: red;
+}
+
+.eror{
+    text-align: center;
+    color: red;
+}
