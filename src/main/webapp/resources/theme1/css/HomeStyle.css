@@ -54,12 +54,14 @@ body{
 }
 
 .errorico{
+    width: 80%;
     position: absolute;
-    left: 48%;
+    left: 39%;
     color: red;
 }
 
 .eror{
+    width: 80%;
     text-align: center;
     color: red;
 }
@@ -71,14 +73,14 @@ body{
 
 button{
     width: 10%;
+    height: 30px;
     background: blueviolet;
     border: 2px solid blueviolet;
     border-bottom: none;
     color: white;
-    padding: 5px;
     font-size: 15px;
     cursor: pointer;
-    margin: 12px 12px;
+    margin: 12px 0;
     border-radius: 20px;
 }
 
@@ -91,26 +93,39 @@ select{
     width: 12%;
     background: none;
     border: 2px solid blueviolet;
-    border-bottom: none;
     padding: 5px;
     color: white;
     font-size: 15px;
     font-family: Georgia, serif;
     cursor: pointer;
-    margin: 12px 12px;
-    border-radius: 15px;
+    margin: 5px 0;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     outline: 0;
     box-shadow: none;
 }
+
+#timeselect{
+    width: 79%;
+}
+
 select option{
     color: black;
     background-color: deepskyblue;
 }
 
-
+#usernamefield{
+    width: 25%;
+    background: none;
+    border: 2px solid blueviolet;
+    padding: 5px;
+    color: white;
+    font-size: 15px;
+    font-family: Georgia, serif;
+    cursor: pointer;
+    margin: 5px 0;
+}
 
 
 /*!*#cars {*!*/
