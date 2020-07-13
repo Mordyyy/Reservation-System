@@ -1,7 +1,6 @@
 package ge.edu.freeuni.DAO;
 
 import ge.edu.freeuni.Models.Challenge;
-import ge.edu.freeuni.Models.User;
 
 import java.sql.*;
 import java.util.ArrayList;

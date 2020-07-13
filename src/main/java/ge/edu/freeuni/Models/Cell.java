@@ -15,7 +15,7 @@ public class Cell {
         return text;
     }
 
-    public void setText(String text) {
+    public synchronized void setText(String text) {
         this.text = text;
     }
 
@@ -23,7 +23,7 @@ public class Cell {
         return color;
     }
 
-    public void setColor(String color) {
+    public synchronized void setColor(String color) {
         this.color = color;
     }
 }

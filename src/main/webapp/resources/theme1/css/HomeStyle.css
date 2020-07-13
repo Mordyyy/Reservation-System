@@ -25,7 +25,6 @@ body{
 
 .timetable th {
     height: 30px;
-    font-family: "Marker Felt",fantasy;
 
 }
 
@@ -69,7 +68,8 @@ body{
     padding: 50px 0;
 }
 
-.changeavatar button{
+
+button{
     width: 10%;
     background: blueviolet;
     border: 2px solid blueviolet;
@@ -80,7 +80,6 @@ body{
     cursor: pointer;
     margin: 12px 12px;
     border-radius: 20px;
-
 }
 
 /*.changeavatar select option{*/
@@ -88,13 +87,13 @@ body{
 /*    font-family: fantasy;*/
 /*}*/
 
-.changeavatar select{
+select{
     width: 12%;
     background: none;
     border: 2px solid blueviolet;
     border-bottom: none;
-    color: white;
     padding: 5px;
+    color: white;
     font-size: 15px;
     font-family: Georgia, serif;
     cursor: pointer;
@@ -105,6 +104,10 @@ body{
     appearance: none;
     outline: 0;
     box-shadow: none;
+}
+select option{
+    color: black;
+    background-color: deepskyblue;
 }
 
 
