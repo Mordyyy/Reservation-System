@@ -49,8 +49,6 @@ public class HomeController {
             TimeTableDAO tableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
             int curTime = Integer.parseInt(time.substring(0, 2));
             int compIndx = Integer.parseInt(computer.substring(computer.length() - 1));
-            int i = curTime - 9;
-            int j = compIndx + 1;
             Cell curCell = tableDAO.get(curTime, compIndx);
             if (blacklistDAO.getUser(curUser.getUsername())) {
                 mv.addObject("error", "You are in a blacklist, you can't reserve!");
@@ -70,6 +68,7 @@ public class HomeController {
                 if (PlayAlone != null) {
                     curCell.setColor("red");
                     curCell.setText("Taken");
+                    tableDAO.update(curCell);
                     if (WannaChallenge == null)
                         challengesDAO.removeAllForComputerTime(challenge);
                 }
@@ -80,6 +79,7 @@ public class HomeController {
                     }
                     curCell.setColor("yellow");
                     curCell.setText("Waiting");
+                    tableDAO.update(curCell);
                 }
             }
             else {

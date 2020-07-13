@@ -14,11 +14,11 @@ public class Cell {
         this.color = color;
     }
 
-    public void setTime(int time) {
+    public synchronized void setTime(int time) {
         this.time = time;
     }
 
-    public void setComputerID(int computerID) {
+    public synchronized void setComputerID(int computerID) {
         this.computerID = computerID;
     }
 

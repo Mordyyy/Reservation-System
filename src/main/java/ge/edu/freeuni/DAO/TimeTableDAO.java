@@ -44,7 +44,7 @@ public class TimeTableDAO {
     }
 
     public boolean update(Cell cell) throws SQLException {
-        PreparedStatement st = con.prepareStatement("update time_table set text = ?, color = ? where time = ? and color = ?");
+        PreparedStatement st = con.prepareStatement("update time_table set text = ?, color = ? where meeting_time = ? and computerID = ?");
         st.setString(1, cell.getText());
         st.setString(2, cell.getColor());
         st.setInt(3, cell.getTime());
