@@ -7,22 +7,24 @@ import ge.edu.freeuni.DAO.UsersDAO;
 import ge.edu.freeuni.Models.Cell;
 import ge.edu.freeuni.Models.Challenge;
 import ge.edu.freeuni.Models.User;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 public class HomeController {
     @GetMapping("/home")
-    public String display(HttpSession ses){
+    public String display(HttpSession ses) throws SQLException {
         User user = (User)ses.getAttribute("user");
         if (user == null || user.getUsername().equals("admin")) {
             return "fail";
@@ -45,6 +47,7 @@ public class HomeController {
         BlacklistDAO blacklistDAO = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
         UsersDAO usersDAO = (UsersDAO)  req.getServletContext().getAttribute("db");
         User curUser = (User)ses.getAttribute("user");
+        colorCheck(req);
         if (Button.equals("reserve")) {
             TimeTableDAO tableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
             int curTime = Integer.parseInt(time.substring(0, 2));
@@ -54,9 +57,15 @@ public class HomeController {
                 mv.addObject("error", "You are in a blacklist, you can't reserve!");
                 return mv;
             }
-            if (!curCell.getColor().equals("red")) {
+            if (!curCell.getColor().equals("red") && !curCell.getColor().equals("grey")) {
                 Challenge challenge = new Challenge(0, "", "", curTime, compIndx);
                 if (WannaChallenge != null) {
+
+                    if(user.equals("")){
+                        mv.addObject("error", "Please, enter opponent's name!");
+                        return mv;
+                    }
+
                     if (blacklistDAO.getUser(user)) {
                         mv.addObject("error", "Your opponent is in a blacklist, you can't reserve!");
                         return mv;
@@ -83,13 +92,16 @@ public class HomeController {
                         mv.addObject("error", "None of the checkboxes checked!");
                         return mv;
                     }
-                    curCell.setColor("yellow");
+                    curCell.setColor("orange");
                     curCell.setText("Waiting");
                     tableDAO.update(curCell);
                 }
             }
             else {
-                mv.addObject("error", "Already taken!");
+                if(curCell.getColor().equals("red"))
+                    mv.addObject("error", "Already taken!");
+                else
+                    mv.addObject("error", "Can not reserve");
             }
         }
         else if (Button.equals("Change avatar")) {
@@ -97,5 +109,40 @@ public class HomeController {
             usersDAO.changeAvatar(curUser);
         }
         return mv;
+    }
+
+    private void colorCheck(HttpServletRequest req) throws SQLException {
+        DateFormat df = new SimpleDateFormat("HH");
+        Date dateobj = new Date();
+        int tm = Integer.parseInt(df.format(dateobj));
+        TimeTableDAO tableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
+        if (tm <= 21 && tm >= 10) {
+            withGrey(tableDAO,tm);
+        }else{
+            withGreen(tableDAO);
+        }
+    }
+
+    private void withGrey(TimeTableDAO tableDAO, int tm) throws SQLException {
+        for (int i = 10; i <= tm; i++) {   // i -> time, j-> computer id
+            for(int j = 0; j < 10; j++){
+                Cell curCell = tableDAO.get(i, j);
+                curCell.setColor("grey");
+                curCell.setText("Time out");
+                tableDAO.update(curCell);
+            }
+        }
+    }
+
+    private void withGreen(TimeTableDAO tableDAO) throws SQLException {
+        for(int i = 10; i <= 21; i++){  // i -> time, j-> computer id
+            for(int j = 0; j < 10; j++){
+                Cell curCell = tableDAO.get(i, j);
+                if(curCell.getColor().equals("grey")){
+                    curCell.setColor("green");
+                    curCell.setText("Free");
+                }
+            }
+        }
     }
 }
