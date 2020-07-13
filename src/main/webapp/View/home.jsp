@@ -91,16 +91,16 @@
                 <option value="21">21:00 - 22:00</option>
             </select>
             <select name = "computer">
-                <option value = "comp 0" selected>Computer 0</option>
-                <option value = "comp 1">Computer 1</option>
-                <option value = "comp 2">Computer 2</option>
-                <option value = "comp 3">Computer 3</option>
-                <option value = "comp 4">Computer 4</option>
-                <option value = "comp 5">Computer 5</option>
-                <option value = "comp 6">Computer 6</option>
-                <option value = "comp 7">Computer 7</option>
-                <option value = "comp 8">Computer 8</option>
-                <option value = "comp 9">Computer 9</option>
+                <option value = "comp 1" selected>Computer 0</option>
+                <option value = "comp 2">Computer 1</option>
+                <option value = "comp 3">Computer 2</option>
+                <option value = "comp 4">Computer 3</option>
+                <option value = "comp 5">Computer 4</option>
+                <option value = "comp 6">Computer 5</option>
+                <option value = "comp 7">Computer 6</option>
+                <option value = "comp 8">Computer 7</option>
+                <option value = "comp 9">Computer 8</option>
+                <option value = "comp 10">Computer 9</option>
             </select>
             <button type="submit" name = "Button" value = "reserve">Reserve a seat</button><br>
             <select name = "user">
@@ -118,7 +118,7 @@
             <c:if test="${error != null}">
                 <div class="errorico">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                </div> <br>
+                </div> <br><br>
                 <div class="eror">
                         ${error}
                 </div>

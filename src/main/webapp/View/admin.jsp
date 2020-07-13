@@ -91,8 +91,9 @@
             <option value = "comp 8">Computer 8</option>
             <option value = "comp 9">Computer 9</option>
         </select>
-        <button type="submit" name = "Button" value = "reserve">Reserve a seat</button><br>
-        <c:if test="${error != null}">
+        <button type="submit" name = "Button" value = "reserve">Reserve a seat</button><br><br>
+        <div class="errors">
+            <c:if test="${error != null}">
             <div class="errorico">
                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
             </div> <br>
@@ -100,6 +101,7 @@
                     ${error}
             </div>
         </c:if>
+        </div>
         <div class="blacklist">
             <h1>Blacklist</h1>
             <div class="Trio">

@@ -56,12 +56,11 @@ body{
 
 .errorico{
     position: absolute;
-    left: 40%;
+    left: 48%;
     color: red;
 }
 
 .eror{
-    position:  center;
     text-align: center;
     color: red;
 }
@@ -80,8 +79,14 @@ body{
     font-size: 15px;
     cursor: pointer;
     margin: 12px 12px;
+    border-radius: 20px;
 
 }
+
+/*.changeavatar select option{*/
+/*    background-color: yellow;*/
+/*    font-family: fantasy;*/
+/*}*/
 
 .changeavatar select{
     width: 12%;
@@ -101,11 +106,6 @@ body{
     outline: 0;
     box-shadow: none;
 }
-
-/*.changeavatar select option{*/
-/*    background-color: yellow;*/
-/*    font-family: fantasy;*/
-/*}*/
 
 
 

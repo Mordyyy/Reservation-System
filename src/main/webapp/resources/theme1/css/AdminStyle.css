@@ -41,13 +41,15 @@ ul li{
     transition: .5s;
 }
 
-.hrefs{
-    /*float: right;*/
-    position: absolute;
-    padding: 0 20px;
-    color: white;
+button{
+    border-radius: 20px;
 }
 
+a{
+    /*float: right;*/
+    color: deepskyblue;
+    font-family: "Arial Narrow", sans-serif;
+}
 .sendmailbox{
     width: 18.23%;
     position: sticky;
@@ -171,17 +173,31 @@ textarea{
 
 th {
     height: 30px;
+    font-family: "Marker Felt",fantasy;
+}
+
+select{
+    padding: 0 50px;
+}
+
+.errors{
+    width: 18.23%;
+    height: 50px;
+    padding: 0 20px;
 }
 
 .errorico{
     position: absolute;
-    left: 48%;
+    left: 15%;
     color: red;
 }
 
+select{
+    background: none;
+    color: white;
+}
+
 .eror{
-    position:  center;
-    text-align: center;
     color: red;
-    left: 48%;
+    text-align: center;
 }
