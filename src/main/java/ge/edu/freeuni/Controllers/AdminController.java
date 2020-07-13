@@ -2,6 +2,7 @@ package ge.edu.freeuni.Controllers;
 
 import ge.edu.freeuni.DAO.BlacklistDAO;
 import ge.edu.freeuni.DAO.ChallengesDAO;
+import ge.edu.freeuni.DAO.TimeTableDAO;
 import ge.edu.freeuni.DAO.UsersDAO;
 import ge.edu.freeuni.Models.Cell;
 import ge.edu.freeuni.Models.Challenge;
@@ -85,14 +86,15 @@ public class AdminController {
                 blackDB.removeUser(toBlock);
             }
         } else if (Button.equals("reserve")) {
-            Cell[][] table = (Cell[][]) req.getSession().getAttribute("table");
+            TimeTableDAO tableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
             int curTime = Integer.parseInt(time.substring(0, 2));
             int compIndx = Integer.parseInt(computer.substring(computer.length() - 1));
             int i = curTime - 9;
             int j = compIndx + 1;
-            if (!table[i][j].getColor().equals("red")) {
-                table[i][j].setColor("red");
-                table[i][j].setText("Taken");
+            Cell curCell = tableDAO.get(curTime, compIndx);
+            if (curCell.getColor().equals("red")) {
+                curCell.setColor("red");
+                curCell.setText("Taken");
                 ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
                 Challenge challenge = new Challenge(0, "", "", curTime, compIndx);
                 challengesDAO.removeAllForComputerTime(challenge);
