@@ -17,6 +17,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,7 +42,7 @@ public class AdminController {
                                  @RequestParam String toBlock,
                                  @RequestParam String time,
                                  @RequestParam String computer,
-                                 HttpServletRequest req) {
+                                 HttpServletRequest req) throws SQLException {
         ModelAndView mv = new ModelAndView("admin");
         Email email = (Email) req.getServletContext().getAttribute("email");
         UsersDAO db = (UsersDAO) req.getServletContext().getAttribute("db");

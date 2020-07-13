@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 @Controller
 public class HomeController {
@@ -37,7 +38,7 @@ public class HomeController {
                                 @RequestParam(value = "PlayAlone", required = false) String PlayAlone,
                                 @RequestParam String user,
                                 HttpServletRequest req,
-                                HttpSession ses) {
+                                HttpSession ses) throws SQLException {
         ModelAndView mv = new ModelAndView("home");
         ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
         BlacklistDAO blacklistDAO = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");

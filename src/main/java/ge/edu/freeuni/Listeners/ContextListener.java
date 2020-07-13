@@ -11,6 +11,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.awt.*;
+import java.sql.SQLException;
 
 public class ContextListener implements ServletContextListener {
 
@@ -21,7 +22,12 @@ public class ContextListener implements ServletContextListener {
         String password = sc.getInitParameter("password");
         String database = sc.getInitParameter("database");
         UsersDAO db = new UsersDAO(url + database, user_name, password);
-        BlacklistDAO blacklist = new BlacklistDAO(url + database, user_name, password);
+        BlacklistDAO blacklist = null;
+        try {
+            blacklist = new BlacklistDAO(url + database, user_name, password);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         Email mail = new Email();
         ChallengesDAO challenges = new ChallengesDAO(url + database, user_name, password);
         ImageDAO images = new ImageDAO(url + database, user_name, password);

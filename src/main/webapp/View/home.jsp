@@ -14,19 +14,15 @@
     <link type="text/css" rel="stylesheet" href="${bla}">
     <title>Home Page</title>
 </head>
-<%--<style>--%>
-<%--    #bla{--%>
-<%--        font-family: Apple Chancery, cursive;--%>
-<%--    }--%>
-<%--</style>--%>
 <form action="/home" method="post">
     <body>
     <% UsersDAO usersDAO = (UsersDAO)request.getServletContext().getAttribute("db");
         User curUser = (User)session.getAttribute("user");
         String imgfile = curUser.getAvatar();
+        System.out.println(imgfile);
     %>
     <img style="float: left" width="200px" height="200px"
-         src="<spring:url value="/resources/images/<%=imgfile%>.jpg"/>"/>
+         src="/resources/images/<%=imgfile%>.jpg"/>
     <div class="info">
         <h1 class="nameval">Hello <%=((User)session.getAttribute("user")).getUsername()%></h1><br><br><br><br><br>
         <a href="/recChallenges">Received Challenges</a><br><br>
@@ -41,7 +37,7 @@
                 List<Image> images = db.getAll();
                 for (int i = 0; i < images.size(); i++) {
                     String curImage = images.get(i).getName();%>
-            <option value="<%=i%>"><%=curImage%></option>
+            <option value="<%=curImage%>"><%=curImage%></option>
             <%}%>
         </select>
         <button type="submit" name = "Button" value = "Change avatar">Change Avatar</button>
