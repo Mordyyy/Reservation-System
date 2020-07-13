@@ -62,8 +62,14 @@ public class HomeController {
                         return mv;
                     }
                     //challengesDAO.removeAllForComputerTime(challenge);
-                    Challenge challenge1 = new Challenge(curUser.getUsername(), user, curTime, compIndx);
-                    challengesDAO.addChallenge(challenge1);
+                    if (usersDAO.contains(user)) {
+                        Challenge challenge1 = new Challenge(curUser.getUsername(), user, curTime, compIndx);
+                        challengesDAO.addChallenge(challenge1);
+                    }
+                    else {
+                        mv.addObject("error", "User you want to challange doesn't exist!");
+                        return mv;
+                    }
                 }
                 if (PlayAlone != null) {
                     curCell.setColor("red");

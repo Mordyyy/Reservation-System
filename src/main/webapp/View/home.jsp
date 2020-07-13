@@ -102,7 +102,7 @@
                 <option value = "comp 8">Computer 8</option>
                 <option value = "comp 9">Computer 9</option>
             </select><br>
-            <input id="usernamefield" type="text" value="" placeholder="Input User to Challenge">
+            <input id="usernamefield" type="text" value="" name="user" placeholder="Input User to Challenge">
             <br>
             <input type="checkbox" name="WannaChallenge"><label>Wanna Challenge</label>
             <input type="checkbox" name="PlayAlone"/><label>Play Alone</label><br>
