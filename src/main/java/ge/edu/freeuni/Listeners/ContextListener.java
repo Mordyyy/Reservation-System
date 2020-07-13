@@ -34,9 +34,7 @@ public class ContextListener implements ServletContextListener {
             for(int j = 0; j <= 9; j++){
                 try {
                     timeTable.add(10*i + j, new Cell(i,j,"Free", "green"));
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
+                } catch (SQLException ignored) {}
             }
         }
 

@@ -78,7 +78,7 @@ public class AdminController {
                 }
             }
         } else if (Button.equals("block")) {
-            if (!blackDB.getUser(toBlock) && !toBlock.equals("admin")) {
+            if (!blackDB.getUser(toBlock) && !toBlock.equals("admin") && db.contains(toBlock)){
                 blackDB.addUser(toBlock);
             }
         } else if (Button.equals("unblock")) {

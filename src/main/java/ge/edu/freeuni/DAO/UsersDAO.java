@@ -125,6 +125,21 @@ public class UsersDAO {
         return false;
     }
 
+    public boolean contains(String userName) throws SQLException {
+        PreparedStatement st = con.prepareStatement("select * from users where username = ?");
+        st.setString(1, userName);
+        ResultSet rs = st.executeQuery();
+        return getResultSetSize(rs) > 0;
+    }
+
+    private int getResultSetSize(ResultSet rs) throws SQLException {
+        int res = 0;
+        while(rs.next()){
+            res++;
+        }
+        return res;
+    }
+
     public List<User> getAll() {
         PreparedStatement st = null;
         List<User> lst = new ArrayList<>();
