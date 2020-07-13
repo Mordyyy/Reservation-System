@@ -25,7 +25,6 @@ body{
 
 .timetable th {
     height: 30px;
-    font-family: "Marker Felt",fantasy;
 
 }
 
@@ -93,7 +92,6 @@ body{
     background: none;
     border: 2px solid blueviolet;
     border-bottom: none;
-    color: white;
     padding: 5px;
     font-size: 15px;
     font-family: Georgia, serif;

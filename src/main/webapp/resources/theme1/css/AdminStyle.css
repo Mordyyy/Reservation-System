@@ -201,3 +201,7 @@ select{
     color: red;
     text-align: center;
 }
+
+.buttons{
+    padding: 0 50px;
+}
