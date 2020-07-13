@@ -29,3 +29,11 @@ create table images(
 	url varchar(60) primary key,
     name varchar(60)
 );
+
+create table time_table(
+    id int primary key,
+    meeting_time int,
+    computerID int,
+    text varchar(60),
+    color varchar(60)
+);
