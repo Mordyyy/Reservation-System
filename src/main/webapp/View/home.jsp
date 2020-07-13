@@ -40,7 +40,7 @@
             <option value="<%=curImage%>"><%=curImage%></option>
             <%}%>
         </select>
-        <button type="submit" name = "Button" value = "Change avatar">Change Avatar</button>
+        <button style="margin: 10px 40px;" type="submit" name = "Button" value = "Change avatar">Change Avatar</button>
     </div>
 
     <div class="timetable">
@@ -77,7 +77,7 @@
             <%}%>
         </table>
         <div class="reservation">
-            <select name = "time">
+            <select id="timeselect" name = "time">
                 <option value="10" selected>10:00 - 11:00</option>
                 <option value="11">11:00 - 12:00</option>
                 <option value="12">12:00 - 13:00</option>
@@ -91,7 +91,7 @@
                 <option value="20">20:00 - 21:00</option>
                 <option value="21">21:00 - 22:00</option>
             </select>
-            <select name = "computer">
+            <select id="timeselect" name = "computer">
                 <option value = "comp 0" selected>Computer 0</option>
                 <option value = "comp 1">Computer 1</option>
                 <option value = "comp 2">Computer 2</option>
@@ -102,24 +102,16 @@
                 <option value = "comp 7">Computer 7</option>
                 <option value = "comp 8">Computer 8</option>
                 <option value = "comp 9">Computer 9</option>
-            </select>
-            <button type="submit" name = "Button" value = "reserve">Reserve a seat</button><br>
-            <select name = "user">
-                <% List<User> users = usersDAO.getAll();
-                    for (User user:users) {
-                        String username = user.getUsername();
-                        if (!username.equals("admin") && !username.equals(curUser.getUsername())) {%>
-                <option value = "<%=username%>"><%=username%></option>
-                <%}
-                }%>
-            </select>
+            </select><br>
+            <input id="usernamefield" type="text" value="" placeholder="Input User to Challenge">
+            <br>
             <input type="checkbox" name="WannaChallenge"><label>Wanna Challenge</label>
-            <input type="checkbox" name="PlayAlone"/><label>Play Alone</label>
-
+            <input type="checkbox" name="PlayAlone"/><label>Play Alone</label><br>
+            <button style="width: 20%" type="submit" name = "Button" value = "reserve">Reserve a seat</button><br>
             <c:if test="${error != null}">
                 <div class="errorico">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                </div> <br><br>
+                </div> <br>
                 <div class="eror">
                         ${error}
                 </div>
