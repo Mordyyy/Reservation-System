@@ -8,3 +8,48 @@
     text-align: center;
     color: red;
 }
+
+body{
+    margin: 0;
+    padding: 0;
+    background: url(../images/Background.jpg) no-repeat;
+    background-size: cover;
+}
+
+.headerm{
+    color: deepskyblue;
+    font-weight: bold;
+}
+
+li{
+    color: yellow;
+}
+
+ul{
+    color: yellow;
+}
+
+#acceptbt{
+    background-color: green;
+    border-color: rgb(49, 75, 9);
+    color: white;
+}
+
+#rejectbt{
+    background-color: red;
+    border-color: red;
+    color: white;
+}
+
+li p{
+    color: yellow;
+}
+
+button{
+    border-radius: 20%;
+    box-shadow: none;
+}
+
+.buts{
+
+}
