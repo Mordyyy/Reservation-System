@@ -1,14 +1,3 @@
-.errorico{
-    position: absolute;
-    left: 48%;
-    color: red;
-}
-
-.eror{
-    text-align: center;
-    color: red;
-}
-
 body{
     margin: 0;
     padding: 0;
@@ -48,8 +37,4 @@ li p{
 button{
     border-radius: 20%;
     box-shadow: none;
-}
-
-.buts{
-
 }

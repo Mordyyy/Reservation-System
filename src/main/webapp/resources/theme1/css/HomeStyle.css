@@ -126,6 +126,23 @@ select option{
     margin: 5px 0;
 }
 
+input[type=checkbox]{
+    content:"\2714";
+    border: 0.1em solid #000;
+    border-radius: 0.2em;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    color: transparent;
+
+}
+
+input[type=checkbox]:checked{
+    background-color: MediumSeaGreen;
+    border-color: MediumSeaGreen;
+    color: #fff;
+}
+
 
 /*!*#cars {*!*/
 /*!*    background-color: yellow !important;*!*/
