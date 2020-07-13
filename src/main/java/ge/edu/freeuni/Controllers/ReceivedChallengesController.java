@@ -1,5 +1,6 @@
 package ge.edu.freeuni.Controllers;
 
+import ge.edu.freeuni.DAO.BlacklistDAO;
 import ge.edu.freeuni.DAO.ChallengesDAO;
 import ge.edu.freeuni.DAO.TimeTableDAO;
 import ge.edu.freeuni.Models.Cell;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -22,27 +24,61 @@ public class ReceivedChallengesController {
     }
 
     @PostMapping("/recChallenges")
-    public String respondChallenge(@RequestParam String hiddenID,
-                                   @RequestParam String Button,
-                                   HttpServletRequest req) throws SQLException {
+    public ModelAndView respondChallenge(@RequestParam String hiddenID,
+                                         @RequestParam String Button,
+                                         HttpServletRequest req) throws SQLException {
 
         ChallengesDAO dao = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
         TimeTableDAO table = (TimeTableDAO) req.getServletContext().getAttribute("table");
-        if(Button.equals("Reject")){
-            Challenge challenge = dao.getChallenge(Integer.parseInt(hiddenID));
-            int time = challenge.getTime();
-            int computer = challenge.getComputerID();
-            List<Challenge> lst = dao.getAllForComputerTime(time, computer);
-            if (lst.size() == 1) {
-                Cell curCell = table.get(time, computer);
-                if (curCell.getColor().equals("yellow")) {
-                    curCell.setColor("green");
-                    curCell.setText("Free");
+        BlacklistDAO blacklistDAO = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
+        Challenge challenge = dao.getChallenge(Integer.parseInt(hiddenID));
+        ModelAndView mv = new ModelAndView("received");
+        int time = challenge.getTime();
+        int computer = challenge.getComputerID();
+        List<Challenge> lst = dao.getAllForComputerTime(time, computer);
+        Cell curCell = table.get(time, computer);
+        if (challenge != null) {
+            if(Button.equals("Reject")){
+                if (lst.size() == 1) {
+                    if (curCell.getColor().equals("yellow")) {
+                        curCell.setColor("green");
+                        curCell.setText("Free");
+                    }
+                    table.update(curCell);
                 }
-                table.update(curCell);
+            }
+            else if (Button.equals("Accept")) {
+                if (blacklistDAO.getUser(challenge.getFromUser())) {
+                    mv.addObject("error", "User who sent you a challenge is in a Blacklist!");
+                }
+                else if (blacklistDAO.getUser(challenge.getToUser())) {
+                    mv.addObject("error", "You are in a Blacklist!");
+                }
+                else {
+                    if (curCell.getColor().equals("yellow")) {
+                        dao.removeChallengesByChallenge(challenge);
+                        curCell.setText("Taken");
+                        curCell.setColor("red");
+                        table.update(curCell);
+                        for (int i = 0; i < 10; i++) {
+                            Cell cell = table.get(time, i);
+                            if (cell.getColor().equals("yellow") && dao.getAllForComputerTime(time, i).size() == 0) {
+                                cell.setColor("green");
+                                cell.setText("Free");
+                                table.update(cell);
+                            }
+                        }
+                    }
+                    else if (curCell.getColor().equals("red")) {
+                        mv.addObject("error", "Already taken!");
+                    }
+                    else if (curCell.getColor().equals("gray")) {
+                        mv.addObject("error", "Too late!");
+                    }
+                }
             }
             dao.deleteChallenge(Integer.parseInt(hiddenID));
         }
-        return "received";
+        return mv;
     }
 }

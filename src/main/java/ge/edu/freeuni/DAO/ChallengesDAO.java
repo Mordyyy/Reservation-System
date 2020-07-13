@@ -32,9 +32,8 @@ public class ChallengesDAO {
                     rs.getString("toUSer"), rs.getInt("meeting_time"), rs.getInt("computerID"));
             return toRet;
         } catch (SQLException throwables) {
-            return null;
         }
-
+        return null;
     }
 
     public boolean addChallenge(Challenge challenge) {
