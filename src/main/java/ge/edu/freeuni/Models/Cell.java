@@ -3,19 +3,38 @@ package ge.edu.freeuni.Models;
 import java.awt.*;
 
 public class Cell {
+    int time,computerID;
     String text;
     String color;
 
-    public Cell(String text, String color) {
+    public Cell(int time, int computerID, String text, String color) {
+        this.time = time;
+        this.computerID = computerID;
         this.text = text;
         this.color = color;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public void setComputerID(int computerID) {
+        this.computerID = computerID;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public int getComputerID() {
+        return computerID;
     }
 
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
+    public synchronized void setText(String text) {
         this.text = text;
     }
 
@@ -23,7 +42,7 @@ public class Cell {
         return color;
     }
 
-    public void setColor(String color) {
+    public synchronized void setColor(String color) {
         this.color = color;
     }
 }

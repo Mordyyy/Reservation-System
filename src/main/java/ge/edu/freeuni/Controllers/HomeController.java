@@ -2,6 +2,7 @@ package ge.edu.freeuni.Controllers;
 
 import ge.edu.freeuni.DAO.BlacklistDAO;
 import ge.edu.freeuni.DAO.ChallengesDAO;
+import ge.edu.freeuni.DAO.TimeTableDAO;
 import ge.edu.freeuni.DAO.UsersDAO;
 import ge.edu.freeuni.Models.Cell;
 import ge.edu.freeuni.Models.Challenge;
@@ -45,16 +46,17 @@ public class HomeController {
         UsersDAO usersDAO = (UsersDAO)  req.getServletContext().getAttribute("db");
         User curUser = (User)ses.getAttribute("user");
         if (Button.equals("reserve")) {
-            Cell[][] table = (Cell[][]) req.getSession().getAttribute("table");
+            TimeTableDAO tableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
             int curTime = Integer.parseInt(time.substring(0, 2));
             int compIndx = Integer.parseInt(computer.substring(computer.length() - 1));
             int i = curTime - 9;
             int j = compIndx + 1;
+            Cell curCell = tableDAO.get(curTime, compIndx);
             if (blacklistDAO.getUser(curUser.getUsername())) {
                 mv.addObject("error", "You are in a blacklist, you can't reserve!");
                 return mv;
             }
-            if (!table[i][j].getColor().equals("red")) {
+            if (!curCell.getColor().equals("red")) {
                 Challenge challenge = new Challenge(0, "", "", curTime, compIndx);
                 if (WannaChallenge != null) {
                     if (blacklistDAO.getUser(user)) {
@@ -66,8 +68,8 @@ public class HomeController {
                     challengesDAO.addChallenge(challenge1);
                 }
                 if (PlayAlone != null) {
-                    table[i][j].setColor("red");
-                    table[i][j].setText("Taken");
+                    curCell.setColor("red");
+                    curCell.setText("Taken");
                     if (WannaChallenge == null)
                         challengesDAO.removeAllForComputerTime(challenge);
                 }
@@ -76,8 +78,8 @@ public class HomeController {
                         mv.addObject("error", "None of the checkboxes checked!");
                         return mv;
                     }
-                    table[i][j].setColor("yellow");
-                    table[i][j].setText("Waiting");
+                    curCell.setColor("yellow");
+                    curCell.setText("Waiting");
                 }
             }
             else {

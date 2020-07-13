@@ -4,6 +4,7 @@ drop table if exists users;
 drop table if exists blacklist;
 drop table if exists challenges;
 drop table if exists images;
+drop table if exists time_table;
 
 create table users (
 	username varchar(60) primary key,
@@ -28,4 +29,12 @@ create table challenges(
 create table images(
 	url varchar(60) primary key,
     name varchar(60)
+);
+
+create table time_table(
+    id int primary key,
+    meeting_time int,
+    computerID int,
+    text varchar(60),
+    color varchar(60)
 );

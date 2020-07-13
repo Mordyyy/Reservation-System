@@ -4,6 +4,7 @@
 <%@ page import="ge.edu.freeuni.DAO.ImageDAO" %>
 <%@ page import="ge.edu.freeuni.Models.Image" %>
 <%@ page import="ge.edu.freeuni.Models.Cell" %>
+<%@ page import="ge.edu.freeuni.DAO.TimeTableDAO" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -31,8 +32,7 @@
 
     </div> <br>
         <div class="changeavatar">
-            <select name = "avatar" id = "cars">
-                <option value="" selected disabled hidden> -- Select Avatar --</option>
+            <select name = "avatar">
             <% ImageDAO db = (ImageDAO) request.getServletContext().getAttribute("images");
                 List<Image> images = db.getAll();
                 for (int i = 0; i < images.size(); i++) {
@@ -45,11 +45,12 @@
 
     <div class="timetable">
         <table class="table table-stripped table-bordered">
-            <% Cell[][] table = (Cell[][]) request.getSession().getAttribute("table");
-                for (int i = 0; i < table.length; i++) {%>
+            <% TimeTableDAO tableDAO = (TimeTableDAO) request.getServletContext().getAttribute("table");
+                for (int i = 0; i < 13; i++) {%>
             <tr style="background-color: blueviolet; color: white">
                 <%
-                    for (int j = 0; j < table[i].length; j++) {
+                    for (int j = 0; j < 11; j++) {
+                        Cell curCell = tableDAO.get(i + 9, j - 1);
                         if (i == 0 && j == 0) {%>
                 <th>Time</th>
                 <%}
@@ -67,8 +68,8 @@
                 <th style="background-color: blueviolet">2<%=i - 11%>:00-2<%=i - 10%>:00</th>
                 <%}%>
                 <%} else {%>
-                <th id="c<%=i + Integer.toString(j - 1)%>" style="background-color: <%=table[i][j].getColor()%>">
-                    <%=table[i][j].getText()%>
+                <th id="c<%=i + Integer.toString(j - 1)%>" style="background-color: <%=curCell.getColor()%>">
+                    <%=curCell.getText()%>
                 </th>
                 <%}%>
                 <%}%>
@@ -91,16 +92,16 @@
                 <option value="21">21:00 - 22:00</option>
             </select>
             <select name = "computer">
-                <option value = "comp 1" selected>Computer 0</option>
-                <option value = "comp 2">Computer 1</option>
-                <option value = "comp 3">Computer 2</option>
-                <option value = "comp 4">Computer 3</option>
-                <option value = "comp 5">Computer 4</option>
-                <option value = "comp 6">Computer 5</option>
-                <option value = "comp 7">Computer 6</option>
-                <option value = "comp 8">Computer 7</option>
-                <option value = "comp 9">Computer 8</option>
-                <option value = "comp 10">Computer 9</option>
+                <option value = "comp 0" selected>Computer 0</option>
+                <option value = "comp 1">Computer 1</option>
+                <option value = "comp 2">Computer 2</option>
+                <option value = "comp 3">Computer 3</option>
+                <option value = "comp 4">Computer 4</option>
+                <option value = "comp 5">Computer 5</option>
+                <option value = "comp 6">Computer 6</option>
+                <option value = "comp 7">Computer 7</option>
+                <option value = "comp 8">Computer 8</option>
+                <option value = "comp 9">Computer 9</option>
             </select>
             <button type="submit" name = "Button" value = "reserve">Reserve a seat</button><br>
             <select name = "user">
