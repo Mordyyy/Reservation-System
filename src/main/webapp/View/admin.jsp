@@ -1,6 +1,7 @@
 <%@ page import="ge.edu.freeuni.DAO.BlacklistDAO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ge.edu.freeuni.Models.Cell" %>
+<%@ page import="ge.edu.freeuni.DAO.TimeTableDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -34,11 +35,12 @@
         </div>
         <div class="timetable">
             <table class="table table-stripped table-bordered">
-                <% Cell[][] table = (Cell[][]) request.getSession().getAttribute("table");
-                    for (int i = 0; i < table.length; i++) {%>
+                <% TimeTableDAO tableDAO = (TimeTableDAO) request.getServletContext().getAttribute("table");
+                    for (int i = 0; i < 13; i++) {%>
                 <tr style="background-color: blueviolet; color: white">
                     <%
-                        for (int j = 0; j < table[i].length; j++) {
+                        for (int j = 0; j < 11; j++) {
+                            Cell curCell = tableDAO.get(i + 9, j - 1);
                             if (i == 0 && j == 0) {%>
                     <th>Time</th>
                     <%}
@@ -56,8 +58,8 @@
                     <th style="background-color: blueviolet">2<%=i - 11%>:00-2<%=i - 10%>:00</th>
                     <%}%>
                     <%} else {%>
-                    <th id="c<%=i + Integer.toString(j - 1)%>" style="background-color: <%=table[i][j].getColor()%>">
-                        <%=table[i][j].getText()%>
+                    <th id="c<%=i + Integer.toString(j - 1)%>" style="background-color: <%=curCell.getColor()%>">
+                        <%=curCell.getText()%>
                     </th>
                     <%}%>
                     <%}%>
