@@ -20,7 +20,6 @@
     <% UsersDAO usersDAO = (UsersDAO)request.getServletContext().getAttribute("db");
         User curUser = (User)session.getAttribute("user");
         String imgfile = curUser.getAvatar();
-        System.out.println(imgfile);
     %>
     <img style="float: left" width="200px" height="200px"
          src="/resources/images/<%=imgfile%>.jpg"/>

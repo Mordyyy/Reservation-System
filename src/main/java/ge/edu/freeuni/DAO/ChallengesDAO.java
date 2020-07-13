@@ -176,6 +176,35 @@ public class ChallengesDAO {
         return lst;
     }
 
+    public List<Challenge> getAllForComputerTime(int time, int computer) {
+        PreparedStatement st = null;
+        List<Challenge> lst = new ArrayList<>();
+        try {
+            st = con.prepareStatement("Select * from challenges where meeting_time = ? and computerID = ?");
+            st.setInt(1, time);
+            st.setInt(2, computer);
+            ResultSet res = st.executeQuery();
+            if (!res.next()) {
+                st.close();
+                return lst;
+            }
+            List<Challenge> challenges = new ArrayList<>();
+            Challenge chall = new Challenge(res.getInt("id"), res.getString("fromUser"), res.getString("toUser"),
+                    res.getInt("meeting_time"), res.getInt("computerID"));
+            challenges.add(chall);
+            while (res.next()) {
+                chall = new Challenge(res.getInt("id"),res.getString("fromUser"), res.getString("toUser"),
+                        res.getInt("meeting_time"), res.getInt("computerID"));
+                challenges.add(chall);
+            }
+            st.close();
+            return challenges;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return lst;
+    }
+
     public List<Challenge> getAllSent(String fromUser) {
         PreparedStatement st = null;
         List<Challenge> lst = new ArrayList<>();

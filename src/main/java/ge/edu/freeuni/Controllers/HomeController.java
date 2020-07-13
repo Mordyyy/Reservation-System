@@ -61,7 +61,7 @@ public class HomeController {
                         mv.addObject("error", "Your opponent is in a blacklist, you can't reserve!");
                         return mv;
                     }
-                    challengesDAO.removeAllForComputerTime(challenge);
+                    //challengesDAO.removeAllForComputerTime(challenge);
                     Challenge challenge1 = new Challenge(curUser.getUsername(), user, curTime, compIndx);
                     challengesDAO.addChallenge(challenge1);
                 }
