@@ -67,6 +67,13 @@ public class ChallengesDAO {
         return false;
     }
 
+    public boolean deleteTimedOutChallenges(int time) throws SQLException {
+        PreparedStatement st = con.prepareStatement("delete from challenges where meeting_time <= ?");
+        st.setInt(1, time);
+        int res = st.executeUpdate();
+        return res > 0;
+    }
+
     public boolean deleteChallenge(Challenge chall) {
         PreparedStatement st;
         try {

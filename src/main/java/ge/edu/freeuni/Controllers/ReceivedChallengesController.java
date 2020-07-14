@@ -13,13 +13,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 public class ReceivedChallengesController {
 
     @GetMapping("/recChallenges")
-    public String display(){
+    public String display(HttpServletRequest req) throws SQLException {
+        ChallengesDAO challenges = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
+        DateFormat df = new SimpleDateFormat("HH");
+        Date dateobj = new Date();
+        int tm = Integer.parseInt(df.format(dateobj));
+        challenges.deleteTimedOutChallenges(tm);
         return "received";
     }
 
