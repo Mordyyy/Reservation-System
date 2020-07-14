@@ -14,6 +14,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @Controller
 public class SendCodeController {
@@ -27,7 +28,7 @@ public class SendCodeController {
     @PostMapping("/sendcode")
     public ModelAndView sendCode(@RequestParam String Button,
                                  HttpServletResponse resp,
-                                 HttpServletRequest req) throws IOException {
+                                 HttpServletRequest req) throws IOException, SQLException {
         GenerateHash hasher = new GenerateHash();
         Email email = (Email) req.getServletContext().getAttribute("email");
         ModelAndView modelAndView = new ModelAndView("submit");

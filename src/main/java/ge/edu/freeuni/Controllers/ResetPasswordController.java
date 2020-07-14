@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @Controller
 public class ResetPasswordController {
@@ -30,7 +31,7 @@ public class ResetPasswordController {
                                   @RequestParam String password2,
                                   HttpServletRequest req,
                                   HttpServletResponse resp,
-                                  HttpSession ses) throws IOException, MessagingException {
+                                  HttpSession ses) throws IOException, MessagingException, SQLException {
         GenerateHash hasher = new GenerateHash();
         String url = "/home";
         User user = (User)ses.getAttribute("user");

@@ -9,12 +9,8 @@ import java.util.List;
 public class TimeTableDAO {
     private Connection con;
 
-    public TimeTableDAO(String url, String user_name, String password) {
-        try {
-            this.con = DriverManager.getConnection(url, user_name, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public TimeTableDAO(String url, String user_name, String password) throws SQLException {
+        this.con = DriverManager.getConnection(url, user_name, password);
     }
 
     public Cell get(int time, int computerID) throws SQLException {
@@ -73,8 +69,8 @@ public class TimeTableDAO {
 
     public void reset() throws SQLException {
         PreparedStatement st = con.prepareStatement("update time_table set text = ?, color = ?");
-        st.setString(1,"Free");
-        st.setString(2,"green");
+        st.setString(1, "Free");
+        st.setString(2, "green");
         st.executeUpdate();
     }
 }

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.POST;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @Controller
 public class RegisterController {
@@ -31,7 +32,7 @@ public class RegisterController {
                                  @RequestParam String eMail,
                                  @RequestParam String Button,
                                  HttpServletRequest req,
-                                 HttpServletResponse resp) throws IOException, MessagingException, ServletException {
+                                 HttpServletResponse resp) throws IOException, MessagingException, ServletException, SQLException {
         boolean registerClickedSuccessfully = false;
         UsersDAO users = (UsersDAO) req.getServletContext().getAttribute("db");
         User user = users.getUserByUsername(Username);

@@ -14,6 +14,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Random;
 
 @Controller
@@ -26,7 +27,7 @@ public class ForgotPasswordController {
     @PostMapping("/forgot")
     public ModelAndView remainder(@RequestParam String email,
                                  HttpServletRequest req,
-                                 HttpServletResponse resp) throws IOException, MessagingException {
+                                 HttpServletResponse resp) throws IOException, MessagingException, SQLException {
         GenerateHash hasher = new GenerateHash();
         ModelAndView modelAndView = new ModelAndView("login");
         UsersDAO usersDAO = (UsersDAO) req.getServletContext().getAttribute("db");

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionListener;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @Controller
 public class LoginController {
@@ -31,7 +32,7 @@ public class LoginController {
                                 @RequestParam String Button,
                                 HttpServletRequest req,
                                 HttpServletResponse resp,
-                                HttpSession ses) throws IOException {
+                                HttpSession ses) throws IOException, SQLException {
         ses.setAttribute("user", null);
         GenerateHash hasher = new GenerateHash();
         if(Button.equals("Login")) {

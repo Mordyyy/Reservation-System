@@ -10,119 +10,86 @@ public class UsersDAO {
 
     private Connection con;
 
-    public UsersDAO(String url, String user_name, String password) {
-        try {
-            this.con = DriverManager.getConnection(url, user_name, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public UsersDAO(String url, String user_name, String password) throws SQLException {
+        this.con = DriverManager.getConnection(url, user_name, password);
     }
 
-    public boolean addUser(User user) {
+    public boolean addUser(User user) throws SQLException {
         PreparedStatement st = null;
-        try {
-            st = con.prepareStatement("Insert into users (username, password, mail, avatar, cancelledOrders) " +
-                    "values (?, ?, ?, ?, ?)");
-            st.setString(1, user.getUsername());
-            st.setString(2, user.getPassword());
-            st.setString(3, user.getMail());
-            st.setString(4, user.getAvatar());
-            st.setInt(5, user.getCancelledOrders());
-            int res = st.executeUpdate();
+        st = con.prepareStatement("Insert into users (username, password, mail, avatar, cancelledOrders) " +
+                "values (?, ?, ?, ?, ?)");
+        st.setString(1, user.getUsername());
+        st.setString(2, user.getPassword());
+        st.setString(3, user.getMail());
+        st.setString(4, user.getAvatar());
+        st.setInt(5, user.getCancelledOrders());
+        int res = st.executeUpdate();
+        st.close();
+        return (res == 1);
+    }
+
+    public User getUserByUsername(String username) throws SQLException {
+        PreparedStatement st = null;
+        st = con.prepareStatement("Select * from users where username = ?");
+        st.setString(1, username);
+        ResultSet res = st.executeQuery();
+        if (!res.next()) {
             st.close();
-            return (res == 1);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            return null;
         }
-        return false;
+        User user = new User(res.getString("username"), res.getString("password")
+                , res.getString("mail"), res.getString("avatar")
+                , res.getInt("cancelledOrders"));
+        st.close();
+        return user;
     }
 
-    public User getUserByUsername(String username) {
+    public boolean changePassword(String username, String newPassword) throws SQLException {
         PreparedStatement st = null;
-        try {
-            st = con.prepareStatement("Select * from users where username = ?");
-            st.setString(1, username);
-            ResultSet res = st.executeQuery();
-            if (!res.next()) {
-                st.close();
-                return null;
-            }
-            User user = new User(res.getString("username"), res.getString("password")
-                    ,res.getString("mail"), res.getString("avatar")
-                    ,res.getInt("cancelledOrders"));
-            st.close();
-            return user;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
-    }
-
-    public boolean changePassword(String username, String newPassword){
-        PreparedStatement st = null;
-        try {
-            st = con.prepareStatement("update users set password = ? where username = ?");
-            st.setString(1, newPassword);
-            st.setString(2, username);
-            st.executeUpdate();
+        st = con.prepareStatement("update users set password = ? where username = ?");
+        st.setString(1, newPassword);
+        st.setString(2, username);
+        int res = st.executeUpdate();
 //            if (!res.next()) {
 //                st.close();
 //                return false;
 //            }
-            st.close();
-            return true;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return false;
+        st.close();
+        return res == 1;
     }
 
-    public void changeAvatar(User user) {
+    public void changeAvatar(User user) throws SQLException {
         PreparedStatement st = null;
-        try {
-            st = con.prepareStatement("update users set avatar = ? where username = ?");
-            st.setString(1, user.getAvatar());
-            st.setString(2, user.getUsername());
-            st.executeUpdate();
-            st.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        st = con.prepareStatement("update users set avatar = ? where username = ?");
+        st.setString(1, user.getAvatar());
+        st.setString(2, user.getUsername());
+        st.executeUpdate();
+        st.close();
     }
 
-    public User getUserByeMail(String eMail) {
+    public User getUserByeMail(String eMail) throws SQLException {
         PreparedStatement st = null;
-        try {
-            st = con.prepareStatement("Select * from users where mail = ?");
-            st.setString(1, eMail);
-            ResultSet res = st.executeQuery();
-            if (!res.next()) {
-                st.close();
-                return null;
-            }
-            User user = new User(res.getString("username"), res.getString("password")
-                    ,res.getString("mail"), res.getString("avatar")
-                    ,res.getInt("cancelledOrders"));
+        st = con.prepareStatement("Select * from users where mail = ?");
+        st.setString(1, eMail);
+        ResultSet res = st.executeQuery();
+        if (!res.next()) {
             st.close();
-            return user;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            return null;
         }
-        return null;
+        User user = new User(res.getString("username"), res.getString("password")
+                , res.getString("mail"), res.getString("avatar")
+                , res.getInt("cancelledOrders"));
+        st.close();
+        return user;
     }
 
-    public boolean removeUser(String username) {
+    public boolean removeUser(String username) throws SQLException {
         PreparedStatement st = null;
-        try {
-            st = con.prepareStatement("Delete from users where username = ?");
-            st.setString(1, username);
-            int res = st.executeUpdate();
-            st.close();
-            return (res == 1);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return false;
+        st = con.prepareStatement("Delete from users where username = ?");
+        st.setString(1, username);
+        int res = st.executeUpdate();
+        st.close();
+        return (res == 1);
     }
 
     public boolean contains(String userName) throws SQLException {
@@ -134,39 +101,34 @@ public class UsersDAO {
 
     private int getResultSetSize(ResultSet rs) throws SQLException {
         int res = 0;
-        while(rs.next()){
+        while (rs.next()) {
             res++;
         }
         return res;
     }
 
-    public List<User> getAll() {
+    public List<User> getAll() throws SQLException {
         PreparedStatement st = null;
         List<User> lst = new ArrayList<>();
-        try {
-            st = con.prepareStatement("Select * from users");
-            ResultSet res = st.executeQuery();
-            if (!res.next()) {
-                st.close();
-                return lst;
-            }
-            List<User> users = new ArrayList<>();
-            User user = new User(res.getString("username"), res.getString("password")
-                    ,res.getString("mail"), res.getString("avatar")
-                    ,res.getInt("cancelledOrders"));
-            users.add(user);
-            while (res.next()) {
-                user = new User(res.getString("username"), res.getString("password")
-                        ,res.getString("mail"), res.getString("avatar")
-                        ,res.getInt("cancelledOrders"));
-                users.add(user);
-            }
+        st = con.prepareStatement("Select * from users");
+        ResultSet res = st.executeQuery();
+        if (!res.next()) {
             st.close();
-            return users;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            return lst;
         }
-        return lst;
+        List<User> users = new ArrayList<>();
+        User user = new User(res.getString("username"), res.getString("password")
+                , res.getString("mail"), res.getString("avatar")
+                , res.getInt("cancelledOrders"));
+        users.add(user);
+        while (res.next()) {
+            user = new User(res.getString("username"), res.getString("password")
+                    , res.getString("mail"), res.getString("avatar")
+                    , res.getInt("cancelledOrders"));
+            users.add(user);
+        }
+        st.close();
+        return users;
     }
 
 }

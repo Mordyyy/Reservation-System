@@ -18,7 +18,12 @@ public class ContextListener implements ServletContextListener {
         String user_name = sc.getInitParameter("user_name");
         String password = sc.getInitParameter("password");
         String database = sc.getInitParameter("database");
-        UsersDAO db = new UsersDAO(url + database, user_name, password);
+        UsersDAO db = null;
+        try {
+            db = new UsersDAO(url + database, user_name, password);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         BlacklistDAO blacklist = null;
         try {
             blacklist = new BlacklistDAO(url + database, user_name, password);
@@ -26,7 +31,12 @@ public class ContextListener implements ServletContextListener {
             throwables.printStackTrace();
         }
         Email mail = new Email();
-        ChallengesDAO challenges = new ChallengesDAO(url + database, user_name, password);
+        ChallengesDAO challenges = null;
+        try {
+            challenges = new ChallengesDAO(url + database, user_name, password);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         ImageDAO images = new ImageDAO(url + database, user_name, password);
         ReservedDAO reservedDAO = null;
         try {
@@ -35,7 +45,12 @@ public class ContextListener implements ServletContextListener {
             throwables.printStackTrace();
         }
 
-        TimeTableDAO timeTable = new TimeTableDAO(url + database, user_name, password);
+        TimeTableDAO timeTable = null;
+        try {
+            timeTable = new TimeTableDAO(url + database, user_name, password);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         for(int i = 10; i <= 21; i++){
             for(int j = 0; j <= 9; j++){
                 try {
