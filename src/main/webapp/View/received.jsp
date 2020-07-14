@@ -12,7 +12,10 @@
     <link type="text/css" rel="stylesheet" href="${bla}">
 </head>
 <body>
-    <h1 class="headerm">Received Challenges</h1>
+    <header>
+        <h1>Received Challenges</h1>
+        <a href="/home">Main Page</a>
+    </header>
     <%
         User user = (User)session.getAttribute("user");
         String username = user.getUsername();
