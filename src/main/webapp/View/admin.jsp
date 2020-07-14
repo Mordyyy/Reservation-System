@@ -96,7 +96,12 @@
             </select>
             <button type="submit" name = "Button" value = "reserve">Reserve a seat</button><br><br>
         </div>
-        <input class="check" type="text" placeholder="Username" name="check">
+<%--        <div class="checking">--%>
+            <input class="check" type="text" placeholder="Username" name="check">
+<%--            <div class="checkico">--%>
+<%--                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>--%>
+<%--            </div>--%>
+<%--        </div>--%>
         <div class="buttons">
             <select name = "time">
                 <option value="10" selected>10:00 - 11:00</option>
