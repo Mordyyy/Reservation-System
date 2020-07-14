@@ -173,13 +173,7 @@ textarea{
 
 th {
     height: 30px;
-    font-family: "Marker Felt",fantasy;
 }
-
-select{
-    padding: 0 50px;
-}
-
 .errors{
     width: 18.23%;
     height: 50px;

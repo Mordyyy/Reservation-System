@@ -24,8 +24,9 @@ import java.util.Date;
 @Controller
 public class HomeController {
     @GetMapping("/home")
-    public String display(HttpSession ses) throws SQLException {
+    public String display(HttpSession ses, HttpServletRequest req) throws SQLException {
         User user = (User)ses.getAttribute("user");
+        colorCheck(req);
         if (user == null || user.getUsername().equals("admin")) {
             return "fail";
         }
