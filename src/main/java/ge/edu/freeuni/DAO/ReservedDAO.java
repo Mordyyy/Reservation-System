@@ -22,6 +22,20 @@ public class ReservedDAO {
         st.close();
     }
 
+    public boolean containsReservation(Reservation res) throws SQLException {
+        PreparedStatement st = con.prepareStatement("select * from reservations where username = ? and " +
+                                                    "time = ? and computerID = ?");
+        st.setString(1, res.getUsername());
+        st.setInt(2, res.getTime());
+        st.setInt(3, res.getCompID());
+        ResultSet rs = st.executeQuery();
+        int ans = 0;
+        while(rs.next()){
+            ans++;
+        }
+        return ans > 0;
+    }
+
     public List<Reservation> getAllByUser(String username) throws SQLException {
         PreparedStatement st = con.prepareStatement("select * from reservations " +
                 "where username = ?");

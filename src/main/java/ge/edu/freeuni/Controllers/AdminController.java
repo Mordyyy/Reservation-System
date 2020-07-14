@@ -1,13 +1,7 @@
 package ge.edu.freeuni.Controllers;
 
-import ge.edu.freeuni.DAO.BlacklistDAO;
-import ge.edu.freeuni.DAO.ChallengesDAO;
-import ge.edu.freeuni.DAO.TimeTableDAO;
-import ge.edu.freeuni.DAO.UsersDAO;
-import ge.edu.freeuni.Models.Cell;
-import ge.edu.freeuni.Models.Challenge;
-import ge.edu.freeuni.Models.Email;
-import ge.edu.freeuni.Models.User;
+import ge.edu.freeuni.DAO.*;
+import ge.edu.freeuni.Models.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,12 +37,27 @@ public class AdminController {
                                  @RequestParam String toBlock,
                                  @RequestParam String time,
                                  @RequestParam String computer,
+                                 @RequestParam String check,
+                                 @RequestParam String timetocheck,
+                                 @RequestParam String computertocheck,
                                  HttpServletRequest req) throws SQLException {
         ModelAndView mv = new ModelAndView("admin");
         Email email = (Email) req.getServletContext().getAttribute("email");
         UsersDAO db = (UsersDAO) req.getServletContext().getAttribute("db");
         BlacklistDAO blackDB = (BlacklistDAO)req.getServletContext().getAttribute("blacklist");
-        if (Button.equals("sendall")) {
+        ReservedDAO reservedDAO = (ReservedDAO)req.getServletContext().getAttribute("reserved");
+        if(Button.equals("check")){
+            if(check != null){
+                String usernm = check;
+                int timeToCheck = Integer.parseInt(timetocheck);
+                int computerToCheck = Integer.parseInt(computertocheck.substring(computer.length() - 1));
+                if(reservedDAO.containsReservation(new Reservation(usernm,timeToCheck,computerToCheck))){
+                    mv.addObject("contains", true);
+                }else{
+                    mv.addObject("contains", false);
+                }
+            }
+        }else if (Button.equals("sendall")) {
             List<User> users = db.getAll();
             for (User user: users) {
                 try {
@@ -59,8 +68,7 @@ public class AdminController {
                     e.printStackTrace();
                 }
             }
-        }
-        else if (Button.equals("send")) {
+        }else if (Button.equals("send")) {
             StringTokenizer tokenizer = new StringTokenizer(emailstosend, " ,");
             while (tokenizer.hasMoreElements()) {
                 String username = tokenizer.nextToken();

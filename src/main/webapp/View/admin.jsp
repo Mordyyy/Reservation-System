@@ -103,7 +103,7 @@
 <%--            </div>--%>
 <%--        </div>--%>
         <div class="buttons">
-            <select name = "time">
+            <select name = "timetocheck">
                 <option value="10" selected>10:00 - 11:00</option>
                 <option value="11">11:00 - 12:00</option>
                 <option value="12">12:00 - 13:00</option>
@@ -117,7 +117,7 @@
                 <option value="20">20:00 - 21:00</option>
                 <option value="21">21:00 - 22:00</option>
             </select>
-            <select name = "computer">
+            <select name = "computertocheck">
                 <option value = "comp 0" selected>Computer 0</option>
                 <option value = "comp 1">Computer 1</option>
                 <option value = "comp 2">Computer 2</option>
@@ -162,6 +162,29 @@
                     ${error}
             </div>
         </c:if>
+
+
+
+
+
+
+        <c:if test="${contains != null}">
+            <c:if test="${contains}">
+<%--                esaa shesacvleli--%>
+                <%System.out.println("User has reserved");%>
+            </c:if>
+            <c:if test="${!contains}">
+<%--                                da es--%>
+                <%System.out.println("User has not reserved");%>
+            </c:if>
+        </c:if>
+
+
+
+
+
+
+
     </div>
     </body>
 </div>
