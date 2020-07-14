@@ -22,7 +22,7 @@
         String imgfile = curUser.getAvatar();
     %>
     <img style="float: left" width="200px" height="200px"
-         src="/resources/images/<%=imgfile%>.jpg"/>
+         src="/resources/images/<%=imgfile%>"/>
     <div class="info">
         <h1 class="nameval">Hello <%=((User)session.getAttribute("user")).getUsername()%></h1><br><br><br><br><br>
         <a href="/recChallenges">Received Challenges</a><br><br>
@@ -35,8 +35,9 @@
             <% ImageDAO db = (ImageDAO) request.getServletContext().getAttribute("images");
                 List<Image> images = db.getAll();
                 for (int i = 0; i < images.size(); i++) {
-                    String curImage = images.get(i).getName();%>
-            <option value="<%=curImage%>"><%=curImage%></option>
+                    String curImage = images.get(i).getName();
+                    String curImageUrl = images.get(i).getUrl();%>
+            <option value="<%=curImageUrl%>"><%=curImage%></option>
             <%}%>
         </select>
         <button style="margin: 10px 40px;" type="submit" name = "Button" value = "Change avatar">Change Avatar</button>

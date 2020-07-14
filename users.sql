@@ -38,3 +38,9 @@ create table time_table(
     text varchar(60),
     color varchar(60)
 );
+
+create table reservations(
+	username varchar(60),
+	time int,
+	computerID int
+);
