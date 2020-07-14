@@ -34,6 +34,9 @@
                 <%}%>
         </ul>
     </nav>
+    <div>
+        <a href = "/home">Go Back</a>
+    </div>
     <c:if test="${error != null}">
         <div class="errorico">
             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
