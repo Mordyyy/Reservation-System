@@ -36,6 +36,12 @@ public class ReservedDAO {
         return ans > 0;
     }
 
+    public void removeAll() throws SQLException {
+        PreparedStatement st;
+        st = con.prepareStatement("Delete from reservations");
+        st.executeUpdate();
+    }
+
     public List<Reservation> getAllByUser(String username) throws SQLException {
         PreparedStatement st = con.prepareStatement("select * from reservations " +
                 "where username = ?");

@@ -71,4 +71,10 @@ public class TimeTableDAO {
         return lst;
     }
 
+    public void reset() throws SQLException {
+        PreparedStatement st = con.prepareStatement("update time_table set text = ?, color = ?");
+        st.setString(1,"Free");
+        st.setString(2,"green");
+        st.executeUpdate();
+    }
 }

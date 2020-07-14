@@ -143,14 +143,10 @@ public class ChallengesDAO {
         }
     }
 
-    public void removeAll() {
+    public void removeAll() throws SQLException {
         PreparedStatement st;
-        try {
-            st = con.prepareStatement("Delete from challenges");
-            st.executeUpdate();
-        } catch (SQLException throwables) {
-
-        }
+        st = con.prepareStatement("Delete from challenges");
+        st.executeUpdate();
     }
 
     public List<Challenge> getAllForTwo(String fromUser, String toUser) {
@@ -170,7 +166,7 @@ public class ChallengesDAO {
                     res.getInt("meeting_time"), res.getInt("computerID"));
             challenges.add(chall);
             while (res.next()) {
-                chall = new Challenge(res.getInt("id"),res.getString("fromUser"), res.getString("toUser"),
+                chall = new Challenge(res.getInt("id"), res.getString("fromUser"), res.getString("toUser"),
                         res.getInt("meeting_time"), res.getInt("computerID"));
                 challenges.add(chall);
             }
@@ -199,7 +195,7 @@ public class ChallengesDAO {
                     res.getInt("meeting_time"), res.getInt("computerID"));
             challenges.add(chall);
             while (res.next()) {
-                chall = new Challenge(res.getInt("id"),res.getString("fromUser"), res.getString("toUser"),
+                chall = new Challenge(res.getInt("id"), res.getString("fromUser"), res.getString("toUser"),
                         res.getInt("meeting_time"), res.getInt("computerID"));
                 challenges.add(chall);
             }
@@ -227,7 +223,7 @@ public class ChallengesDAO {
                     res.getInt("meeting_time"), res.getInt("computerID"));
             challenges.add(chall);
             while (res.next()) {
-                chall = new Challenge(res.getInt("id"),res.getString("fromUser"), res.getString("toUser"),
+                chall = new Challenge(res.getInt("id"), res.getString("fromUser"), res.getString("toUser"),
                         res.getInt("meeting_time"), res.getInt("computerID"));
                 challenges.add(chall);
             }
@@ -251,11 +247,11 @@ public class ChallengesDAO {
                 return lst;
             }
             List<Challenge> challenges = new ArrayList<>();
-            Challenge chall = new Challenge(res.getInt("id"),res.getString("fromUser"), res.getString("toUser"),
+            Challenge chall = new Challenge(res.getInt("id"), res.getString("fromUser"), res.getString("toUser"),
                     res.getInt("meeting_time"), res.getInt("computerID"));
             challenges.add(chall);
             while (res.next()) {
-                chall = new Challenge(res.getInt("id"),res.getString("fromUser"), res.getString("toUser"),
+                chall = new Challenge(res.getInt("id"), res.getString("fromUser"), res.getString("toUser"),
                         res.getInt("meeting_time"), res.getInt("computerID"));
                 challenges.add(chall);
             }

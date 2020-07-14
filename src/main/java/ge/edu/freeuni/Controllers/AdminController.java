@@ -46,7 +46,13 @@ public class AdminController {
         UsersDAO db = (UsersDAO) req.getServletContext().getAttribute("db");
         BlacklistDAO blackDB = (BlacklistDAO)req.getServletContext().getAttribute("blacklist");
         ReservedDAO reservedDAO = (ReservedDAO)req.getServletContext().getAttribute("reserved");
-        if(Button.equals("check")){
+        ChallengesDAO challengesDAO = (ChallengesDAO)req.getServletContext().getAttribute("challenges");
+        TimeTableDAO timeTableDAO = (TimeTableDAO)req.getServletContext().getAttribute("table");
+        if(Button.equals("reset")){
+            challengesDAO.removeAll();
+            reservedDAO.removeAll();
+            timeTableDAO.reset();
+        }else if(Button.equals("check")){
             if(check != null){
                 String usernm = check;
                 int timeToCheck = Integer.parseInt(timetocheck);
@@ -103,7 +109,7 @@ public class AdminController {
             if (curCell.getColor().equals("red")) {
                 curCell.setColor("red");
                 curCell.setText("Taken");
-                ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
+                challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
                 Challenge challenge = new Challenge(0, "", "", curTime, compIndx);
                 challengesDAO.removeAllForComputerTime(challenge);
             }
