@@ -11,7 +11,6 @@ body{
     overflow: hidden;
     position: relative;
     padding:0 0 0 0;
-    font-family: sans-serif;
     background: url(../images/Background.jpg) repeat-x;
     background-size: cover;
 }
@@ -182,13 +181,24 @@ th {
 
 .errorico{
     position: absolute;
-    left: 15%;
+    left: 12.3%;
     color: red;
 }
 
 select{
     background: none;
+    border: 2px solid blueviolet;
+    padding: 5px;
     color: white;
+    font-size: 15px;
+    font-family: Georgia, serif;
+    cursor: pointer;
+    /*margin: 5px 0;*/
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
 }
 
 .eror{
@@ -197,5 +207,25 @@ select{
 }
 
 .buttons{
-    padding: 0 50px;
+    padding: 0 20px;
 }
+
+
+button{
+    width: 7%;
+    height: 30px;
+    background: blueviolet;
+    border: 2px solid blueviolet;
+    border-bottom: none;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    margin: 12px 0;
+    border-radius: 20px;
+}
+
+select option{
+    color: black;
+    background-color: deepskyblue;
+}
+
