@@ -28,6 +28,12 @@ public class ContextListener implements ServletContextListener {
         Email mail = new Email();
         ChallengesDAO challenges = new ChallengesDAO(url + database, user_name, password);
         ImageDAO images = new ImageDAO(url + database, user_name, password);
+        ReservedDAO reservedDAO = null;
+        try {
+            reservedDAO = new ReservedDAO(url + database, user_name, password);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
         TimeTableDAO timeTable = new TimeTableDAO(url + database, user_name, password);
         for(int i = 10; i <= 21; i++){
@@ -38,6 +44,7 @@ public class ContextListener implements ServletContextListener {
             }
         }
 
+        sc.setAttribute("reserved", reservedDAO);
         sc.setAttribute("table", timeTable);
         sc.setAttribute("challenges", challenges);
         sc.setAttribute("email", mail);
