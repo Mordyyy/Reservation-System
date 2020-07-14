@@ -40,7 +40,7 @@ public class ReceivedChallengesController {
         if (challenge != null) {
             if(Button.equals("Reject")){
                 if (lst.size() == 1) {
-                    if (curCell.getColor().equals("yellow")) {
+                    if (curCell.getColor().equals("orange")) {
                         curCell.setColor("green");
                         curCell.setText("Free");
                     }
@@ -55,14 +55,14 @@ public class ReceivedChallengesController {
                     mv.addObject("error", "You are in a Blacklist!");
                 }
                 else {
-                    if (curCell.getColor().equals("yellow")) {
+                    if (curCell.getColor().equals("orange")) {
                         dao.removeChallengesByChallenge(challenge);
                         curCell.setText("Taken");
                         curCell.setColor("red");
                         table.update(curCell);
                         for (int i = 0; i < 10; i++) {
                             Cell cell = table.get(time, i);
-                            if (cell.getColor().equals("yellow") && dao.getAllForComputerTime(time, i).size() == 0) {
+                            if (cell.getColor().equals("orange") && dao.getAllForComputerTime(time, i).size() == 0) {
                                 cell.setColor("green");
                                 cell.setText("Free");
                                 table.update(cell);
