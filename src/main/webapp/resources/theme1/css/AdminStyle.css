@@ -109,6 +109,17 @@ textarea{
     margin: 0 10px;
 }
 
+.check{
+    width: 11%;
+    border: none;
+    outline: none;
+    background: none;
+    color: white;
+    font-size: 14px;
+    margin: 0 20px;
+    border-bottom: 2px solid blueviolet;
+}
+
 .blacklist{
     width: 18.23%;
     position: absolute;
