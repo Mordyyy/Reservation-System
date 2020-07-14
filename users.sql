@@ -5,6 +5,7 @@ drop table if exists blacklist;
 drop table if exists challenges;
 drop table if exists images;
 drop table if exists time_table;
+drop table if exists reservations;
 
 create table users (
 	username varchar(60) primary key,

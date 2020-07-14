@@ -1,11 +1,9 @@
 package ge.edu.freeuni.Controllers;
 
-import ge.edu.freeuni.DAO.BlacklistDAO;
-import ge.edu.freeuni.DAO.ChallengesDAO;
-import ge.edu.freeuni.DAO.TimeTableDAO;
-import ge.edu.freeuni.DAO.UsersDAO;
+import ge.edu.freeuni.DAO.*;
 import ge.edu.freeuni.Models.Cell;
 import ge.edu.freeuni.Models.Challenge;
+import ge.edu.freeuni.Models.Reservation;
 import ge.edu.freeuni.Models.User;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -47,6 +45,7 @@ public class HomeController {
         ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
         BlacklistDAO blacklistDAO = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
         UsersDAO usersDAO = (UsersDAO)  req.getServletContext().getAttribute("db");
+        ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         User curUser = (User)ses.getAttribute("user");
         colorCheck(req);
         if (Button.equals("reserve")) {
@@ -61,18 +60,16 @@ public class HomeController {
             if (!curCell.getColor().equals("red") && !curCell.getColor().equals("grey")) {
                 Challenge challenge = new Challenge(0, "", "", curTime, compIndx);
                 if (WannaChallenge != null) {
-
                     if(user.equals("")){
                         mv.addObject("error", "Please, enter opponent's name!");
                         return mv;
-                    }
-
-                    if (blacklistDAO.getUser(user)) {
+                    } else if (user.equals(curUser.getUsername())) {
+                        mv.addObject("error", "You can't challenge yourself!");
+                        return mv;
+                    } else if (blacklistDAO.getUser(user)) {
                         mv.addObject("error", "Your opponent is in a blacklist, you can't reserve!");
                         return mv;
-                    }
-                    //challengesDAO.removeAllForComputerTime(challenge);
-                    if (usersDAO.contains(user)) {
+                    } else if (usersDAO.contains(user)) {
                         Challenge challenge1 = new Challenge(curUser.getUsername(), user, curTime, compIndx);
                         challengesDAO.addChallenge(challenge1);
                     }
@@ -85,6 +82,8 @@ public class HomeController {
                     curCell.setColor("red");
                     curCell.setText("Taken");
                     tableDAO.update(curCell);
+                    Reservation reservation = new Reservation(curUser.getUsername(), curTime, compIndx);
+                    reservedDAO.addReservation(reservation);
                     if (WannaChallenge == null)
                         challengesDAO.removeAllForComputerTime(challenge);
                 }

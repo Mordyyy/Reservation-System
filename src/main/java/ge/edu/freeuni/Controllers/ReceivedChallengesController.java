@@ -2,9 +2,11 @@ package ge.edu.freeuni.Controllers;
 
 import ge.edu.freeuni.DAO.BlacklistDAO;
 import ge.edu.freeuni.DAO.ChallengesDAO;
+import ge.edu.freeuni.DAO.ReservedDAO;
 import ge.edu.freeuni.DAO.TimeTableDAO;
 import ge.edu.freeuni.Models.Cell;
 import ge.edu.freeuni.Models.Challenge;
+import ge.edu.freeuni.Models.Reservation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +33,7 @@ public class ReceivedChallengesController {
         ChallengesDAO dao = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
         TimeTableDAO table = (TimeTableDAO) req.getServletContext().getAttribute("table");
         BlacklistDAO blacklistDAO = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
+        ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         Challenge challenge = dao.getChallenge(Integer.parseInt(hiddenID));
         ModelAndView mv = new ModelAndView("received");
         int time = challenge.getTime();
@@ -68,9 +71,34 @@ public class ReceivedChallengesController {
                                 table.update(cell);
                             }
                         }
+                        reservedDAO.addReservation(new Reservation(challenge.getToUser(), time, computer));
+                        reservedDAO.addReservation(new Reservation(challenge.getFromUser(), time, computer));
                     }
                     else if (curCell.getColor().equals("red")) {
-                        mv.addObject("error", "Already taken!");
+                        dao.removeChallengesByChallenge(challenge);
+                        List<Reservation> reservations = reservedDAO.getAllByTime(challenge.getTime());
+                        for (Reservation reservation: reservations) {
+                            System.out.println(reservation.getUsername());
+                        }
+                        if (reservations.size() > 1) {
+                            mv.addObject("error", "Already taken!");
+                        }
+                        else {
+                            Reservation curReservation = reservations.get(0);
+                            if (curReservation.getUsername().equals(challenge.getFromUser())) {
+                                List<Reservation> curReservations = reservedDAO.getAllByUser(challenge.getToUser());
+                                for (Reservation reservation: curReservations) {
+                                    if (reservation.getTime() == challenge.getTime()) {
+                                        mv.addObject("error", "You can't accept this challenge!");
+                                        return mv;
+                                    }
+                                }
+                                reservedDAO.addReservation(new Reservation(challenge.getToUser(), time, computer));
+                            }
+                            else {
+                                mv.addObject("error", "Already taken!");
+                            }
+                        }
                     }
                     else if (curCell.getColor().equals("gray")) {
                         mv.addObject("error", "Too late!");
