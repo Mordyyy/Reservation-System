@@ -109,6 +109,21 @@ textarea{
     margin: 0 10px;
 }
 
+.checking input{
+    display: block;
+}
+
+.check{
+    width: 11%;
+    border: none;
+    outline: none;
+    background: none;
+    color: white;
+    font-size: 14px;
+    margin: 0 20px;
+    border-bottom: 2px solid blueviolet;
+}
+
 .blacklist{
     width: 18.23%;
     position: absolute;
@@ -183,6 +198,12 @@ th {
     position: absolute;
     left: 12.3%;
     color: red;
+}
+
+.checkico{
+    position: absolute;
+    width: 5%;
+    padding: 0 10px;
 }
 
 select{
