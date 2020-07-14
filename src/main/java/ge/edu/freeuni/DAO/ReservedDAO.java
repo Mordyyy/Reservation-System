@@ -29,20 +29,19 @@ public class ReservedDAO {
         ResultSet res = st.executeQuery();
         if (!res.next()) {
             st.close();
-            return null;
+            return new ArrayList<>();
         }
         return getFromResultSet(res);
     }
 
-    public List<Reservation> getAllByTimeComp(int time, int compID) throws SQLException {
+    public List<Reservation> getAllByTime(int time) throws SQLException {
         PreparedStatement st = con.prepareStatement("select * from reservations " +
-                "where time = ? and computerID = ?");
-        st.setInt(1,time);
-        st.setInt(2,compID);
+                "where time = ?");
+        st.setInt(1, time);
         ResultSet res = st.executeQuery();
         if (!res.next()) {
             st.close();
-            return null;
+            return new ArrayList<>();
         }
         return getFromResultSet(res);
     }
