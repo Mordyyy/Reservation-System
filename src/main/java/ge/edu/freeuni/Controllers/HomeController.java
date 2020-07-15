@@ -66,6 +66,9 @@ public class HomeController {
                     } else if (user.equals(curUser.getUsername())) {
                         mv.addObject("error", "You can't challenge yourself!");
                         return mv;
+                    } else if (user.equals("admin")) {
+                        mv.addObject("error", "You can't challenge admin!");
+                        return mv;
                     } else if (blacklistDAO.getUser(user)) {
                         mv.addObject("error", "Your opponent is in a blacklist, you can't reserve!");
                         return mv;
