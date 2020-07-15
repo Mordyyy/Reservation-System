@@ -14,6 +14,22 @@ public class ChallengesDAO {
         this.con = DriverManager.getConnection(url, user_name, password);
     }
 
+    public int getChallengeId(String fromUser, String toUser, int time, int compID) throws SQLException {
+        String query = "select id from challenges where fromUser = ? and toUser = ?" +
+                "and meeting_time = ? and computerID = ?";
+        PreparedStatement st = con.prepareStatement(query);
+        st.setString(1,fromUser);
+        st.setString(2, toUser);
+        st.setInt(3,time);
+        st.setInt(4,compID);
+        ResultSet rs = st.executeQuery();
+        if (!rs.next()) {
+            st.close();
+            return -1;
+        }
+        return rs.getInt(1);
+    }
+
     public Challenge getChallenge(int id) throws SQLException {
         PreparedStatement st;
         st = con.prepareStatement("select * from challenges where id = ?");

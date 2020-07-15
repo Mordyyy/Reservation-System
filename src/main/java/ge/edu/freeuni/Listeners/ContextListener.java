@@ -37,7 +37,12 @@ public class ContextListener implements ServletContextListener {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        ImageDAO images = new ImageDAO(url + database, user_name, password);
+        ImageDAO images = null;
+        try {
+            images = new ImageDAO(url + database, user_name, password);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         ReservedDAO reservedDAO = null;
         try {
             reservedDAO = new ReservedDAO(url + database, user_name, password);

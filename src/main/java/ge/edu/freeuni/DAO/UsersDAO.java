@@ -50,10 +50,6 @@ public class UsersDAO {
         st.setString(1, newPassword);
         st.setString(2, username);
         int res = st.executeUpdate();
-//            if (!res.next()) {
-//                st.close();
-//                return false;
-//            }
         st.close();
         return res == 1;
     }
