@@ -7,6 +7,7 @@ import ge.edu.freeuni.DAO.TimeTableDAO;
 import ge.edu.freeuni.Models.Cell;
 import ge.edu.freeuni.Models.Challenge;
 import ge.edu.freeuni.Models.Reservation;
+import ge.edu.freeuni.Models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,26 +27,27 @@ import java.util.List;
 public class ReceivedChallengesController {
 
     @GetMapping("/recChallenges")
-    public String display(HttpServletRequest req) throws SQLException {
+    public ModelAndView display(HttpServletRequest req, HttpSession ses) throws SQLException {
         ChallengesDAO challenges = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
         DateFormat df = new SimpleDateFormat("HH");
         Date dateobj = new Date();
         int tm = Integer.parseInt(df.format(dateobj));
         challenges.deleteTimedOutChallenges(tm);
-        return "received";
+        ModelAndView mv = new ModelAndView("received");
+        setModelAttributes(req, ses, mv);
+        return mv;
     }
 
     @PostMapping("/recChallenges")
     public ModelAndView respondChallenge(@RequestParam String hiddenID,
                                          @RequestParam String Button,
-                                         HttpServletRequest req) throws SQLException {
-
-        ChallengesDAO dao = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
+                                         HttpServletRequest req, HttpSession ses) throws SQLException {
+        ModelAndView mv = new ModelAndView("received");
+        ChallengesDAO dao = (ChallengesDAO)req.getServletContext().getAttribute("challenges");
         TimeTableDAO table = (TimeTableDAO) req.getServletContext().getAttribute("table");
         BlacklistDAO blacklistDAO = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
         ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         Challenge challenge = dao.getChallenge(Integer.parseInt(hiddenID));
-        ModelAndView mv = new ModelAndView("received");
         int time = challenge.getTime();
         int computer = challenge.getComputerID();
         List<Challenge> lst = dao.getAllForComputerTime(time, computer);
@@ -98,6 +102,7 @@ public class ReceivedChallengesController {
                                 for (Reservation reservation: curReservations) {
                                     if (reservation.getTime() == challenge.getTime()) {
                                         mv.addObject("error", "You can't accept this challenge!");
+                                        setModelAttributes(req, ses, mv);
                                         return mv;
                                     }
                                 }
@@ -115,6 +120,18 @@ public class ReceivedChallengesController {
             }
             dao.deleteChallenge(Integer.parseInt(hiddenID));
         }
+        setModelAttributes(req, ses, mv);
         return mv;
     }
+
+    private ModelAndView setModelAttributes(HttpServletRequest req, HttpSession ses,
+                                            ModelAndView mv) throws SQLException {
+        User user = (User)ses.getAttribute("user");
+        String username = user.getUsername();
+        ChallengesDAO dao = (ChallengesDAO)req.getServletContext().getAttribute("challenges");
+        List<Challenge> allReceived = dao.getAllReceived(username);
+        mv.addObject("receivedChallenges", allReceived);
+        return mv;
+    }
+
 }

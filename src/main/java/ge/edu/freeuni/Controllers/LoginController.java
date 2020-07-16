@@ -1,8 +1,11 @@
 package ge.edu.freeuni.Controllers;
 
+import ge.edu.freeuni.DAO.BlacklistDAO;
 import ge.edu.freeuni.DAO.ChallengesDAO;
+import ge.edu.freeuni.DAO.ImageDAO;
 import ge.edu.freeuni.DAO.UsersDAO;
 import ge.edu.freeuni.Hash.GenerateHash;
+import ge.edu.freeuni.Models.Image;
 import ge.edu.freeuni.Models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionListener;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 @Controller
 public class LoginController {
@@ -56,20 +60,35 @@ public class LoginController {
             if (user == null) {
                 modelAndView.addObject("Error", "Account Does not exist!");
                 modelAndView.setViewName("login");
+                setModelAttributes(req, ses, modelAndView);
                 return modelAndView;
             }
             if (!user.getPassword().equals(hasher.generateHash(Password))) {
                 modelAndView.addObject("Error", "Username or Password incorrect!");
                 modelAndView.setViewName("login");
+                setModelAttributes(req, ses, modelAndView);
                 return modelAndView;
             }
             //modelAndView.setViewName("home");
             ses.setAttribute("user", user);
             resp.sendRedirect(url);
+            setModelAttributes(req, ses, modelAndView);
             return modelAndView;
         }else {
             resp.sendRedirect("/register");
             return new ModelAndView("register");
         }
+    }
+
+    private void setModelAttributes(HttpServletRequest req, HttpSession ses, ModelAndView mv) throws SQLException {
+        BlacklistDAO dao = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
+        List<String> blacklist = dao.getAll();
+        User curUser = (User)ses.getAttribute("user");
+        String imgfile = curUser.getAvatar();
+        ImageDAO db = (ImageDAO) req.getServletContext().getAttribute("images");
+        List<Image> images = db.getAll();
+        mv.addObject("blacklist", blacklist);
+        mv.addObject("imgfile", imgfile);
+        mv.addObject("images", images);
     }
 }

@@ -1,12 +1,10 @@
 package ge.edu.freeuni.Controllers;
 
 import ge.edu.freeuni.DAO.*;
-import ge.edu.freeuni.Models.Cell;
-import ge.edu.freeuni.Models.Challenge;
-import ge.edu.freeuni.Models.Reservation;
-import ge.edu.freeuni.Models.User;
+import ge.edu.freeuni.Models.*;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,14 +20,29 @@ import java.util.List;
 
 @Controller
 public class HomeController {
+
+    private void setModelAttributes(HttpServletRequest req, HttpSession ses, ModelAndView mv) throws SQLException {
+        BlacklistDAO dao = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
+        List<String> blacklist = dao.getAll();
+        User curUser = (User)ses.getAttribute("user");
+        String imgfile = curUser.getAvatar();
+        ImageDAO db = (ImageDAO) req.getServletContext().getAttribute("images");
+        List<Image> images = db.getAll();
+        mv.addObject("blacklist", blacklist);
+        mv.addObject("imgfile", imgfile);
+        mv.addObject("images", images);
+    }
+
     @GetMapping("/home")
-    public String display(HttpSession ses, HttpServletRequest req) throws SQLException {
+    public ModelAndView display(HttpSession ses, HttpServletRequest req) throws SQLException {
         User user = (User)ses.getAttribute("user");
         colorCheck(req);
         if (user == null || user.getUsername().equals("admin")) {
-            return "fail";
+            return new ModelAndView("fail");
         }
-        return "home";
+        ModelAndView mv = new ModelAndView("home");
+        setModelAttributes(req, ses, mv);
+        return mv;
     }
 
     @PostMapping("/home")
@@ -56,6 +69,7 @@ public class HomeController {
             Cell curCell = tableDAO.get(curTime, compIndx);
             if (blacklistDAO.getUser(curUser.getUsername())) {
                 mv.addObject("error", "You are in a blacklist, you can't reserve!");
+                setModelAttributes(req, ses, mv);
                 return mv;
             }
             if (!curCell.getColor().equals("red") && !curCell.getColor().equals("grey")) {
@@ -63,15 +77,19 @@ public class HomeController {
                 if (WannaChallenge != null) {
                     if(user.equals("")){
                         mv.addObject("error", "Please, enter opponent's name!");
+                        setModelAttributes(req, ses, mv);
                         return mv;
                     } else if (user.equals(curUser.getUsername())) {
                         mv.addObject("error", "You can't challenge yourself!");
+                        setModelAttributes(req, ses, mv);
                         return mv;
                     } else if (user.equals("admin")) {
                         mv.addObject("error", "You can't challenge admin!");
+                        setModelAttributes(req, ses, mv);
                         return mv;
                     } else if (blacklistDAO.getUser(user)) {
                         mv.addObject("error", "Your opponent is in a blacklist, you can't reserve!");
+                        setModelAttributes(req, ses, mv);
                         return mv;
                     } else if (usersDAO.contains(user)) {
                         Challenge challenge1 = new Challenge(curUser.getUsername(), user, curTime, compIndx);
@@ -79,6 +97,7 @@ public class HomeController {
                     }
                     else {
                         mv.addObject("error", "User you want to challange doesn't exist!");
+                        setModelAttributes(req, ses, mv);
                         return mv;
                     }
                 }
@@ -87,6 +106,7 @@ public class HomeController {
                     for (Reservation reservation: userReservations) {
                         if (reservation.getTime() == curTime) {
                             mv.addObject("error", "You cant play by this time!");
+                            setModelAttributes(req, ses, mv);
                             return mv;
                         }
                     }
@@ -101,7 +121,16 @@ public class HomeController {
                 else {
                     if (WannaChallenge == null) {
                         mv.addObject("error", "None of the checkboxes checked!");
+                        setModelAttributes(req, ses, mv);
                         return mv;
+                    }
+                    List<Reservation> userReservations = reservedDAO.getAllByUser(curUser.getUsername());
+                    for (Reservation reservation: userReservations) {
+                        if (reservation.getTime() == curTime) {
+                            mv.addObject("error", "You cant play by this time!");
+                            setModelAttributes(req, ses, mv);
+                            return mv;
+                        }
                     }
                     curCell.setColor("orange");
                     curCell.setText("Waiting");
@@ -119,6 +148,7 @@ public class HomeController {
             curUser.setAvatar(avatar);
             usersDAO.changeAvatar(curUser);
         }
+        setModelAttributes(req, ses, mv);
         return mv;
     }
 

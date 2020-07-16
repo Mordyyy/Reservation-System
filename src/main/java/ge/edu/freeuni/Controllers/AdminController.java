@@ -21,12 +21,26 @@ import java.util.StringTokenizer;
 @Controller
 public class AdminController {
 
+    private void setModelAttributes(HttpServletRequest req, HttpSession ses, ModelAndView mv) throws SQLException {
+        BlacklistDAO dao = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
+        List<String> blacklist = dao.getAll();
+        User curUser = (User)ses.getAttribute("user");
+        String imgfile = curUser.getAvatar();
+        ImageDAO db = (ImageDAO) req.getServletContext().getAttribute("images");
+        List<Image> images = db.getAll();
+        mv.addObject("blacklist", blacklist);
+        mv.addObject("imgfile", imgfile);
+        mv.addObject("images", images);
+    }
+
     @GetMapping("/admin")
-    public String render(HttpSession ses) {
+    public ModelAndView render(HttpSession ses, HttpServletRequest req) throws SQLException {
         User user = (User)ses.getAttribute("user");
         if (user == null || !user.getUsername().equals("admin"))
-            return "fail";
-        return "admin";
+            return new ModelAndView("fail");
+        ModelAndView mv = new ModelAndView("admin");
+        setModelAttributes(req, ses, mv);
+        return mv;
     }
 
     @PostMapping("/admin")
@@ -40,7 +54,7 @@ public class AdminController {
                                  @RequestParam String check,
                                  @RequestParam String timetocheck,
                                  @RequestParam String computertocheck,
-                                 HttpServletRequest req) throws SQLException {
+                                 HttpServletRequest req, HttpSession ses) throws SQLException {
         ModelAndView mv = new ModelAndView("admin");
         Email email = (Email) req.getServletContext().getAttribute("email");
         UsersDAO db = (UsersDAO) req.getServletContext().getAttribute("db");
@@ -117,6 +131,7 @@ public class AdminController {
                 mv.addObject("error", "Already taken!");
             }
         }
+        setModelAttributes(req, ses, mv);
         return mv;
     }
 
