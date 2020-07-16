@@ -31,6 +31,16 @@ create table images(
     name varchar(60)
 );
 
+insert into images values("pic.jpg", "FreeUni Logo");
+insert into images values("1.png", "Uturi");
+insert into images values("2.png", "Dreaded Girl");
+insert into images values("3.png", "Panthera");
+insert into images values("4.png", "Cruella");
+insert into images values("5.png", "Beard Man");
+insert into images values("6.png", "Mr. Banana");
+insert into images values("7.png", "Medusa");
+insert into images values("8.png", "Moss");
+
 create table time_table(
     id int primary key,
     meeting_time int,
