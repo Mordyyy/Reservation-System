@@ -148,7 +148,7 @@
                 </ul>
             </nav>
         </div>
-        <button type="submit" name = "Button" value="reset">Start New Day</button>
+        <button type="submit" name = "Button" value="reset">Start New Day</button>`
     </form>
     <div class="hrefs">
         <a href="/reset">Reset Password!</a> <br>

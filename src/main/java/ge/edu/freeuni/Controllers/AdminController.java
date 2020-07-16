@@ -13,17 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.StringTokenizer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 public class AdminController {
 
     @GetMapping("/admin")
-    public String render(HttpSession ses) {
+    public String render(HttpSession ses, HttpServletRequest req) throws SQLException {
         User user = (User)ses.getAttribute("user");
+        colorCheck(req);
         if (user == null || !user.getUsername().equals("admin"))
             return "fail";
         return "admin";
@@ -48,6 +48,7 @@ public class AdminController {
         ReservedDAO reservedDAO = (ReservedDAO)req.getServletContext().getAttribute("reserved");
         ChallengesDAO challengesDAO = (ChallengesDAO)req.getServletContext().getAttribute("challenges");
         TimeTableDAO timeTableDAO = (TimeTableDAO)req.getServletContext().getAttribute("table");
+        colorCheck(req);
         if(Button.equals("reset")){
             challengesDAO.removeAll();
             reservedDAO.removeAll();
@@ -118,6 +119,42 @@ public class AdminController {
             }
         }
         return mv;
+    }
+
+    private void colorCheck(HttpServletRequest req) throws SQLException {
+        DateFormat df = new SimpleDateFormat("HH");
+        Date dateobj = new Date();
+        int tm = Integer.parseInt(df.format(dateobj));
+        TimeTableDAO tableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
+        if (tm <= 21 && tm >= 10) {
+            withGrey(tableDAO,tm);
+        }else{
+            withGreen(tableDAO);
+        }
+    }
+
+    private void withGrey(TimeTableDAO tableDAO, int tm) throws SQLException {
+       // System.out.println(tm);
+        for (int i = 10; i <= tm; i++) {   // i -> time, j-> computer id
+            for(int j = 0; j < 10; j++){
+                Cell curCell = tableDAO.get(i, j);
+                curCell.setColor("grey");
+                curCell.setText("Time out");
+                System.out.println(tableDAO.update(curCell));
+            }
+        }
+    }
+
+    private void withGreen(TimeTableDAO tableDAO) throws SQLException {
+        for(int i = 10; i <= 21; i++){  // i -> time, j-> computer id
+            for(int j = 0; j < 10; j++){
+                Cell curCell = tableDAO.get(i, j);
+                if(curCell.getColor().equals("grey")){
+                    curCell.setColor("green");
+                    curCell.setText("Free");
+                }
+            }
+        }
     }
 
 }
