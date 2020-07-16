@@ -17,12 +17,8 @@
 </head>
 <form action="/home" method="post">
     <body>
-    <% UsersDAO usersDAO = (UsersDAO)request.getServletContext().getAttribute("db");
-        User curUser = (User)session.getAttribute("user");
-        String imgfile = curUser.getAvatar();
-    %>
     <img style="float: left" width="200px" height="200px"
-         src="/resources/images/<%=imgfile%>"/>
+         src="/resources/images/${imgfile}"/>
     <div class="info">
         <h1 class="nameval">Hello <%=((User)session.getAttribute("user")).getUsername()%></h1><br><br><br><br><br>
         <a href="/recChallenges">Received Challenges</a><br><br>
@@ -32,12 +28,8 @@
     </div> <br>
         <div class="changeavatar">
             <select name = "avatar">
-            <% ImageDAO db = (ImageDAO) request.getServletContext().getAttribute("images");
-                List<Image> images = db.getAll();
-                for (int i = 0; i < images.size(); i++) {
-                    String curImage = images.get(i).getName();
-                    String curImageUrl = images.get(i).getUrl();%>
-            <option value="<%=curImageUrl%>"><%=curImage%></option>
+            <% for (Image img : (List<Image>)request.getAttribute("images")) {%>
+                <option value="<%=img.getUrl()%>"><%=img.getName()%></option>
             <%}%>
         </select>
         <button style="margin: 10px 40px;" type="submit" name = "Button" value = "Change avatar">Change Avatar</button>
@@ -78,30 +70,14 @@
         </table>
         <div class="reservation">
             <select id="timeselect" name = "time">
-                <option value="10" selected>10:00 - 11:00</option>
-                <option value="11">11:00 - 12:00</option>
-                <option value="12">12:00 - 13:00</option>
-                <option value="13">13:00 - 14:00</option>
-                <option value="14">14:00 - 15:00</option>
-                <option value="15">15:00 - 16:00</option>
-                <option value="16">16:00 - 17:00</option>
-                <option value="17">17:00 - 18:00</option>
-                <option value="18">18:00 - 19:00</option>
-                <option value="19">19:00 - 20:00</option>
-                <option value="20">20:00 - 21:00</option>
-                <option value="21">21:00 - 22:00</option>
+                <% for (int i = 10; i <= 21; i++) {%>
+                    <option value="<%=i%>>"><%=i%>>:00 - <%=i + 1%>:00</option>
+                <%}%>
             </select>
             <select id="timeselect" name = "computer">
-                <option value = "comp 0" selected>Computer 0</option>
-                <option value = "comp 1">Computer 1</option>
-                <option value = "comp 2">Computer 2</option>
-                <option value = "comp 3">Computer 3</option>
-                <option value = "comp 4">Computer 4</option>
-                <option value = "comp 5">Computer 5</option>
-                <option value = "comp 6">Computer 6</option>
-                <option value = "comp 7">Computer 7</option>
-                <option value = "comp 8">Computer 8</option>
-                <option value = "comp 9">Computer 9</option>
+                <% for (int i = 0; i < 10; i++) {%>
+                    <option value = "comp <%=i%>">Computer <%=i%></option>
+                <%}%>
             </select><br>
             <input id="usernamefield" type="text" value="" name="user" placeholder="Input User to Challenge"><br>
             <input type="checkbox" name="WannaChallenge"><label>Wanna Challenge</label>

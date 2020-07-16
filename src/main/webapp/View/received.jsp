@@ -2,6 +2,7 @@
 <%@ page import="ge.edu.freeuni.DAO.ChallengesDAO" %>
 <%@ page import="ge.edu.freeuni.Models.Challenge" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -16,16 +17,10 @@
         <h1>Received Challenges</h1>
         <a href="/home">Main Page</a>
     </header>
-    <%
-        User user = (User)session.getAttribute("user");
-        String username = user.getUsername();
-        ChallengesDAO dao = (ChallengesDAO) request.getServletContext().getAttribute("challenges");
-        ArrayList<Challenge> allReceived = (ArrayList<Challenge>) dao.getAllReceived(username);
-    %>
     <nav>
         <ul>
             <%
-                for(Challenge ch:allReceived){%>
+                for(Challenge ch:(List<Challenge>)request.getAttribute("receivedChallenges")){%>
                     <li>
                         <form action = "/recChallenges" method = "POST">
                             <p>From: <%=ch.getFromUser()%>, Time: <%=ch.getTime()%>:00, Computer ID: <%=ch.getComputerID()%></p>

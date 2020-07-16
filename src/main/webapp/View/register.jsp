@@ -40,6 +40,5 @@
         </c:if>
     </form>
 </div>
-<%--    <input class="buton" type="button" name="Button" value="Register">--%>
 </body>
 </html>
