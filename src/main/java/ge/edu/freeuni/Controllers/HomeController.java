@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +42,13 @@ public class HomeController {
             return new ModelAndView("fail");
         }
         ModelAndView mv = new ModelAndView("home");
+        ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
+        ArrayList<Reservation> arr = (ArrayList<Reservation>) reservedDAO.getAllByUserSorted(user.getUsername());
+        if(arr.size() > 0) {
+            mv.addObject("label", "Next Reservation on " + arr.get(0).getTime() + ":00 on " + arr.get(0).getCompID() + "th Computer!");
+        }else{
+            mv.addObject("label", "No Reservations");
+        }
         setModelAttributes(req, ses, mv);
         return mv;
     }
@@ -62,6 +70,13 @@ public class HomeController {
         ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         User curUser = (User)ses.getAttribute("user");
         colorCheck(req);
+        User usser = (User) ses.getAttribute("user");
+        ArrayList<Reservation> arr = (ArrayList<Reservation>) reservedDAO.getAllByUserSorted(usser.getUsername());
+        if(arr.size() > 0) {
+            mv.addObject("label", "Next Reservation on " + arr.get(0).getTime() + ":00");
+        }else{
+            mv.addObject("label", "No Reservations");
+        }
         if (Button.equals("reserve")) {
             TimeTableDAO tableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
             int curTime = Integer.parseInt(time.substring(0, 2));
@@ -149,6 +164,12 @@ public class HomeController {
             usersDAO.changeAvatar(curUser);
         }
         setModelAttributes(req, ses, mv);
+        arr = (ArrayList<Reservation>) reservedDAO.getAllByUserSorted(usser.getUsername());
+        if(arr.size() > 0) {
+            mv.addObject("label", "Next Reservation on " + arr.get(0).getTime() + ":00");
+        }else{
+            mv.addObject("label", "No Reservations");
+        }
         return mv;
     }
 
@@ -157,20 +178,23 @@ public class HomeController {
         Date dateobj = new Date();
         int tm = Integer.parseInt(df.format(dateobj));
         TimeTableDAO tableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
+        ReservedDAO reserved = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         if (tm <= 21 && tm >= 10) {
-            withGrey(tableDAO,tm);
+            withGrey(tableDAO, reserved,tm);
         }else{
             withGreen(tableDAO);
         }
     }
 
-    private void withGrey(TimeTableDAO tableDAO, int tm) throws SQLException {
+    private void withGrey(TimeTableDAO tableDAO, ReservedDAO reserved, int tm) throws SQLException {
+        // System.out.println(tm);
         for (int i = 10; i <= tm; i++) {   // i -> time, j-> computer id
             for(int j = 0; j < 10; j++){
                 Cell curCell = tableDAO.get(i, j);
                 curCell.setColor("grey");
                 curCell.setText("Time out");
                 tableDAO.update(curCell);
+                reserved.removeTimedOut(tm);
             }
         }
     }

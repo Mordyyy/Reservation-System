@@ -35,6 +35,13 @@
         <button style="margin: 10px 40px;" type="submit" name = "Button" value = "Change avatar">Change Avatar</button>
     </div>
 
+    <c:if test="${label != null}">
+        <label class="message"> ${label} </label>
+    </c:if>
+    <c:if test="${label == null}">
+        OOPS!
+    </c:if>
+
     <div class="timetable">
         <table class="table table-stripped table-bordered">
             <% TimeTableDAO tableDAO = (TimeTableDAO) request.getServletContext().getAttribute("table");

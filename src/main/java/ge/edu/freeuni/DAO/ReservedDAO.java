@@ -36,10 +36,28 @@ public class ReservedDAO {
         return ans > 0;
     }
 
+    public void removeTimedOut(int time) throws SQLException {
+        PreparedStatement st = con.prepareStatement("delete from reservations where time <= ?");
+        st.setInt(1, time);
+        st.executeUpdate();
+    }
+
     public void removeAll() throws SQLException {
         PreparedStatement st;
         st = con.prepareStatement("Delete from reservations");
         st.executeUpdate();
+    }
+
+    public List<Reservation> getAllByUserSorted(String username) throws SQLException {
+        PreparedStatement st = con.prepareStatement("select * from reservations " +
+                "where username = ? order by time");
+        st.setString(1,username);
+        ResultSet res = st.executeQuery();
+        if (!res.next()) {
+            st.close();
+            return new ArrayList<>();
+        }
+        return getFromResultSet(res);
     }
 
     public List<Reservation> getAllByUser(String username) throws SQLException {
