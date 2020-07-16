@@ -17,19 +17,29 @@ import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Controller
 public class HomeController {
     @GetMapping("/home")
-    public String display(HttpSession ses, HttpServletRequest req) throws SQLException {
+    public ModelAndView display(HttpSession ses, HttpServletRequest req) throws SQLException {
+        ModelAndView modelAndView = new ModelAndView("home");
         User user = (User)ses.getAttribute("user");
         colorCheck(req);
         if (user == null || user.getUsername().equals("admin")) {
-            return "fail";
+            modelAndView.setViewName("fail");
+            return modelAndView;
         }
-        return "home";
+        ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
+        ArrayList<Reservation> arr = (ArrayList<Reservation>) reservedDAO.getAllByUserSorted(user.getUsername());
+        if(arr.size() > 0) {
+            modelAndView.addObject("label", "Next Reservation on " + arr.get(0).getTime() + ":00");
+        }else{
+            modelAndView.addObject("label", "No Reservations");
+        }
+        return modelAndView;
     }
 
     @PostMapping("/home")
@@ -49,6 +59,13 @@ public class HomeController {
         ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         User curUser = (User)ses.getAttribute("user");
         colorCheck(req);
+        User usser = (User) ses.getAttribute("user");
+        ArrayList<Reservation> arr = (ArrayList<Reservation>) reservedDAO.getAllByUserSorted(usser.getUsername());
+        if(arr.size() > 0) {
+            mv.addObject("label", "Next Reservation on " + arr.get(0).getTime() + ":00");
+        }else{
+            mv.addObject("label", "No Reservations");
+        }
         if (Button.equals("reserve")) {
             TimeTableDAO tableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
             int curTime = Integer.parseInt(time.substring(0, 2));
@@ -118,6 +135,13 @@ public class HomeController {
         else if (Button.equals("Change avatar")) {
             curUser.setAvatar(avatar);
             usersDAO.changeAvatar(curUser);
+        }
+
+        arr = (ArrayList<Reservation>) reservedDAO.getAllByUserSorted(usser.getUsername());
+        if(arr.size() > 0) {
+            mv.addObject("label", "Next Reservation on " + arr.get(0).getTime() + ":00");
+        }else{
+            mv.addObject("label", "No Reservations");
         }
         return mv;
     }

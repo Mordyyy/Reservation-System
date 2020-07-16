@@ -140,7 +140,7 @@ public class AdminController {
                 Cell curCell = tableDAO.get(i, j);
                 curCell.setColor("grey");
                 curCell.setText("Time out");
-                System.out.println(tableDAO.update(curCell));
+                tableDAO.update(curCell);
             }
         }
     }

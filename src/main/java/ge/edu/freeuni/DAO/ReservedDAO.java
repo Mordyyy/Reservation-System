@@ -42,6 +42,18 @@ public class ReservedDAO {
         st.executeUpdate();
     }
 
+    public List<Reservation> getAllByUserSorted(String username) throws SQLException {
+        PreparedStatement st = con.prepareStatement("select * from reservations " +
+                "where username = ? order by time");
+        st.setString(1,username);
+        ResultSet res = st.executeQuery();
+        if (!res.next()) {
+            st.close();
+            return new ArrayList<>();
+        }
+        return getFromResultSet(res);
+    }
+
     public List<Reservation> getAllByUser(String username) throws SQLException {
         PreparedStatement st = con.prepareStatement("select * from reservations " +
                 "where username = ?");
