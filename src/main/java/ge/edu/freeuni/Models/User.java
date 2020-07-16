@@ -2,14 +2,12 @@ package ge.edu.freeuni.Models;
 
 public class User {
     private String username, password, mail, avatar;
-    private int cancelledOrders;
 
-    public User(String username, String password, String mail, String avatar, int cancelledOrders) {
+    public User(String username, String password, String mail, String avatar) {
         this.username = username;
         this.password = password;
         this.mail = mail;
         this.avatar = avatar;
-        this.cancelledOrders = cancelledOrders;
     }
 
     public String getUsername() {
@@ -28,15 +26,7 @@ public class User {
         return avatar;
     }
 
-    public int getCancelledOrders() {
-        return cancelledOrders;
-    }
-
     public void setAvatar(String avatar) {
         this.avatar = avatar;
-    }
-
-    public void setCancelledOrders(int cancelledOrders) {
-        this.cancelledOrders = cancelledOrders;
     }
 }

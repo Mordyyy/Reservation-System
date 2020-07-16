@@ -16,13 +16,12 @@ public class UsersDAO {
 
     public boolean addUser(User user) throws SQLException {
         PreparedStatement st = null;
-        st = con.prepareStatement("Insert into users (username, password, mail, avatar, cancelledOrders) " +
-                "values (?, ?, ?, ?, ?)");
+        st = con.prepareStatement("Insert into users (username, password, mail, avatar) " +
+                "values (?, ?, ?, ?)");
         st.setString(1, user.getUsername());
         st.setString(2, user.getPassword());
         st.setString(3, user.getMail());
         st.setString(4, user.getAvatar());
-        st.setInt(5, user.getCancelledOrders());
         int res = st.executeUpdate();
         st.close();
         return (res == 1);
@@ -38,8 +37,7 @@ public class UsersDAO {
             return null;
         }
         User user = new User(res.getString("username"), res.getString("password")
-                , res.getString("mail"), res.getString("avatar")
-                , res.getInt("cancelledOrders"));
+                , res.getString("mail"), res.getString("avatar"));
         st.close();
         return user;
     }
@@ -73,8 +71,7 @@ public class UsersDAO {
             return null;
         }
         User user = new User(res.getString("username"), res.getString("password")
-                , res.getString("mail"), res.getString("avatar")
-                , res.getInt("cancelledOrders"));
+                , res.getString("mail"), res.getString("avatar"));
         st.close();
         return user;
     }
@@ -114,13 +111,11 @@ public class UsersDAO {
         }
         List<User> users = new ArrayList<>();
         User user = new User(res.getString("username"), res.getString("password")
-                , res.getString("mail"), res.getString("avatar")
-                , res.getInt("cancelledOrders"));
+                , res.getString("mail"), res.getString("avatar"));
         users.add(user);
         while (res.next()) {
             user = new User(res.getString("username"), res.getString("password")
-                    , res.getString("mail"), res.getString("avatar")
-                    , res.getInt("cancelledOrders"));
+                    , res.getString("mail"), res.getString("avatar"));
             users.add(user);
         }
         st.close();

@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -82,6 +83,13 @@ public class HomeController {
                     }
                 }
                 if (PlayAlone != null) {
+                    List<Reservation> userReservations = reservedDAO.getAllByUser(curUser.getUsername());
+                    for (Reservation reservation: userReservations) {
+                        if (reservation.getTime() == curTime) {
+                            mv.addObject("error", "You cant play by this time!");
+                            return mv;
+                        }
+                    }
                     curCell.setColor("red");
                     curCell.setText("Taken");
                     tableDAO.update(curCell);

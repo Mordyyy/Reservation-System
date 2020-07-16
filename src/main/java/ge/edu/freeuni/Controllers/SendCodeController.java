@@ -53,7 +53,7 @@ public class SendCodeController {
             }
             user = new User((String)req.getParameter("Username"),
                     hasher.generateHash((String)req.getParameter("Password1")),
-                    (String)req.getParameter("eMail"), "", 0);
+                    (String)req.getParameter("eMail"), "");
             return modelAndView;
         }
     }
