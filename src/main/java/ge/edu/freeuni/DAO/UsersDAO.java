@@ -42,6 +42,21 @@ public class UsersDAO {
         return user;
     }
 
+    public User getUserByeMail(String eMail) throws SQLException {
+        PreparedStatement st = null;
+        st = con.prepareStatement("Select * from users where mail = ?");
+        st.setString(1, eMail);
+        ResultSet res = st.executeQuery();
+        if (!res.next()) {
+            st.close();
+            return null;
+        }
+        User user = new User(res.getString("username"), res.getString("password")
+                , res.getString("mail"), res.getString("avatar"));
+        st.close();
+        return user;
+    }
+
     public boolean changePassword(String username, String newPassword) throws SQLException {
         PreparedStatement st = null;
         st = con.prepareStatement("update users set password = ? where username = ?");
@@ -59,21 +74,6 @@ public class UsersDAO {
         st.setString(2, user.getUsername());
         st.executeUpdate();
         st.close();
-    }
-
-    public User getUserByeMail(String eMail) throws SQLException {
-        PreparedStatement st = null;
-        st = con.prepareStatement("Select * from users where mail = ?");
-        st.setString(1, eMail);
-        ResultSet res = st.executeQuery();
-        if (!res.next()) {
-            st.close();
-            return null;
-        }
-        User user = new User(res.getString("username"), res.getString("password")
-                , res.getString("mail"), res.getString("avatar"));
-        st.close();
-        return user;
     }
 
     public boolean removeUser(String username) throws SQLException {
@@ -120,6 +120,14 @@ public class UsersDAO {
         }
         st.close();
         return users;
+    }
+
+    public boolean removeALl() throws SQLException {
+        PreparedStatement st = null;
+        st = con.prepareStatement("Delete from users");
+        int res = st.executeUpdate();
+        st.close();
+        return (res > 0);
     }
 
 }
