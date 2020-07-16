@@ -36,6 +36,12 @@ public class ReservedDAO {
         return ans > 0;
     }
 
+    public void removeTimedOut(int time) throws SQLException {
+        PreparedStatement st = con.prepareStatement("delete from reservations where time <= ?");
+        st.setInt(1, time);
+        st.executeUpdate();
+    }
+
     public void removeAll() throws SQLException {
         PreparedStatement st;
         st = con.prepareStatement("Delete from reservations");

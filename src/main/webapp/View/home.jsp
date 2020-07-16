@@ -42,8 +42,9 @@
         </select>
         <button style="margin: 10px 40px;" type="submit" name = "Button" value = "Change avatar">Change Avatar</button>
     </div>
+
     <c:if test="${label != null}">
-        ${label}
+        <label class="message"> ${label} </label>
     </c:if>
     <c:if test="${label == null}">
         OOPS!

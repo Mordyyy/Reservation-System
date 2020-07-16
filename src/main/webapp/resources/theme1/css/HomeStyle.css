@@ -49,6 +49,12 @@ body{
     /*padding: 13px 0*/
 }
 
+.message{
+    color: yellowgreen;
+    font-size: 30px;
+    font-family: "American Typewriter", serif;
+}
+
 .submit{
     background-color: blueviolet;
 }
