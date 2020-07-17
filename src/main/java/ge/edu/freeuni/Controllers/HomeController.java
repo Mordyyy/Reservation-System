@@ -112,6 +112,15 @@ public class HomeController {
             int curTime = Integer.parseInt(time.substring(0, 2));
             int compIndx = Integer.parseInt(computer.substring(computer.length() - 1));
             Cell curCell = tableDAO.get(curTime, compIndx);
+
+            cal = Calendar.getInstance();
+            formatter = new SimpleDateFormat("HH");
+            int tm = Integer.parseInt(formatter.format(cal.getTime()));
+            if(tm >= 21 && tm <= 24){
+                mv.addObject("error", "Can Not Reserve Until 12 o'clock!");
+                setModelAttributes(req, ses, mv);
+                return mv;
+            }
             if (blacklistDAO.getUser(curUser.getUsername())) {
                 mv.addObject("error", "You are in a blacklist, you can't reserve!");
                 setModelAttributes(req, ses, mv);
