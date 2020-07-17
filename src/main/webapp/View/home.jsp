@@ -78,7 +78,7 @@
         <div class="reservation">
             <select id="timeselect" name = "time">
                 <% for (int i = 10; i <= 21; i++) {%>
-                    <option value="<%=i%>>"><%=i%>>:00 - <%=i + 1%>:00</option>
+                    <option value="<%=i%>>"><%=i%>:00 - <%=i + 1%>:00</option>
                 <%}%>
             </select>
             <select id="timeselect" name = "computer">

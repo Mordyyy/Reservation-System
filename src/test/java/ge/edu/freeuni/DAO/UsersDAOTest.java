@@ -65,9 +65,9 @@ public class UsersDAOTest {
         curUser = usersDAO.getUserByUsername("username");
         assertEquals(curUser.getMail(), "example@gmail.com");
         curUser = usersDAO.getUserByUsername("bla");
-        assertEquals(null, curUser);
+        assertNull(curUser);
         curUser = usersDAO.getUserByeMail("bla@gmail.com");
-        assertEquals(null, curUser);
+        assertNull(curUser);
     }
 
     @Test

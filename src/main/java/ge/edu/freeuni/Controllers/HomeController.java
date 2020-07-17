@@ -73,7 +73,7 @@ public class HomeController {
         User usser = (User) ses.getAttribute("user");
         ArrayList<Reservation> arr = (ArrayList<Reservation>) reservedDAO.getAllByUserSorted(usser.getUsername());
         if(arr.size() > 0) {
-            mv.addObject("label", "Next Reservation on " + arr.get(0).getTime() + ":00");
+            mv.addObject("label", "Next Reservation on " + arr.get(0).getTime() + ":00 on " + arr.get(0).getCompID() + "th Computer!");
         }else{
             mv.addObject("label", "No Reservations");
         }
@@ -166,7 +166,7 @@ public class HomeController {
         setModelAttributes(req, ses, mv);
         arr = (ArrayList<Reservation>) reservedDAO.getAllByUserSorted(usser.getUsername());
         if(arr.size() > 0) {
-            mv.addObject("label", "Next Reservation on " + arr.get(0).getTime() + ":00");
+            mv.addObject("label", "Next Reservation on " + arr.get(0).getTime() + ":00 on " + arr.get(0).getCompID() + "th Computer!");
         }else{
             mv.addObject("label", "No Reservations");
         }
@@ -180,14 +180,13 @@ public class HomeController {
         TimeTableDAO tableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
         ReservedDAO reserved = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         if (tm <= 21 && tm >= 10) {
-            withGrey(tableDAO, reserved,tm);
+            withGrey(tableDAO, reserved, tm);
         }else{
             withGreen(tableDAO);
         }
     }
 
     private void withGrey(TimeTableDAO tableDAO, ReservedDAO reserved, int tm) throws SQLException {
-        // System.out.println(tm);
         for (int i = 10; i <= tm; i++) {   // i -> time, j-> computer id
             for(int j = 0; j < 10; j++){
                 Cell curCell = tableDAO.get(i, j);
@@ -206,6 +205,7 @@ public class HomeController {
                 if(curCell.getColor().equals("grey")){
                     curCell.setColor("green");
                     curCell.setText("Free");
+                    tableDAO.update(curCell);
                 }
             }
         }

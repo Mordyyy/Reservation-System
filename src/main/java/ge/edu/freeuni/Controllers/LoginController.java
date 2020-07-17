@@ -84,7 +84,9 @@ public class LoginController {
         BlacklistDAO dao = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
         List<String> blacklist = dao.getAll();
         User curUser = (User)ses.getAttribute("user");
-        String imgfile = curUser.getAvatar();
+        String imgfile = null;
+        if (curUser != null)
+            imgfile = curUser.getAvatar();
         ImageDAO db = (ImageDAO) req.getServletContext().getAttribute("images");
         List<Image> images = db.getAll();
         mv.addObject("blacklist", blacklist);

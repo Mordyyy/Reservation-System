@@ -62,7 +62,6 @@ public class AdminController {
         ReservedDAO reservedDAO = (ReservedDAO)req.getServletContext().getAttribute("reserved");
         ChallengesDAO challengesDAO = (ChallengesDAO)req.getServletContext().getAttribute("challenges");
         TimeTableDAO timeTableDAO = (TimeTableDAO)req.getServletContext().getAttribute("table");
-        colorCheck(req);
         if(Button.equals("reset")){
             challengesDAO.removeAll();
             reservedDAO.removeAll();
@@ -133,6 +132,7 @@ public class AdminController {
             }
         }
         setModelAttributes(req, ses, mv);
+        colorCheck(req);
         return mv;
     }
 
@@ -143,7 +143,7 @@ public class AdminController {
         TimeTableDAO tableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
         ReservedDAO reserved = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         if (tm <= 21 && tm >= 10) {
-            withGrey(tableDAO, reserved,tm);
+            withGrey(tableDAO, reserved, tm);
         }else{
             withGreen(tableDAO);
         }
@@ -169,6 +169,7 @@ public class AdminController {
                 if(curCell.getColor().equals("grey")){
                     curCell.setColor("green");
                     curCell.setText("Free");
+                    tableDAO.update(curCell);
                 }
             }
         }
