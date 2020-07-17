@@ -56,10 +56,8 @@ public class ReceivedChallengesController {
             if(Button.equals("Reject")){
                 if (lst.size() == 1) {
                     if (curCell.getColor().equals("orange")) {
-                        curCell.setColor("green");
-                        curCell.setText("Free");
+                        updateTable(curCell, "green", "Free", table);
                     }
-                    table.update(curCell);
                 }
             }
             else if (Button.equals("Accept")) {
@@ -72,15 +70,11 @@ public class ReceivedChallengesController {
                 else {
                     if (curCell.getColor().equals("orange")) {
                         dao.removeChallengesByChallenge(challenge);
-                        curCell.setText("Taken");
-                        curCell.setColor("red");
-                        table.update(curCell);
+                        updateTable(curCell, "red", "Taken", table);
                         for (int i = 0; i < 10; i++) {
                             Cell cell = table.get(time, i);
                             if (cell.getColor().equals("orange") && dao.getAllForComputerTime(time, i).size() == 0) {
-                                cell.setColor("green");
-                                cell.setText("Free");
-                                table.update(cell);
+                                updateTable(cell, "green", "Free", table);
                             }
                         }
                         reservedDAO.addReservation(new Reservation(challenge.getToUser(), time, computer));
@@ -89,9 +83,6 @@ public class ReceivedChallengesController {
                     else if (curCell.getColor().equals("red")) {
                         dao.removeChallengesByChallenge(challenge);
                         List<Reservation> reservations = reservedDAO.getAllByTime(challenge.getTime());
-                        for (Reservation reservation: reservations) {
-                            System.out.println(reservation.getUsername());
-                        }
                         if (reservations.size() > 1) {
                             mv.addObject("error", "Already taken!");
                         }
@@ -113,7 +104,7 @@ public class ReceivedChallengesController {
                             }
                         }
                     }
-                    else if (curCell.getColor().equals("gray")) {
+                    else if (curCell.getColor().equals("grey")) {
                         mv.addObject("error", "Too late!");
                     }
                 }
@@ -132,6 +123,12 @@ public class ReceivedChallengesController {
         List<Challenge> allReceived = dao.getAllReceived(username);
         mv.addObject("receivedChallenges", allReceived);
         return mv;
+    }
+
+    private void updateTable(Cell cell, String color, String text, TimeTableDAO table) throws SQLException {
+        cell.setColor("green");
+        cell.setText("Free");
+        table.update(cell);
     }
 
 }
