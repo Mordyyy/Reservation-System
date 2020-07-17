@@ -1,7 +1,17 @@
 package ge.edu.freeuni.Models;
 
+import ge.edu.freeuni.Hash.GenerateHash;
+
 public class User {
     private String username, password, mail, avatar;
+    private GenerateHash hasher = new GenerateHash();
+
+    public User(String username, String password, String mail) {
+        this.username = username;
+        this.password = hasher.generateHash(password);
+        this.mail = mail;
+        this.avatar = "pic.jpg";
+    }
 
     public User(String username, String password, String mail, String avatar) {
         this.username = username;

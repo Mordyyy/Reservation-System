@@ -9,8 +9,10 @@ import java.util.Random;
 public class Email{
     private final String verificationString = "Your verification code is :";
     private HashMap<String,Integer> randomCodes;    // key = email, value = random integer
+    private Randomizer randomizer;
     public Email(){
         randomCodes = new HashMap<>();
+        randomizer = new Randomizer();
     }
     public boolean verifyRandomCode(String email, int code){
         if(!randomCodes.containsKey(email)) return false;
@@ -22,7 +24,7 @@ public class Email{
     }
 
     public void sendRandomCode(String email) throws MessagingException {
-        int randomCode = getRandomInteger();
+        int randomCode = randomizer.getRandomInteger();
         randomCodes.put(email,randomCode);
         sendCode(email,"Email Verification Code", verificationString + Integer.toString(randomCode));
     }
@@ -30,11 +32,5 @@ public class Email{
     public int getUsersCode(String email){
         if(!randomCodes.containsKey(email)) return -1;
         return randomCodes.get(email);
-    }
-
-    private int getRandomInteger(){
-        Random rand = new Random();
-        int randInteger = rand.nextInt(1000000) + 100000;
-        return randInteger;
     }
 }

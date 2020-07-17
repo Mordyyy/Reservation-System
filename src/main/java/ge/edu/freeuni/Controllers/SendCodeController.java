@@ -19,30 +19,22 @@ import java.sql.SQLException;
 @Controller
 public class SendCodeController {
     private User user;
-//    @GetMapping("/sendcode")
-//    public ModelAndView display(@RequestParam String Code){
-//        ModelAndView modelAndView = new ModelAndView("submit");
-//        return modelAndView;
-//    }
 
     @PostMapping("/sendcode")
     public ModelAndView sendCode(@RequestParam String Button,
                                  HttpServletResponse resp,
                                  HttpServletRequest req) throws IOException, SQLException {
-        GenerateHash hasher = new GenerateHash();
         Email email = (Email) req.getServletContext().getAttribute("email");
         ModelAndView modelAndView = new ModelAndView("submit");
         if (Button.equals("Submit")) {
             String Code = (String)req.getParameter("Code");
             int sentCode = email.getUsersCode(user.getMail());
             if (Integer.parseInt(Code) == sentCode) {
-                user.setAvatar("pic.jpg");
                 ((UsersDAO)req.getServletContext().getAttribute("db")).addUser(user);
                 resp.sendRedirect("");
             } else {
                 modelAndView.addObject("error", "Wrong Code!");
             }
-            return modelAndView;
         } else {
             try {
                 email.sendRandomCode((String)req.getParameter("eMail"));
@@ -52,9 +44,9 @@ public class SendCodeController {
                 return mv;
             }
             user = new User((String)req.getParameter("Username"),
-                    hasher.generateHash((String)req.getParameter("Password1")),
-                    (String)req.getParameter("eMail"), "");
-            return modelAndView;
+                    (String)req.getParameter("Password1"),
+                    (String)req.getParameter("eMail"));
         }
+        return modelAndView;
     }
 }

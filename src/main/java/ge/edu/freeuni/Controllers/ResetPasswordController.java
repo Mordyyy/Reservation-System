@@ -44,21 +44,22 @@ public class ResetPasswordController {
         Email mail = (Email) req.getServletContext().getAttribute("email");
         String userName = user.getUsername();
         if(oldpassword.equals(password1)){
-            modelAndView.setViewName("reset");
-            modelAndView.addObject("error", "Dude, Serious?");
-            return modelAndView;
+            return errorMV(modelAndView, "Dude, Serious?");
         }else if(hasher.generateHash(oldpassword).equals(user.getPassword()) &&  password1.equals(password2) && password1.length() >= 6){
             usersDAO.changePassword(userName,hasher.generateHash(password1));
             resp.sendRedirect(url);
             return modelAndView;
         }else if (!hasher.generateHash(oldpassword).equals(user.getPassword())){
-            modelAndView.setViewName("reset");
-            modelAndView.addObject("error", "Your current password is not correct");
-            return modelAndView;
+            return errorMV(modelAndView, "Your current password is not correct");
         }else{
-            modelAndView.setViewName("reset");
-            modelAndView.addObject("error", "Password doesn't match");
-            return modelAndView;
+            return errorMV(modelAndView, "Password doesn't match");
         }
     }
+
+    private ModelAndView errorMV(ModelAndView mv, String errorMessage) {
+        mv.setViewName("reset");
+        mv.addObject("error", errorMessage);
+        return mv;
+    }
+
 }
