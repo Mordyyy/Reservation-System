@@ -126,8 +126,8 @@ public class ReceivedChallengesController {
     }
 
     private void updateTable(Cell cell, String color, String text, TimeTableDAO table) throws SQLException {
-        cell.setColor("green");
-        cell.setText("Free");
+        cell.setColor(color);
+        cell.setText(text);
         table.update(cell);
     }
 
