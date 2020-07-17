@@ -1,4 +1,4 @@
-package ge.edu.freeuni.Mail;
+package ge.edu.freeuni.Helpers;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

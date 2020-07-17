@@ -1,6 +1,6 @@
 package ge.edu.freeuni.Models;
 
-import ge.edu.freeuni.Hash.GenerateHash;
+import ge.edu.freeuni.Helpers.GenerateHash;
 
 public class User {
     private String username, password, mail, avatar;

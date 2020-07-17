@@ -1,4 +1,4 @@
-package ge.edu.freeuni.Hash;
+package ge.edu.freeuni.Helpers;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

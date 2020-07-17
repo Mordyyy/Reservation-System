@@ -1,8 +1,8 @@
 package ge.edu.freeuni.Controllers;
 
 import ge.edu.freeuni.DAO.UsersDAO;
-import ge.edu.freeuni.Hash.GenerateHash;
-import ge.edu.freeuni.Models.Email;
+import ge.edu.freeuni.Helpers.GenerateHash;
+import ge.edu.freeuni.Helpers.Email;
 import ge.edu.freeuni.Models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

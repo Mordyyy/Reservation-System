@@ -1,6 +1,7 @@
 package ge.edu.freeuni.Controllers;
 
 import ge.edu.freeuni.DAO.*;
+import ge.edu.freeuni.Helpers.TableGrey;
 import ge.edu.freeuni.Models.*;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,8 @@ import java.util.List;
 @Controller
 public class HomeController {
 
+    private TableGrey tableGrey = new TableGrey();
+
     private void setModelAttributes(HttpServletRequest req, HttpSession ses, ModelAndView mv) throws SQLException {
         BlacklistDAO dao = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
         List<String> blacklist = dao.getAll();
@@ -39,22 +42,8 @@ public class HomeController {
     public ModelAndView display(HttpSession ses, HttpServletRequest req) throws SQLException {
         User user = (User) ses.getAttribute("user");
         colorCheck(req);
-        LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
+        tableGrey.tableGrey(req);
         ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
-        ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
-        TimeTableDAO timeTableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
-
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String date = formatter.format(cal.getTime());
-        String resetDate = lastResetDAO.get();
-
-        if (date.compareTo(resetDate) >= 0) {
-            challengesDAO.removeAll();
-            reservedDAO.removeAll();
-            timeTableDAO.resetWithGrey();
-        }
-
         if (user == null || user.getUsername().equals("admin")) {
             return new ModelAndView("fail");
         }
@@ -83,22 +72,11 @@ public class HomeController {
         ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
         BlacklistDAO blacklistDAO = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
         UsersDAO usersDAO = (UsersDAO) req.getServletContext().getAttribute("db");
+        tableGrey.tableGrey(req);
         ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         TimeTableDAO timeTableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
         LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
         User curUser = (User) ses.getAttribute("user");
-
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String date = formatter.format(cal.getTime());
-        String resetDate = lastResetDAO.get();
-
-        if (date.compareTo(resetDate) >= 0) {
-            challengesDAO.removeAll();
-            reservedDAO.removeAll();
-            timeTableDAO.resetWithGrey();
-        }
-
         colorCheck(req);
         User usser = (User) ses.getAttribute("user");
         ArrayList<Reservation> arr = (ArrayList<Reservation>) reservedDAO.getAllByUserSorted(usser.getUsername());
@@ -113,8 +91,8 @@ public class HomeController {
             int compIndx = Integer.parseInt(computer.substring(computer.length() - 1));
             Cell curCell = tableDAO.get(curTime, compIndx);
 
-            cal = Calendar.getInstance();
-            formatter = new SimpleDateFormat("HH");
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat formatter = new SimpleDateFormat("HH");
             int tm = Integer.parseInt(formatter.format(cal.getTime()));
             if(tm >= 21 && tm <= 24){
                 mv.addObject("error", "Can Not Reserve Until 12 o'clock!");

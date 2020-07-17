@@ -2,12 +2,11 @@ package ge.edu.freeuni.Listeners;
 
 import ge.edu.freeuni.DAO.*;
 import ge.edu.freeuni.Models.Cell;
-import ge.edu.freeuni.Models.Email;
+import ge.edu.freeuni.Helpers.Email;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.awt.*;
 import java.sql.SQLException;
 
 public class ContextListener implements ServletContextListener {

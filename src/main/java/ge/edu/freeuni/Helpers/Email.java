@@ -1,10 +1,10 @@
-package ge.edu.freeuni.Models;
+package ge.edu.freeuni.Helpers;
 
-import ge.edu.freeuni.Mail.JavaMailUtil;
+import ge.edu.freeuni.Helpers.JavaMailUtil;
+import ge.edu.freeuni.Models.Randomizer;
 
 import javax.mail.MessagingException;
 import java.util.HashMap;
-import java.util.Random;
 
 public class Email{
     private final String verificationString = "Your verification code is :";

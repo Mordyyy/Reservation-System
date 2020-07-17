@@ -1,6 +1,8 @@
 package ge.edu.freeuni.Controllers;
 
 import ge.edu.freeuni.DAO.*;
+import ge.edu.freeuni.Helpers.Email;
+import ge.edu.freeuni.Helpers.TableGrey;
 import ge.edu.freeuni.Models.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -19,6 +20,8 @@ import java.util.*;
 
 @Controller
 public class AdminController {
+
+    private TableGrey tableGrey = new TableGrey();
 
     private void setModelAttributes(HttpServletRequest req, HttpSession ses, ModelAndView mv) throws SQLException {
         BlacklistDAO dao = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
@@ -36,22 +39,7 @@ public class AdminController {
     public ModelAndView render(HttpSession ses, HttpServletRequest req) throws SQLException {
         User user = (User) ses.getAttribute("user");
         colorCheck(req);
-
-        LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
-        ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
-        ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
-        TimeTableDAO timeTableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
-
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String date = formatter.format(cal.getTime());
-        String resetDate = lastResetDAO.get();
-
-        if (date.compareTo(resetDate) >= 0) {
-            challengesDAO.removeAll();
-            reservedDAO.removeAll();
-            timeTableDAO.resetWithGrey();
-        }
+        tableGrey.tableGrey(req);
         if (user == null || !user.getUsername().equals("admin"))
             return new ModelAndView("fail");
         ModelAndView mv = new ModelAndView("admin");
@@ -75,39 +63,14 @@ public class AdminController {
         Email email = (Email) req.getServletContext().getAttribute("email");
         UsersDAO db = (UsersDAO) req.getServletContext().getAttribute("db");
         BlacklistDAO blackDB = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
+        tableGrey.tableGrey(req);
         ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
         TimeTableDAO timeTableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
         LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
 
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String date = formatter.format(cal.getTime());
-        String resetDate = lastResetDAO.get();
-
-        if (date.compareTo(resetDate) >= 0) {
-            challengesDAO.removeAll();
-            reservedDAO.removeAll();
-            timeTableDAO.resetWithGrey();
-        }
-
         if (Button.equals("reset")) {
-            cal = Calendar.getInstance();
-            formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            SimpleDateFormat timeFormatter = new SimpleDateFormat("HH");
-            int tm = Integer.parseInt(timeFormatter.format(cal.getTime()));
-            String dateToday = formatter.format(cal.getTime());
-            System.out.println(dateToday);
-            if (tm < 21) {
-                lastResetDAO.update(dateToday.substring(0, 11) + "21:00:00");
-            } else {
-                cal.add(Calendar.DATE, 1);
-                String dateTomorrow = formatter.format(cal.getTime());
-                lastResetDAO.update(dateTomorrow.substring(0, 11) + "21:00:00");
-            }
-            challengesDAO.removeAll();
-            reservedDAO.removeAll();
-            timeTableDAO.reset();
+            resetting(reservedDAO, challengesDAO, timeTableDAO, lastResetDAO);
         } else if (Button.equals("check")) {
             if (check != null) {
                 String usernm = check;
@@ -131,22 +94,7 @@ public class AdminController {
                 }
             }
         } else if (Button.equals("send")) {
-            StringTokenizer tokenizer = new StringTokenizer(emailstosend, " ,");
-            while (tokenizer.hasMoreElements()) {
-                String username = tokenizer.nextToken();
-                User user = db.getUserByUsername(username);
-                Set<String> st = new HashSet<>();
-                if (user != null && !user.getUsername().equals("admin")) {
-                    st.add(user.getMail());
-                }
-                for (String curMail : st) {
-                    try {
-                        email.sendCode(curMail, subject, text);
-                    } catch (MessagingException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+            sendMail(emailstosend, subject, text, email, db);
         } else if (Button.equals("block")) {
             if (!blackDB.getUser(toBlock) && !toBlock.equals("admin") && db.contains(toBlock)) {
                 blackDB.addUser(toBlock);
@@ -156,25 +104,68 @@ public class AdminController {
                 blackDB.removeUser(toBlock);
             }
         } else if (Button.equals("reserve")) {
-            TimeTableDAO tableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
-            int curTime = Integer.parseInt(time.substring(0, 2));
-            int compIndx = Integer.parseInt(computer.substring(computer.length() - 1));
-            int i = curTime - 9;
-            int j = compIndx + 1;
-            Cell curCell = tableDAO.get(curTime, compIndx);
-            if (curCell.getColor().equals("red")) {
-                curCell.setColor("red");
-                curCell.setText("Taken");
-                challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
-                Challenge challenge = new Challenge(0, "", "", curTime, compIndx);
-                challengesDAO.removeAllForComputerTime(challenge);
-            } else {
-                mv.addObject("error", "Already taken!");
-            }
+            reserveByAdmin(time, computer, req, mv);
         }
         setModelAttributes(req, ses, mv);
         colorCheck(req);
         return mv;
+    }
+
+    private void reserveByAdmin(@RequestParam String time, @RequestParam String computer, HttpServletRequest req, ModelAndView mv) throws SQLException {
+        ChallengesDAO challengesDAO;
+        TimeTableDAO tableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
+        int curTime = Integer.parseInt(time.substring(0, 2));
+        int compIndx = Integer.parseInt(computer.substring(computer.length() - 1));
+        int i = curTime - 9;
+        int j = compIndx + 1;
+        Cell curCell = tableDAO.get(curTime, compIndx);
+        if (curCell.getColor().equals("red")) {
+            curCell.setColor("red");
+            curCell.setText("Taken");
+            challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
+            Challenge challenge = new Challenge(0, "", "", curTime, compIndx);
+            challengesDAO.removeAllForComputerTime(challenge);
+        } else {
+            mv.addObject("error", "Already taken!");
+        }
+    }
+
+    private void sendMail(@RequestParam String emailstosend, @RequestParam String subject, @RequestParam String text, Email email, UsersDAO db) throws SQLException {
+        StringTokenizer tokenizer = new StringTokenizer(emailstosend, " ,");
+        while (tokenizer.hasMoreElements()) {
+            String username = tokenizer.nextToken();
+            User user = db.getUserByUsername(username);
+            Set<String> st = new HashSet<>();
+            if (user != null && !user.getUsername().equals("admin")) {
+                st.add(user.getMail());
+            }
+            for (String curMail : st) {
+                try {
+                    email.sendCode(curMail, subject, text);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void resetting(ReservedDAO reservedDAO, ChallengesDAO challengesDAO, TimeTableDAO timeTableDAO, LastResetDAO lastResetDAO) throws SQLException {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("HH");
+        int tm = Integer.parseInt(timeFormatter.format(cal.getTime()));
+        String dateToday = formatter.format(cal.getTime());
+        System.out.println(dateToday);
+        if (tm < 21) {
+            lastResetDAO.update(dateToday.substring(0, 11) + "21:00:00");
+        } else {
+            cal.add(Calendar.DATE, 1);
+            String dateTomorrow = formatter.format(cal.getTime());
+            lastResetDAO.update(dateTomorrow.substring(0, 11) + "21:00:00");
+        }
+        challengesDAO.removeAll();
+        reservedDAO.removeAll();
+        timeTableDAO.reset();
     }
 
     private void colorCheck(HttpServletRequest req) throws SQLException {

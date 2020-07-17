@@ -1,6 +1,5 @@
 package ge.edu.freeuni.DAO;
 
-import ge.edu.freeuni.Hash.GenerateHash;
 import ge.edu.freeuni.Models.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
