@@ -6,6 +6,7 @@ drop table if exists challenges;
 drop table if exists images;
 drop table if exists time_table;
 drop table if exists reservations;
+drop table if exists last_reset;
 
 create table users (
 	username varchar(60) primary key,
@@ -54,3 +55,9 @@ create table reservations(
 	time int,
 	computerID int
 );
+
+create table last_reset(
+	date varchar(60)
+);
+
+insert into last_reset values("0000-00-00 00:00:00");

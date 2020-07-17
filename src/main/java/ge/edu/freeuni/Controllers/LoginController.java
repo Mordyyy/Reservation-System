@@ -59,17 +59,14 @@ public class LoginController {
             }
             if (user == null) {
                 modelAndView.addObject("Error", "Account Does not exist!");
-                modelAndView.setViewName("login");
-                setModelAttributes(req, ses, modelAndView);
-                return modelAndView;
-            }
-            if (!user.getPassword().equals(hasher.generateHash(Password))) {
+            } else if (!user.getPassword().equals(hasher.generateHash(Password))) {
                 modelAndView.addObject("Error", "Username or Password incorrect!");
+            }
+            if (user == null || !user.getPassword().equals(hasher.generateHash(Password))) {
                 modelAndView.setViewName("login");
                 setModelAttributes(req, ses, modelAndView);
                 return modelAndView;
             }
-            //modelAndView.setViewName("home");
             ses.setAttribute("user", user);
             resp.sendRedirect(url);
             setModelAttributes(req, ses, modelAndView);
