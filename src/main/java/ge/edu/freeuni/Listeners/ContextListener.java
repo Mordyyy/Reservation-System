@@ -64,6 +64,14 @@ public class ContextListener implements ServletContextListener {
             }
         }
 
+        LastResetDAO lastResetDAO = null;
+        try {
+            lastResetDAO = new LastResetDAO(url + database, user_name, password);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        sc.setAttribute("lastReset", lastResetDAO);
         sc.setAttribute("reserved", reservedDAO);
         sc.setAttribute("table", timeTable);
         sc.setAttribute("challenges", challenges);

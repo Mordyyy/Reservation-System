@@ -73,4 +73,11 @@ public class TimeTableDAO {
         st.setString(2, "green");
         st.executeUpdate();
     }
+
+    public void resetWithGrey() throws SQLException {
+        PreparedStatement st = con.prepareStatement("update time_table set text = ?, color = ?");
+        st.setString(1, "Timed Out");
+        st.setString(2, "grey");
+        st.executeUpdate();
+    }
 }

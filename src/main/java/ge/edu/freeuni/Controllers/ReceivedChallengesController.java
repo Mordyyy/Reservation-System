@@ -32,6 +32,7 @@ public class ReceivedChallengesController {
         DateFormat df = new SimpleDateFormat("HH");
         Date dateobj = new Date();
         int tm = Integer.parseInt(df.format(dateobj));
+        System.out.println(tm + "<----------");
         challenges.deleteTimedOutChallenges(tm);
         ModelAndView mv = new ModelAndView("received");
         setModelAttributes(req, ses, mv);

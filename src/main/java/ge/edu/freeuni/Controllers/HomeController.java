@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class HomeController {
     private void setModelAttributes(HttpServletRequest req, HttpSession ses, ModelAndView mv) throws SQLException {
         BlacklistDAO dao = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
         List<String> blacklist = dao.getAll();
-        User curUser = (User)ses.getAttribute("user");
+        User curUser = (User) ses.getAttribute("user");
         String imgfile = curUser.getAvatar();
         ImageDAO db = (ImageDAO) req.getServletContext().getAttribute("images");
         List<Image> images = db.getAll();
@@ -36,17 +37,32 @@ public class HomeController {
 
     @GetMapping("/home")
     public ModelAndView display(HttpSession ses, HttpServletRequest req) throws SQLException {
-        User user = (User)ses.getAttribute("user");
+        User user = (User) ses.getAttribute("user");
         colorCheck(req);
+        LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
+        ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
+        ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
+        TimeTableDAO timeTableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = formatter.format(cal.getTime());
+        String resetDate = lastResetDAO.get();
+
+        if (date.compareTo(resetDate) >= 0) {
+            challengesDAO.removeAll();
+            reservedDAO.removeAll();
+            timeTableDAO.resetWithGrey();
+        }
+
         if (user == null || user.getUsername().equals("admin")) {
             return new ModelAndView("fail");
         }
         ModelAndView mv = new ModelAndView("home");
-        ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         ArrayList<Reservation> arr = (ArrayList<Reservation>) reservedDAO.getAllByUserSorted(user.getUsername());
-        if(arr.size() > 0) {
+        if (arr.size() > 0) {
             mv.addObject("label", "Next Reservation on " + arr.get(0).getTime() + ":00 on " + arr.get(0).getCompID() + "th Computer!");
-        }else{
+        } else {
             mv.addObject("label", "No Reservations");
         }
         setModelAttributes(req, ses, mv);
@@ -66,15 +82,29 @@ public class HomeController {
         ModelAndView mv = new ModelAndView("home");
         ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
         BlacklistDAO blacklistDAO = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
-        UsersDAO usersDAO = (UsersDAO)  req.getServletContext().getAttribute("db");
+        UsersDAO usersDAO = (UsersDAO) req.getServletContext().getAttribute("db");
         ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
-        User curUser = (User)ses.getAttribute("user");
+        TimeTableDAO timeTableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
+        LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
+        User curUser = (User) ses.getAttribute("user");
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = formatter.format(cal.getTime());
+        String resetDate = lastResetDAO.get();
+
+        if (date.compareTo(resetDate) >= 0) {
+            challengesDAO.removeAll();
+            reservedDAO.removeAll();
+            timeTableDAO.resetWithGrey();
+        }
+
         colorCheck(req);
         User usser = (User) ses.getAttribute("user");
         ArrayList<Reservation> arr = (ArrayList<Reservation>) reservedDAO.getAllByUserSorted(usser.getUsername());
-        if(arr.size() > 0) {
+        if (arr.size() > 0) {
             mv.addObject("label", "Next Reservation on " + arr.get(0).getTime() + ":00 on " + arr.get(0).getCompID() + "th Computer!");
-        }else{
+        } else {
             mv.addObject("label", "No Reservations");
         }
         if (Button.equals("reserve")) {
@@ -90,7 +120,7 @@ public class HomeController {
             if (!curCell.getColor().equals("red") && !curCell.getColor().equals("grey")) {
                 Challenge challenge = new Challenge(0, "", "", curTime, compIndx);
                 if (WannaChallenge != null) {
-                    if(user.equals("")){
+                    if (user.equals("")) {
                         mv.addObject("error", "Please, enter opponent's name!");
                         setModelAttributes(req, ses, mv);
                         return mv;
@@ -109,8 +139,7 @@ public class HomeController {
                     } else if (usersDAO.contains(user)) {
                         Challenge challenge1 = new Challenge(curUser.getUsername(), user, curTime, compIndx);
                         challengesDAO.addChallenge(challenge1);
-                    }
-                    else {
+                    } else {
                         mv.addObject("error", "User you want to challange doesn't exist!");
                         setModelAttributes(req, ses, mv);
                         return mv;
@@ -118,7 +147,7 @@ public class HomeController {
                 }
                 if (PlayAlone != null) {
                     List<Reservation> userReservations = reservedDAO.getAllByUser(curUser.getUsername());
-                    for (Reservation reservation: userReservations) {
+                    for (Reservation reservation : userReservations) {
                         if (reservation.getTime() == curTime) {
                             mv.addObject("error", "You cant play by this time!");
                             setModelAttributes(req, ses, mv);
@@ -132,15 +161,14 @@ public class HomeController {
                     reservedDAO.addReservation(reservation);
                     if (WannaChallenge == null)
                         challengesDAO.removeAllForComputerTime(challenge);
-                }
-                else {
+                } else {
                     if (WannaChallenge == null) {
                         mv.addObject("error", "None of the checkboxes checked!");
                         setModelAttributes(req, ses, mv);
                         return mv;
                     }
                     List<Reservation> userReservations = reservedDAO.getAllByUser(curUser.getUsername());
-                    for (Reservation reservation: userReservations) {
+                    for (Reservation reservation : userReservations) {
                         if (reservation.getTime() == curTime) {
                             mv.addObject("error", "You cant play by this time!");
                             setModelAttributes(req, ses, mv);
@@ -151,23 +179,21 @@ public class HomeController {
                     curCell.setText("Waiting");
                     tableDAO.update(curCell);
                 }
-            }
-            else {
-                if(curCell.getColor().equals("red"))
+            } else {
+                if (curCell.getColor().equals("red"))
                     mv.addObject("error", "Already taken!");
                 else
                     mv.addObject("error", "Can not reserve");
             }
-        }
-        else if (Button.equals("Change avatar")) {
+        } else if (Button.equals("Change avatar")) {
             curUser.setAvatar(avatar);
             usersDAO.changeAvatar(curUser);
         }
         setModelAttributes(req, ses, mv);
         arr = (ArrayList<Reservation>) reservedDAO.getAllByUserSorted(usser.getUsername());
-        if(arr.size() > 0) {
+        if (arr.size() > 0) {
             mv.addObject("label", "Next Reservation on " + arr.get(0).getTime() + ":00 on " + arr.get(0).getCompID() + "th Computer!");
-        }else{
+        } else {
             mv.addObject("label", "No Reservations");
         }
         return mv;
@@ -181,14 +207,14 @@ public class HomeController {
         ReservedDAO reserved = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         if (tm <= 21 && tm >= 10) {
             withGrey(tableDAO, reserved, tm);
-        }else{
+        } else {
             withGreen(tableDAO);
         }
     }
 
     private void withGrey(TimeTableDAO tableDAO, ReservedDAO reserved, int tm) throws SQLException {
         for (int i = 10; i <= tm; i++) {   // i -> time, j-> computer id
-            for(int j = 0; j < 10; j++){
+            for (int j = 0; j < 10; j++) {
                 Cell curCell = tableDAO.get(i, j);
                 curCell.setColor("grey");
                 curCell.setText("Time out");
@@ -199,10 +225,10 @@ public class HomeController {
     }
 
     private void withGreen(TimeTableDAO tableDAO) throws SQLException {
-        for(int i = 10; i <= 21; i++){  // i -> time, j-> computer id
-            for(int j = 0; j < 10; j++){
+        for (int i = 10; i <= 21; i++) {  // i -> time, j-> computer id
+            for (int j = 0; j < 10; j++) {
                 Cell curCell = tableDAO.get(i, j);
-                if(curCell.getColor().equals("grey")){
+                if (curCell.getColor().equals("grey")) {
                     curCell.setColor("green");
                     curCell.setText("Free");
                     tableDAO.update(curCell);

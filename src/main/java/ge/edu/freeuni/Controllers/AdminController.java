@@ -23,7 +23,7 @@ public class AdminController {
     private void setModelAttributes(HttpServletRequest req, HttpSession ses, ModelAndView mv) throws SQLException {
         BlacklistDAO dao = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
         List<String> blacklist = dao.getAll();
-        User curUser = (User)ses.getAttribute("user");
+        User curUser = (User) ses.getAttribute("user");
         String imgfile = curUser.getAvatar();
         ImageDAO db = (ImageDAO) req.getServletContext().getAttribute("images");
         List<Image> images = db.getAll();
@@ -34,8 +34,24 @@ public class AdminController {
 
     @GetMapping("/admin")
     public ModelAndView render(HttpSession ses, HttpServletRequest req) throws SQLException {
-        User user = (User)ses.getAttribute("user");
+        User user = (User) ses.getAttribute("user");
         colorCheck(req);
+
+        LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
+        ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
+        ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
+        TimeTableDAO timeTableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = formatter.format(cal.getTime());
+        String resetDate = lastResetDAO.get();
+
+        if (date.compareTo(resetDate) >= 0) {
+            challengesDAO.removeAll();
+            reservedDAO.removeAll();
+            timeTableDAO.resetWithGrey();
+        }
         if (user == null || !user.getUsername().equals("admin"))
             return new ModelAndView("fail");
         ModelAndView mv = new ModelAndView("admin");
@@ -45,41 +61,67 @@ public class AdminController {
 
     @PostMapping("/admin")
     public ModelAndView adminActions(@RequestParam String emailstosend,
-                                 @RequestParam String subject,
-                                 @RequestParam String text,
-                                 @RequestParam String Button,
-                                 @RequestParam String toBlock,
-                                 @RequestParam String time,
-                                 @RequestParam String computer,
-                                 @RequestParam String check,
-                                 @RequestParam String timetocheck,
-                                 @RequestParam String computertocheck,
-                                 HttpServletRequest req, HttpSession ses) throws SQLException {
+                                     @RequestParam String subject,
+                                     @RequestParam String text,
+                                     @RequestParam String Button,
+                                     @RequestParam String toBlock,
+                                     @RequestParam String time,
+                                     @RequestParam String computer,
+                                     @RequestParam String check,
+                                     @RequestParam String timetocheck,
+                                     @RequestParam String computertocheck,
+                                     HttpServletRequest req, HttpSession ses) throws SQLException {
         ModelAndView mv = new ModelAndView("admin");
         Email email = (Email) req.getServletContext().getAttribute("email");
         UsersDAO db = (UsersDAO) req.getServletContext().getAttribute("db");
-        BlacklistDAO blackDB = (BlacklistDAO)req.getServletContext().getAttribute("blacklist");
-        ReservedDAO reservedDAO = (ReservedDAO)req.getServletContext().getAttribute("reserved");
-        ChallengesDAO challengesDAO = (ChallengesDAO)req.getServletContext().getAttribute("challenges");
-        TimeTableDAO timeTableDAO = (TimeTableDAO)req.getServletContext().getAttribute("table");
-        if(Button.equals("reset")){
+        BlacklistDAO blackDB = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
+        ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
+        ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
+        TimeTableDAO timeTableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
+        LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = formatter.format(cal.getTime());
+        String resetDate = lastResetDAO.get();
+
+        if (date.compareTo(resetDate) >= 0) {
+            challengesDAO.removeAll();
+            reservedDAO.removeAll();
+            timeTableDAO.resetWithGrey();
+        }
+
+        if (Button.equals("reset")) {
+            cal = Calendar.getInstance();
+            formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat timeFormatter = new SimpleDateFormat("HH");
+            int tm = Integer.parseInt(timeFormatter.format(cal.getTime()));
+            String dateToday = formatter.format(cal.getTime());
+            System.out.println(dateToday);
+            if (tm < 21) {
+                lastResetDAO.update(dateToday.substring(0, 11) + "21:00:00");
+            } else {
+                cal.add(Calendar.DATE, 1);
+                String dateTomorrow = formatter.format(cal.getTime());
+                lastResetDAO.update(dateTomorrow.substring(0, 11) + "21:00:00");
+            }
             challengesDAO.removeAll();
             reservedDAO.removeAll();
             timeTableDAO.reset();
-        }else if(Button.equals("check")){
-            if(check != null){
+        } else if (Button.equals("check")) {
+            if (check != null) {
                 String usernm = check;
                 int timeToCheck = Integer.parseInt(timetocheck);
                 int computerToCheck = Integer.parseInt(computertocheck.substring(computer.length() - 1));
-                if(reservedDAO.containsReservation(new Reservation(usernm,timeToCheck,computerToCheck))){
+                if (reservedDAO.containsReservation(new Reservation(usernm, timeToCheck, computerToCheck))) {
                     mv.addObject("contains", true);
-                }else{
+                } else {
                     mv.addObject("contains", false);
                 }
             }
-        }else if (Button.equals("sendall")) {
+        } else if (Button.equals("sendall")) {
             List<User> users = db.getAll();
-            for (User user: users) {
+            for (User user : users) {
                 try {
                     if (user.getUsername().equals("admin"))
                         continue;
@@ -88,7 +130,7 @@ public class AdminController {
                     e.printStackTrace();
                 }
             }
-        }else if (Button.equals("send")) {
+        } else if (Button.equals("send")) {
             StringTokenizer tokenizer = new StringTokenizer(emailstosend, " ,");
             while (tokenizer.hasMoreElements()) {
                 String username = tokenizer.nextToken();
@@ -97,7 +139,7 @@ public class AdminController {
                 if (user != null && !user.getUsername().equals("admin")) {
                     st.add(user.getMail());
                 }
-                for (String curMail: st) {
+                for (String curMail : st) {
                     try {
                         email.sendCode(curMail, subject, text);
                     } catch (MessagingException e) {
@@ -106,7 +148,7 @@ public class AdminController {
                 }
             }
         } else if (Button.equals("block")) {
-            if (!blackDB.getUser(toBlock) && !toBlock.equals("admin") && db.contains(toBlock)){
+            if (!blackDB.getUser(toBlock) && !toBlock.equals("admin") && db.contains(toBlock)) {
                 blackDB.addUser(toBlock);
             }
         } else if (Button.equals("unblock")) {
@@ -126,8 +168,7 @@ public class AdminController {
                 challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
                 Challenge challenge = new Challenge(0, "", "", curTime, compIndx);
                 challengesDAO.removeAllForComputerTime(challenge);
-            }
-            else {
+            } else {
                 mv.addObject("error", "Already taken!");
             }
         }
@@ -144,15 +185,15 @@ public class AdminController {
         ReservedDAO reserved = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         if (tm <= 21 && tm >= 10) {
             withGrey(tableDAO, reserved, tm);
-        }else{
+        } else {
             withGreen(tableDAO);
         }
     }
 
     private void withGrey(TimeTableDAO tableDAO, ReservedDAO reserved, int tm) throws SQLException {
-       // System.out.println(tm);
+        // System.out.println(tm);
         for (int i = 10; i <= tm; i++) {   // i -> time, j-> computer id
-            for(int j = 0; j < 10; j++){
+            for (int j = 0; j < 10; j++) {
                 Cell curCell = tableDAO.get(i, j);
                 curCell.setColor("grey");
                 curCell.setText("Time out");
@@ -163,10 +204,10 @@ public class AdminController {
     }
 
     private void withGreen(TimeTableDAO tableDAO) throws SQLException {
-        for(int i = 10; i <= 21; i++){  // i -> time, j-> computer id
-            for(int j = 0; j < 10; j++){
+        for (int i = 10; i <= 21; i++) {  // i -> time, j-> computer id
+            for (int j = 0; j < 10; j++) {
                 Cell curCell = tableDAO.get(i, j);
-                if(curCell.getColor().equals("grey")){
+                if (curCell.getColor().equals("grey")) {
                     curCell.setColor("green");
                     curCell.setText("Free");
                     tableDAO.update(curCell);
