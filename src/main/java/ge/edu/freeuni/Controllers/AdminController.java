@@ -119,9 +119,10 @@ public class AdminController {
         int i = curTime - 9;
         int j = compIndx + 1;
         Cell curCell = tableDAO.get(curTime, compIndx);
-        if (curCell.getColor().equals("red")) {
+        if (curCell.getColor().equals("green") || curCell.getColor().equals("orange")) {
             curCell.setColor("red");
             curCell.setText("Taken");
+            tableDAO.update(curCell);
             challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
             Challenge challenge = new Challenge(0, "", "", curTime, compIndx);
             challengesDAO.removeAllForComputerTime(challenge);

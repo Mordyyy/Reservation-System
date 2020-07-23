@@ -19,7 +19,7 @@
             <h1>Send Mail</h1>
             <div class="Trio">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
-                <input type="text" placeholder="E-mail(s)" name="emailstosend" value="" multiple>
+                <input type="text" placeholder="User(s)" name="emailstosend" value="" multiple>
             </div>
             <div class="Trio">
                 <i class="fa fa-address-book" aria-hidden="true"></i>
@@ -127,7 +127,7 @@
                 </ul>
             </nav>
         </div>
-        <button type="submit" name = "Button" value="reset">Start New Day</button>`
+        <button type="submit" name = "Button" value="reset" style="margin: 0 18px;">Start New Day</button>`
     </form>
     <div class="hrefs">
         <a href="/reset">Reset Password!</a> <br>
