@@ -4,6 +4,7 @@
     margin-left:auto;
     margin-right:auto;
     width:1920px;
+
 }
 
 body{
@@ -250,3 +251,20 @@ select option{
     background-color: deepskyblue;
 }
 
+.icox{
+    background: url("../images/x.png") no-repeat;
+    background-size: cover;
+    width: 25px;
+    height: 25px;
+    display: -webkit-inline-flex;
+    margin-top: -15px;
+}
+
+.icoy{
+    background: url("../images/y.png") no-repeat;
+    background-size: cover;
+    width: 25px;
+    height: 25px;
+    display: -webkit-inline-flex;
+    margin-top: -15px;
+}

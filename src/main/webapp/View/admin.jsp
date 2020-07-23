@@ -82,7 +82,18 @@
         </div>
 <%--        <div class="checking">--%>
             <input class="check" type="text" placeholder="Username" name="check">
-<%--            <div class="checkico">--%>
+        <c:if test="${contains != null}">
+            <c:if test="${contains}">
+                <%--                esaa shesacvleli--%>
+                <div class="icoy"></div>
+            </c:if>
+            <c:if test="${!contains}">
+                <%--                                da es--%>
+                <div class="icox"></div>
+            </c:if>
+        </c:if>
+
+    <%--            <div class="checkico">--%>
 <%--                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>--%>
 <%--            </div>--%>
 <%--        </div>--%>
@@ -131,29 +142,6 @@
                     ${error}
             </div>
         </c:if>
-
-
-
-
-
-
-        <c:if test="${contains != null}">
-            <c:if test="${contains}">
-<%--                esaa shesacvleli--%>
-                <%System.out.println("User has reserved");%>
-            </c:if>
-            <c:if test="${!contains}">
-<%--                                da es--%>
-                <%System.out.println("User has not reserved");%>
-            </c:if>
-        </c:if>
-
-
-
-
-
-
-
     </div>
     </body>
 </div>
