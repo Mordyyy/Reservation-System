@@ -14,6 +14,10 @@ create table users (
     mail varchar(60) unique,
     avatar varchar(60)
 );
+insert into users values ('Bot1', 'fbef64b2c3fc970f7f87bc69f5fa2a968657e569', 
+			'example@freeuni.edu.ge', 'pic.jpg');
+insert into users values ('Bot2', 'fbef64b2c3fc970f7f87bc69f5fa2a968657e569', 
+			'example2@freeuni.edu.ge', 'pic.jpg');
 
 create table blacklist(
 	username varchar(60) primary key
