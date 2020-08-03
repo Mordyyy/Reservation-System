@@ -16,7 +16,7 @@ public class UsersDAO {
 
     public boolean addUser(User user) throws SQLException {
         PreparedStatement st = null;
-        st = con.prepareStatement("Insert into users (username, password, mail, avatar) " +
+        st = con.prepareStatement("Insert into users (username, password, mail, avatar, reliability) " +
                 "values (?, ?, ?, ?, ?)");
         st.setString(1, user.getUsername());
         st.setString(2, user.getPassword());
