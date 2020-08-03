@@ -17,11 +17,12 @@ public class UsersDAO {
     public boolean addUser(User user) throws SQLException {
         PreparedStatement st = null;
         st = con.prepareStatement("Insert into users (username, password, mail, avatar) " +
-                "values (?, ?, ?, ?)");
+                "values (?, ?, ?, ?, ?)");
         st.setString(1, user.getUsername());
         st.setString(2, user.getPassword());
         st.setString(3, user.getMail());
         st.setString(4, user.getAvatar());
+        st.setDouble(5,user.getReliability());
         int res = st.executeUpdate();
         st.close();
         return (res == 1);

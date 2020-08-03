@@ -6,18 +6,20 @@ drop table if exists challenges;
 drop table if exists images;
 drop table if exists time_table;
 drop table if exists reservations;
+drop table if exists orders;
 drop table if exists last_reset;
 
 create table users (
 	username varchar(60) primary key,
     password varchar(60),
     mail varchar(60) unique,
-    avatar varchar(60)
+    avatar varchar(60),
+    reliability double
 );
 insert into users values ('Bot1', 'fbef64b2c3fc970f7f87bc69f5fa2a968657e569', 
-			'example@freeuni.edu.ge', 'pic.jpg');
+			'example@freeuni.edu.ge', 'pic.jpg',2);
 insert into users values ('Bot2', 'fbef64b2c3fc970f7f87bc69f5fa2a968657e569', 
-			'example2@freeuni.edu.ge', 'pic.jpg');
+			'example2@freeuni.edu.ge', 'pic.jpg',9);
 
 create table blacklist(
 	username varchar(60) primary key

@@ -6,6 +6,7 @@ public class User {
     private String username, password, mail, avatar;
     private GenerateHash hasher = new GenerateHash();
     private int bonus,orders;
+    private double reliability;
 
     public User(String username, String password, String mail) {
         this.username = username;
@@ -14,6 +15,7 @@ public class User {
         this.avatar = "pic.jpg";
         bonus = 0;
         orders = 0;
+        reliability = 0;
     }
 
     public User(String username, String password, String mail, String avatar) {
@@ -53,5 +55,17 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public void setReliability(double reliability){
+        this.reliability = reliability;
+    }
+
+    public double getReliability(){
+        return reliability;
+    }
+
+    public boolean isReliable(){
+        return reliability >= 7.5;
     }
 }
