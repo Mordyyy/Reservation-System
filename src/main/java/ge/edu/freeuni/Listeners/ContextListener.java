@@ -70,6 +70,13 @@ public class ContextListener implements ServletContextListener {
             throwables.printStackTrace();
         }
 
+        OrdersDAO ordersDAO = null;
+        try {
+            ordersDAO = new OrdersDAO(url + database, user_name, password);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
         sc.setAttribute("lastReset", lastResetDAO);
         sc.setAttribute("reserved", reservedDAO);
         sc.setAttribute("table", timeTable);
@@ -78,6 +85,7 @@ public class ContextListener implements ServletContextListener {
         sc.setAttribute("db", db);
         sc.setAttribute("blacklist", blacklist);
         sc.setAttribute("images", images);
+        sc.setAttribute("orders", ordersDAO);
     }
 
     @Override

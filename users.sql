@@ -54,6 +54,12 @@ create table time_table(
     color varchar(60)
 );
 
+create table orders(
+	username varchar(60) primary key,
+    orders_num int,
+    bonus_num int 
+);
+
 create table reservations(
 	username varchar(60),
 	time int,
