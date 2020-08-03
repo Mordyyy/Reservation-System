@@ -54,6 +54,8 @@ public class HomeController {
         } else {
             mv.addObject("label", "No Reservations");
         }
+        double reliability = user.getReliability();
+        mv.addObject("reliability", Double.toString(reliability) + "/10");
         setModelAttributes(req, ses, mv);
         return mv;
     }

@@ -20,7 +20,9 @@
     <img style="float: left" width="200px" height="200px"
          src="/resources/images/${imgfile}"/>
     <div class="info">
-        <h1 class="nameval">Hello <%=((User)session.getAttribute("user")).getUsername()%></h1><br><br><br><br><br>
+        <h1 class="nameval">Hello <%=((User)session.getAttribute("user")).getUsername()%></h1><br><br><br><br>
+        <h3 class="reliability">Reliability: <%=request.getAttribute("reliability")%></h3>
+        <h3 class="bonus">Bonus coupons: <%=((User)session.getAttribute("user")).getBonus()%></h3>
         <a href="/recChallenges">Received Challenges</a><br><br>
         <a href = "/reset">Reset Password!</a><br><br>
         <a href="/">Log Out</a>

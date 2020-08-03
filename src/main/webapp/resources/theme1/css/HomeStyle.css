@@ -48,6 +48,18 @@ body{
     /*padding: 13px 0*/
 }
 
+.reliability{
+    color: deepskyblue;
+    font-size: 15px;
+    font-family: "Arial Narrow", sans-serif;
+}
+
+.bonus{
+    color: deepskyblue;
+    font-size: 15px;
+    font-family: "Arial Narrow", sans-serif;
+}
+
 .message{
     color: yellowgreen;
     font-size: 30px;

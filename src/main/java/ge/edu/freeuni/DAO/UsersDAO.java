@@ -77,6 +77,15 @@ public class UsersDAO {
         st.close();
     }
 
+    public void changeReliability(User user) throws SQLException {
+        PreparedStatement st = null;
+        st = con.prepareStatement("update users set reliability = ? where username = ?");
+        st.setDouble(1, user.getReliability());
+        st.setString(2, user.getUsername());
+        st.executeUpdate();
+        st.close();
+    }
+
     public boolean removeUser(String username) throws SQLException {
         PreparedStatement st = null;
         st = con.prepareStatement("Delete from users where username = ?");
