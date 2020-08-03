@@ -23,6 +23,9 @@ public class User {
         this.password = password;
         this.mail = mail;
         this.avatar = avatar;
+        bonus = 0;
+        orders = 0;
+        reliability = 0;
     }
 
     public String getUsername() {
