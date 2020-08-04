@@ -23,7 +23,6 @@ public class UsersDAO {
         st.setString(3, user.getMail());
         st.setString(4, user.getAvatar());
         st.setDouble(5, user.getReliability());
-//        st.setDouble(5,user.getReliability());
         int res = st.executeUpdate();
         st.close();
         return (res == 1);
@@ -39,7 +38,7 @@ public class UsersDAO {
             return null;
         }
         User user = new User(res.getString("username"), res.getString("password")
-                , res.getString("mail"), res.getString("avatar"));
+                , res.getString("mail"), res.getString("avatar"), res.getDouble("reliability"));
         st.close();
         return user;
     }
@@ -54,7 +53,7 @@ public class UsersDAO {
             return null;
         }
         User user = new User(res.getString("username"), res.getString("password")
-                , res.getString("mail"), res.getString("avatar"));
+                , res.getString("mail"), res.getString("avatar"), res.getDouble("reliability"));
         st.close();
         return user;
     }

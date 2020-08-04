@@ -1,5 +1,7 @@
 package ge.edu.freeuni.DAO;
 
+import ge.edu.freeuni.Models.User;
+
 import java.sql.*;
 
 public class OrdersDAO {
@@ -9,11 +11,11 @@ public class OrdersDAO {
         this.con = DriverManager.getConnection(url, user_name, password);
     }
 
-    public boolean addUser(String username) throws SQLException {
+    public boolean addUser(User user) throws SQLException {
         String query = "insert into orders (username, orders_num, bonus_num) " +
                        "values (?, ?, ?)";
         PreparedStatement st = con.prepareStatement(query);
-        st.setString(1,username);
+        st.setString(1,user.getUsername());
         st.setInt(2, 0);
         st.setInt(3, 0);
         int res = st.executeUpdate();
@@ -21,8 +23,8 @@ public class OrdersDAO {
 
     }
 
-    public int getUserOrders(String username) throws SQLException {
-        ResultSet rs = getResultSet(username);
+    public int getUserOrders(User user) throws SQLException {
+        ResultSet rs = getResultSet(user.getUsername());
         if(!rs.next()){
             rs.close();
             return -1;
@@ -30,28 +32,28 @@ public class OrdersDAO {
         return rs.getInt(1);
     }
 
-    public int getUserBonus(String username) throws SQLException {
-        ResultSet rs = getResultSet(username);
+    public int getUserBonus(User user) throws SQLException {
+        ResultSet rs = getResultSet(user.getUsername());
         if(!rs.next()){
             return -1;
         }
         return rs.getInt(1);
     }
 
-    public void updateUserBonus(String username, int bonus) throws SQLException {
+    public void updateUserBonus(User user) throws SQLException {
         String query = "update orders set bonus_num = ? where username = ?";
         PreparedStatement st = con.prepareStatement(query);
-        st.setInt(1, bonus);
-        st.setString(2, username);
+        st.setInt(1, user.getBonus());
+        st.setString(2, user.getUsername());
         st.executeUpdate();
         st.close();
     }
 
-    public void updateUserOrders(String username, int orders) throws SQLException {
+    public void updateUserOrders(User user) throws SQLException {
         String query = "update orders set orders_num = ? where username = ?";
         PreparedStatement st = con.prepareStatement(query);
-        st.setInt(1, orders);
-        st.setString(2, username);
+        st.setInt(1, user.getOrders());
+        st.setString(2, user.getUsername());
         st.executeUpdate();
         st.close();
     }

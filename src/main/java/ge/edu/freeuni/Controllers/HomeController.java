@@ -77,6 +77,7 @@ public class HomeController {
         TimeTableDAO timeTableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
         LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
         User curUser = (User) ses.getAttribute("user");
+        System.out.println(curUser.getUsername() + " " + curUser.getReliability() + " " + curUser.getMail());
         colorCheck(req);
 
         nextReservationDisp(ses, mv, reservedDAO);

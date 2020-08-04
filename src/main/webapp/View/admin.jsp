@@ -114,6 +114,10 @@
             <h1>Blacklist</h1>
             <div class="Trio">
                 <input type="text" placeholder="Username" name="toBlock">
+                <div class="reliab">
+                    <input type="number" placeholder="Realiability" step="0.1" name="reliabilityField" min="0" max="10">
+                    <button type="submit" name = "Button" value="reliability">Set Realiability</button>
+                </div>
                 <button type="submit" class="block" name="Button" value="unblock">Unblock</button>
                 <button type="submit" class="block" name="Button" value="block">Block</button>
             </div>
