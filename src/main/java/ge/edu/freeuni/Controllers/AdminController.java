@@ -58,6 +58,7 @@ public class AdminController {
                                      @RequestParam String check,
                                      @RequestParam String timetocheck,
                                      @RequestParam String computertocheck,
+                                     @RequestParam Double reliabilityField,
                                      HttpServletRequest req, HttpSession ses) throws SQLException {
         ModelAndView mv = new ModelAndView("admin");
         Email email = (Email) req.getServletContext().getAttribute("email");
@@ -68,7 +69,6 @@ public class AdminController {
         ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
         TimeTableDAO timeTableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
         LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
-
         if (Button.equals("reset")) {
             resetting(reservedDAO, challengesDAO, timeTableDAO, lastResetDAO);
         } else if (Button.equals("check")) {
@@ -105,6 +105,12 @@ public class AdminController {
             }
         } else if (Button.equals("reserve")) {
             reserveByAdmin(time, computer, req, mv);
+        } else if (Button.equals("reliability")){
+            if(db.contains(toBlock)){
+                User user = db.getUserByUsername(toBlock);
+                user.setReliability(reliabilityField);
+                db.changeReliability(user);
+            }
         }
         setModelAttributes(req, ses, mv);
         colorCheck(req);

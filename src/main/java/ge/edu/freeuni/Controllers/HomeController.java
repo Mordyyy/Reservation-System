@@ -54,8 +54,6 @@ public class HomeController {
         } else {
             mv.addObject("label", "No Reservations");
         }
-        double reliability = user.getReliability();
-        mv.addObject("reliability", Double.toString(reliability) + "/10");
         setModelAttributes(req, ses, mv);
         return mv;
     }
@@ -79,6 +77,7 @@ public class HomeController {
         TimeTableDAO timeTableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
         LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
         User curUser = (User) ses.getAttribute("user");
+        System.out.println(curUser.getUsername() + " " + curUser.getReliability() + " " + curUser.getMail());
         colorCheck(req);
 
         nextReservationDisp(ses, mv, reservedDAO);

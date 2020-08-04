@@ -23,6 +23,18 @@ public class User {
         this.password = password;
         this.mail = mail;
         this.avatar = avatar;
+        bonus = 0;
+        orders = 0;
+        reliability = 0;
+    }
+    public User(String username, String password, String mail, String avatar, double reliability) {
+        this.username = username;
+        this.password = password;
+        this.mail = mail;
+        this.avatar = avatar;
+        bonus = 0;
+        orders = 0;
+        this.reliability = reliability;
     }
 
     public String getUsername() {

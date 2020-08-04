@@ -1,6 +1,7 @@
 package ge.edu.freeuni.DAO;
 
 import ge.edu.freeuni.Models.Challenge;
+import ge.edu.freeuni.Models.User;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,10 +19,14 @@ class OrdersDAOTest {
     private final String username = "root";
     private final String password = "4546";
     private OrdersDAO ordersDAO;
+    private UsersDAO usersDAO;
+    private User user;
 
     @BeforeEach
     public void init() throws SQLException {
         ordersDAO = new OrdersDAO(url,username,password);
+        usersDAO = new UsersDAO(url, username, password);
+        user = usersDAO.getUserByUsername("Bot1");
     }
 
     @AfterEach
@@ -34,20 +39,22 @@ class OrdersDAOTest {
 
     @Test
     public void AddUser() throws SQLException {
-        assertEquals(-1, ordersDAO.getUserBonus("Bot1"));
-        assertTrue(ordersDAO.addUser("Bot1"));
+        assertEquals(-1, ordersDAO.getUserBonus(user));
+        assertTrue(ordersDAO.addUser(user));
     }
 
     @Test
     public void getSet() throws SQLException {
-        assertEquals(-1, ordersDAO.getUserOrders("Bot1"));
-        assertTrue(ordersDAO.addUser("Bot1"));
-        assertEquals(0, ordersDAO.getUserBonus("Bot1"));
-        assertEquals(0,ordersDAO.getUserOrders("Bot1"));
-        ordersDAO.updateUserBonus("Bot1", 5);
-        ordersDAO.updateUserOrders("Bot1", 5);
-        assertEquals(5, ordersDAO.getUserBonus("Bot1"));
-        assertEquals(5,ordersDAO.getUserOrders("Bot1"));
+        assertEquals(-1, ordersDAO.getUserOrders(user));
+        assertTrue(ordersDAO.addUser(user));
+        assertEquals(0, ordersDAO.getUserBonus(user));
+        assertEquals(0,ordersDAO.getUserOrders(user));
+        user.setBonus(5);
+        user.setOrders(5);
+        ordersDAO.updateUserBonus(user);
+        ordersDAO.updateUserOrders(user);
+        assertEquals(5, ordersDAO.getUserBonus(user));
+        assertEquals(5,ordersDAO.getUserOrders(user));
 
     }
 

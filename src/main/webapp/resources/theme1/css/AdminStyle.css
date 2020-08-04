@@ -27,7 +27,7 @@ nav ul{
     padding: 6px 8px;
     border-radius: 20px;
     border: 2px solid blueviolet;
-    height:400px;
+    height:300px;
     width:100%;
 }
 nav ul{
@@ -108,6 +108,20 @@ textarea{
     width: 80%;
     float: left;
     margin: 0 10px;
+}
+
+.Trio .reliab{
+    margin-top: 30px;
+}
+
+.Trio .reliab input{
+    width: 50%;
+    font-size: 12px;
+}
+
+.trio .reliab button{
+    font-size: 14px;
+    width: 50%;
 }
 
 .checking input{
