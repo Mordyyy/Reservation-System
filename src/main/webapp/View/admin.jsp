@@ -78,7 +78,7 @@
                     <option value = "comp <%=i%>">Computer <%=i%></option>
                 <%}%>
             </select>
-            <button type="submit" name = "Button" value = "reserve">Reserve a seat</button><br><br>
+            <button type="submit" name = "Button" id="reservebutton"  value = "reserve">Reserve</button><br><br>
         </div>
 <%--        <div class="checking">--%>
             <input class="check" type="text" placeholder="Username" name="check">
@@ -108,10 +108,10 @@
                     <option value = "comp <%=i%>">Computer <%=i%></option>
                 <%}%>
             </select>
-            <button type="submit" name = "Button" value = "check">Check</button>
+            <button type="submit" id="checkbutton" name = "Button" value = "check">Check</button>
         </div>
         <div class="blacklist">
-            <h1>Blacklist</h1>
+            <h1>Control Panel</h1>
             <div class="Trio">
                 <input type="text" placeholder="Username" name="toBlock">
                 <div class="reliab">
@@ -120,6 +120,7 @@
                 </div>
                 <button type="submit" class="block" name="Button" value="unblock">Unblock</button>
                 <button type="submit" class="block" name="Button" value="block">Block</button>
+                <button type="submit" class="block" name="Button" value="bonus">Bonus</button>
             </div>
             <nav>
                 <ul>

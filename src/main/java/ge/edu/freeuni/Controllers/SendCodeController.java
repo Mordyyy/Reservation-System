@@ -1,4 +1,5 @@
 package ge.edu.freeuni.Controllers;
+import ge.edu.freeuni.DAO.OrdersDAO;
 import ge.edu.freeuni.DAO.UsersDAO;
 import ge.edu.freeuni.Helpers.Email;
 import ge.edu.freeuni.Models.User;
@@ -28,6 +29,7 @@ public class SendCodeController {
             int sentCode = email.getUsersCode(user.getMail());
             if (Integer.parseInt(Code) == sentCode) {
                 ((UsersDAO)req.getServletContext().getAttribute("db")).addUser(user);
+                ((OrdersDAO)req.getServletContext().getAttribute("orders")).addUser(user);
                 resp.sendRedirect("");
             } else {
                 modelAndView.addObject("error", "Wrong Code!");

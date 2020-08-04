@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
+import javax.persistence.criteria.Order;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
@@ -69,6 +70,7 @@ public class AdminController {
         ChallengesDAO challengesDAO = (ChallengesDAO) req.getServletContext().getAttribute("challenges");
         TimeTableDAO timeTableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
         LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
+        OrdersDAO ordersDAO = (OrdersDAO) req.getServletContext().getAttribute("orders");
         if (Button.equals("reset")) {
             resetting(reservedDAO, challengesDAO, timeTableDAO, lastResetDAO);
         } else if (Button.equals("check")) {
@@ -110,6 +112,16 @@ public class AdminController {
                 User user = db.getUserByUsername(toBlock);
                 user.setReliability(reliabilityField);
                 db.changeReliability(user);
+            }
+        } else if(Button.equals("bonus")){
+            if(db.contains(toBlock)) {
+                User user = db.getUserByUsername(toBlock);
+                int bonus = ordersDAO.getUserBonus(user);
+                if (bonus > 0) {
+                    bonus--;
+                    user.setBonus(bonus);
+                    ordersDAO.updateUserBonus(user);
+                }
             }
         }
         setModelAttributes(req, ses, mv);

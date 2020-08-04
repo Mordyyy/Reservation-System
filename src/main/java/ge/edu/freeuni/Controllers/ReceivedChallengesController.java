@@ -1,9 +1,6 @@
 package ge.edu.freeuni.Controllers;
 
-import ge.edu.freeuni.DAO.BlacklistDAO;
-import ge.edu.freeuni.DAO.ChallengesDAO;
-import ge.edu.freeuni.DAO.ReservedDAO;
-import ge.edu.freeuni.DAO.TimeTableDAO;
+import ge.edu.freeuni.DAO.*;
 import ge.edu.freeuni.Models.Cell;
 import ge.edu.freeuni.Models.Challenge;
 import ge.edu.freeuni.Models.Reservation;
@@ -48,6 +45,7 @@ public class ReceivedChallengesController {
         BlacklistDAO blacklistDAO = (BlacklistDAO) req.getServletContext().getAttribute("blacklist");
         ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         Challenge challenge = dao.getChallenge(Integer.parseInt(hiddenID));
+        OrdersDAO ordersDAO = (OrdersDAO) req.getServletContext().getAttribute("orders");
         int time = challenge.getTime();
         int computer = challenge.getComputerID();
         List<Challenge> lst = dao.getAllForComputerTime(time, computer);
@@ -79,6 +77,18 @@ public class ReceivedChallengesController {
                         }
                         reservedDAO.addReservation(new Reservation(challenge.getToUser(), time, computer));
                         reservedDAO.addReservation(new Reservation(challenge.getFromUser(), time, computer));
+                        User tmpuser = new User(challenge.getFromUser());
+                        int orders = ordersDAO.getUserOrders(tmpuser);
+                        orders++;
+                        tmpuser.setOrders(orders);
+                        ordersDAO.updateUserOrders(tmpuser);
+                        if(orders % 5 == 0) {
+                            int bonus = ordersDAO.getUserBonus(tmpuser);
+                            bonus++;
+                            tmpuser.setBonus(bonus);
+                            ordersDAO.updateUserBonus(tmpuser);
+                        }
+                        System.out.println(tmpuser.getUsername() + " " + ordersDAO.getUserOrders(tmpuser) + " " + tmpuser.getBonus());
                     }
                     else if (curCell.getColor().equals("red")) {
                         dao.removeChallengesByChallenge(challenge);

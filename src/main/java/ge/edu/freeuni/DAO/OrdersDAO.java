@@ -24,7 +24,8 @@ public class OrdersDAO {
     }
 
     public int getUserOrders(User user) throws SQLException {
-        ResultSet rs = getResultSet(user.getUsername());
+        String query = "select orders_num from orders where username = ?";
+        ResultSet rs = getResultSet(user.getUsername(), query);
         if(!rs.next()){
             rs.close();
             return -1;
@@ -33,7 +34,8 @@ public class OrdersDAO {
     }
 
     public int getUserBonus(User user) throws SQLException {
-        ResultSet rs = getResultSet(user.getUsername());
+        String query = "select bonus_num from orders where username = ?";
+        ResultSet rs = getResultSet(user.getUsername(), query);
         if(!rs.next()){
             return -1;
         }
@@ -58,8 +60,7 @@ public class OrdersDAO {
         st.close();
     }
 
-    private ResultSet getResultSet(String username) throws SQLException {
-        String query = "select orders_num from orders where username = ?";
+    private ResultSet getResultSet(String username,String query) throws SQLException { ;
         PreparedStatement st = con.prepareStatement(query);
         st.setString(1,username);
         ResultSet rs = st.executeQuery();

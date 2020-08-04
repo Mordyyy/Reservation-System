@@ -44,9 +44,12 @@ public class HomeController {
         colorCheck(req);
         tableGrey.tableGrey(req);
         ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
+        OrdersDAO ordersDAO = (OrdersDAO) req.getServletContext().getAttribute("orders");
         if (user == null || user.getUsername().equals("admin")) {
             return new ModelAndView("fail");
         }
+        user.setBonus(ordersDAO.getUserBonus(user));
+        user.setOrders(ordersDAO.getUserOrders(user));
         ModelAndView mv = new ModelAndView("home");
         ArrayList<Reservation> arr = (ArrayList<Reservation>) reservedDAO.getAllByUserSorted(user.getUsername());
         if (arr.size() > 0) {
@@ -74,10 +77,10 @@ public class HomeController {
         UsersDAO usersDAO = (UsersDAO) req.getServletContext().getAttribute("db");
         tableGrey.tableGrey(req);
         ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
-        TimeTableDAO timeTableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
-        LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
         User curUser = (User) ses.getAttribute("user");
-        System.out.println(curUser.getUsername() + " " + curUser.getReliability() + " " + curUser.getMail());
+        OrdersDAO ordersDAO = (OrdersDAO) req.getServletContext().getAttribute("orders");
+        curUser.setBonus(ordersDAO.getUserBonus(curUser));
+        curUser.setOrders(ordersDAO.getUserOrders(curUser));
         colorCheck(req);
 
         nextReservationDisp(ses, mv, reservedDAO);
@@ -122,6 +125,14 @@ public class HomeController {
                     tableDAO.update(curCell);
                     Reservation reservation = new Reservation(curUser.getUsername(), curTime, compIndx);
                     reservedDAO.addReservation(reservation);
+                    int orders = ordersDAO.getUserOrders(curUser); orders++;
+                    curUser.setOrders(orders);
+                    ordersDAO.updateUserOrders(curUser);
+                    if(orders % 5 == 0) {
+                        int bonus = ordersDAO.getUserBonus(curUser);  bonus++;
+                        curUser.setBonus(bonus);
+                        ordersDAO.updateUserBonus(curUser);
+                    }
                     if (WannaChallenge == null)
                         challengesDAO.removeAllForComputerTime(challenge);
                 } else {
@@ -154,9 +165,9 @@ public class HomeController {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat formatter = new SimpleDateFormat("HH");
         int tm = Integer.parseInt(formatter.format(cal.getTime()));
-        if (tm >= 21 && tm <= 24) {
-            return true;
-        }
+//        if (tm >= 21 && tm <= 24) {
+//            return true;
+//        }
         return false;
     }
 
