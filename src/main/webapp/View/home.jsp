@@ -17,7 +17,7 @@
 </head>
 <form action="/home" method="post">
     <body>
-    <img style="float: left" width="200px" height="200px"
+    <img style="float: left" width="200px" height="200px" id="avatarr"
          src="/resources/images/${imgfile}"/>
     <div class="info">
         <h1 class="nameval">Hello <%=((User)session.getAttribute("user")).getUsername()%></h1><br><br><br><br>
@@ -26,7 +26,6 @@
         <a href="/recChallenges">Received Challenges</a><br><br>
         <a href = "/reset">Reset Password!</a><br><br>
         <a href="/">Log Out</a>
-
     </div> <br>
         <div class="changeavatar">
             <select name = "avatar">
@@ -34,15 +33,17 @@
                 <option value="<%=img.getUrl()%>"><%=img.getName()%></option>
             <%}%>
         </select>
-        <button style="margin: 10px 40px;" type="submit" name = "Button" value = "Change avatar">Change Avatar</button>
+        <button style="margin: 10px 40px;" type="submit" name = "Button" value = "Change avatar">Change Avatar</button><br>
+            <a href="/info">Have a question?</a><br><br><br>
+            <c:if test="${label != null}">
+                <label class="message"> ${label} </label>
+            </c:if>
+            <c:if test="${label == null}">
+                OOPS!
+            </c:if>
     </div>
 
-    <c:if test="${label != null}">
-        <label class="message"> ${label} </label>
-    </c:if>
-    <c:if test="${label == null}">
-        OOPS!
-    </c:if>
+
 
     <div class="timetable">
         <table class="table table-stripped table-bordered">

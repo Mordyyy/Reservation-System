@@ -60,10 +60,15 @@ body{
     font-family: "Arial Narrow", sans-serif;
 }
 
+#avatarr{
+    padding: 25px 0;
+}
+
 .message{
     color: yellowgreen;
-    font-size: 30px;
+    font-size: 20px;
     font-family: "American Typewriter", serif;
+    width: 100%;
 }
 
 .submit{
@@ -83,9 +88,9 @@ body{
     color: red;
 }
 
-.changeavatar{
-    padding: 50px 0;
-}
+/*.changeavatar{*/
+/*    padding: 50px 0;*/
+/*}*/
 
 
 button{
