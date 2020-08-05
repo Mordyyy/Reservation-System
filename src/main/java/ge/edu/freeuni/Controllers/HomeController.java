@@ -74,8 +74,6 @@ public class HomeController {
         UsersDAO usersDAO = (UsersDAO) req.getServletContext().getAttribute("db");
         tableGrey.tableGrey(req);
         ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
-        TimeTableDAO timeTableDAO = (TimeTableDAO) req.getServletContext().getAttribute("table");
-        LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
         User curUser = (User) ses.getAttribute("user");
         colorCheck(req);
 
@@ -187,8 +185,6 @@ public class HomeController {
         ReservedDAO reserved = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         if (tm <= 21 && tm >= 10) {
             withGrey(tableDAO, reserved, tm);
-        } else {
-            withGreen(tableDAO);
         }
     }
 
@@ -200,19 +196,6 @@ public class HomeController {
                 curCell.setText("Time out");
                 tableDAO.update(curCell);
                 reserved.removeTimedOut(tm);
-            }
-        }
-    }
-
-    private void withGreen(TimeTableDAO tableDAO) throws SQLException {
-        for (int i = 10; i <= 21; i++) {  // i -> time, j-> computer id
-            for (int j = 0; j < 10; j++) {
-                Cell curCell = tableDAO.get(i, j);
-                if (curCell.getColor().equals("grey")) {
-                    curCell.setColor("green");
-                    curCell.setText("Free");
-                    tableDAO.update(curCell);
-                }
             }
         }
     }
