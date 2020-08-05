@@ -223,4 +223,12 @@ public class ChallengesDAO {
         st.close();
         return challenges;
     }
+
+    public boolean removeAllForUser(String user) throws SQLException {
+        PreparedStatement st = con.prepareStatement("delete from challenges where fromUser = ? or toUser = ? ");
+        st.setString(1, user);
+        st.setString(2, user);
+        int res = st.executeUpdate();
+        return res > 0;
+    }
 }

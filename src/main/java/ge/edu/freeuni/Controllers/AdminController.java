@@ -99,7 +99,7 @@ public class AdminController {
             sendMail(emailstosend, subject, text, email, db);
         } else if (Button.equals("block")) {
             if (!blackDB.getUser(toBlock) && !toBlock.equals("admin") && db.contains(toBlock)) {
-                blackDB.addUser(toBlock);
+                blockUser(toBlock, blackDB, reservedDAO, challengesDAO, timeTableDAO);
             }
         } else if (Button.equals("unblock")) {
             if (blackDB.getUser(toBlock)) {
@@ -127,6 +127,13 @@ public class AdminController {
         setModelAttributes(req, ses, mv);
         colorCheck(req);
         return mv;
+    }
+
+    private void blockUser(String toBlock, BlacklistDAO blackDB, ReservedDAO reservedDAO, ChallengesDAO challengesDAO, TimeTableDAO timeTableDAO) throws SQLException {
+        blackDB.addUser(toBlock);
+        reservedDAO.removeAllForUser(toBlock);
+        challengesDAO.removeAllForUser(toBlock);
+        timeTableDAO.updatewithReservedChallenges();
     }
 
     private void reserveByAdmin(@RequestParam String time, @RequestParam String computer, HttpServletRequest req, ModelAndView mv) throws SQLException {
@@ -174,7 +181,7 @@ public class AdminController {
         SimpleDateFormat timeFormatter = new SimpleDateFormat("HH");
         int tm = Integer.parseInt(timeFormatter.format(cal.getTime()));
         String dateToday = formatter.format(cal.getTime());
-        System.out.println(dateToday);
+        //System.out.println(dateToday);
         if (tm < 21) {
             lastResetDAO.update(dateToday.substring(0, 11) + "21:00:00");
         } else {

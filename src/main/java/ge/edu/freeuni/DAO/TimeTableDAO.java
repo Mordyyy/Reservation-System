@@ -67,6 +67,15 @@ public class TimeTableDAO {
         return lst;
     }
 
+    public void updatewithReservedChallenges() throws SQLException {
+        reset();
+        PreparedStatement st = con.prepareStatement("update time_table inner join reservations on time_table.meeting_time = reservations.time and time_table.computerID = reservations.computerID set time_table.text = \"Taken\", time_table.color = \"red\"");
+        st.executeUpdate();
+
+        st = con.prepareStatement("update time_table inner join challenges on time_table.meeting_time = challenges.meeting_time and time_table.computerID = challenges.computerID set time_table.text = \"Waiting\", time_table.color = \"orange\"");
+        st.executeUpdate();
+    }
+
     public void reset() throws SQLException {
         PreparedStatement st = con.prepareStatement("update time_table set text = ?, color = ?");
         st.setString(1, "Free");

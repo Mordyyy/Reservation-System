@@ -96,4 +96,10 @@ public class ReservedDAO {
         return reservations;
     }
 
+    public boolean removeAllForUser(String user) throws SQLException {
+        PreparedStatement st = con.prepareStatement("delete from reservations where username = ?");
+        st.setString(1, user);
+        int res = st.executeUpdate();
+        return res > 0;
+    }
 }
