@@ -78,7 +78,7 @@ public class ReceivedChallengesController {
                         reservedDAO.addReservation(new Reservation(challenge.getToUser(), time, computer));
                         reservedDAO.addReservation(new Reservation(challenge.getFromUser(), time, computer));
                         User tmpuser = new User(challenge.getFromUser());
-                        int orders = ordersDAO.getUserOrders(tmpuser);
+                        int orders = ordersDAO.getUserOrders(tmpuser.getUsername());
                         orders++;
                         tmpuser.setOrders(orders);
                         ordersDAO.updateUserOrders(tmpuser);
@@ -88,7 +88,7 @@ public class ReceivedChallengesController {
                             tmpuser.setBonus(bonus);
                             ordersDAO.updateUserBonus(tmpuser);
                         }
-                        System.out.println(tmpuser.getUsername() + " " + ordersDAO.getUserOrders(tmpuser) + " " + tmpuser.getBonus());
+                        System.out.println(tmpuser.getUsername() + " " + ordersDAO.getUserOrders(tmpuser.getUsername()) + " " + tmpuser.getBonus());
                     }
                     else if (curCell.getColor().equals("red")) {
                         dao.removeChallengesByChallenge(challenge);

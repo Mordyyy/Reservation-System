@@ -72,7 +72,7 @@ public class AdminController {
         LastResetDAO lastResetDAO = (LastResetDAO) req.getServletContext().getAttribute("lastReset");
         OrdersDAO ordersDAO = (OrdersDAO) req.getServletContext().getAttribute("orders");
         if (Button.equals("reset")) {
-            resetting(reservedDAO, challengesDAO, timeTableDAO, lastResetDAO);
+            resetting(reservedDAO, challengesDAO, timeTableDAO, lastResetDAO, ordersDAO);
         } else if (Button.equals("check")) {
             if (check != null) {
                 String usernm = check;
@@ -175,7 +175,7 @@ public class AdminController {
         }
     }
 
-    private void resetting(ReservedDAO reservedDAO, ChallengesDAO challengesDAO, TimeTableDAO timeTableDAO, LastResetDAO lastResetDAO) throws SQLException {
+    private void resetting(ReservedDAO reservedDAO, ChallengesDAO challengesDAO, TimeTableDAO timeTableDAO, LastResetDAO lastResetDAO, OrdersDAO ordersDAO) throws SQLException {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat timeFormatter = new SimpleDateFormat("HH");
@@ -192,6 +192,7 @@ public class AdminController {
         challengesDAO.removeAll();
         reservedDAO.removeAll();
         timeTableDAO.reset();
+        ordersDAO.reset();
     }
 
     private void colorCheck(HttpServletRequest req) throws SQLException {

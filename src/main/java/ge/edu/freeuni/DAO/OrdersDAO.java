@@ -23,9 +23,14 @@ public class OrdersDAO {
 
     }
 
-    public int getUserOrders(User user) throws SQLException {
+    public void reset() throws SQLException {
+        PreparedStatement st = con.prepareStatement("update orders set orders_num = 0");
+        st.executeUpdate();
+    }
+
+    public int getUserOrders(String user) throws SQLException {
         String query = "select orders_num from orders where username = ?";
-        ResultSet rs = getResultSet(user.getUsername(), query);
+        ResultSet rs = getResultSet(user, query);
         if(!rs.next()){
             rs.close();
             return -1;
