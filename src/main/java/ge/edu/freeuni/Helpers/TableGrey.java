@@ -27,6 +27,7 @@ public class TableGrey {
             challengesDAO.removeAll();
             reservedDAO.removeAll();
             timeTableDAO.resetWithGrey();
+
         }
     }
 
