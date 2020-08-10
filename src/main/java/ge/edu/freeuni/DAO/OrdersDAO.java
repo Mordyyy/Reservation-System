@@ -4,6 +4,14 @@ import ge.edu.freeuni.Models.User;
 
 import java.sql.*;
 
+/*
+    4 columns:
+    1. username - user's username
+    2. orders_num - orders number from his registration
+    3. bonus_num - number of bonuses
+    4. today_orders - orders number which are ordered today
+ */
+
 public class OrdersDAO {
     private Connection con;
 
@@ -23,6 +31,7 @@ public class OrdersDAO {
         return res == 1;
     }
 
+    // making all today orders zeros
     public void reset() throws SQLException {
         PreparedStatement st = con.prepareStatement("update orders set today_orders = 0");
         st.executeUpdate();
@@ -87,6 +96,7 @@ public class OrdersDAO {
         st.close();
     }
 
+    // helper method, giving one column with specific query
     private ResultSet getResultSet(String username,String query) throws SQLException { ;
         PreparedStatement st = con.prepareStatement(query);
         st.setString(1,username);

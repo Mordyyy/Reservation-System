@@ -6,6 +6,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    This database has 5 columns:
+
+    1. username - user's username
+    2. password - hash of user's password
+    3. mail - user's email adress
+    4. avatar - url of user's avatar
+    5. reliability - reliability of user
+
+    For default, contains 2 users. Bot1 and Bot2. Password is achiachi.
+ */
+
 public class UsersDAO {
 
     private Connection con;
@@ -28,6 +40,7 @@ public class UsersDAO {
         return (res == 1);
     }
 
+    // returns user by username
     public User getUserByUsername(String username) throws SQLException {
         PreparedStatement st = null;
         st = con.prepareStatement("Select * from users where username = ?");
@@ -43,6 +56,7 @@ public class UsersDAO {
         return user;
     }
 
+    // returns user by email adress
     public User getUserByeMail(String eMail) throws SQLException {
         PreparedStatement st = null;
         st = con.prepareStatement("Select * from users where mail = ?");
@@ -95,6 +109,7 @@ public class UsersDAO {
         return (res == 1);
     }
 
+    // returns true if database contains user with this username
     public boolean contains(String userName) throws SQLException {
         PreparedStatement st = con.prepareStatement("select * from users where username = ?");
         st.setString(1, userName);
@@ -109,7 +124,7 @@ public class UsersDAO {
         }
         return res;
     }
-
+    // returns list of users
     public List<User> getAll() throws SQLException {
         PreparedStatement st = null;
         List<User> lst = new ArrayList<>();

@@ -6,6 +6,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    Has two columns:
+    1. url - location of image
+    2. name - name of special avatars
+ */
+
 public class ImageDAO {
     private Connection con;
 

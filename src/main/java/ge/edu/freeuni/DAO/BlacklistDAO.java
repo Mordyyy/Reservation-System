@@ -1,10 +1,9 @@
 package ge.edu.freeuni.DAO;
-
-import ge.edu.freeuni.Models.User;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+/* Data base, where are blocked users. Database has only one column for usernames */
 
 public class BlacklistDAO {
     private Connection con;
@@ -13,6 +12,7 @@ public class BlacklistDAO {
         this.con = DriverManager.getConnection(url, user_name, password);
     }
 
+    // adding user
     public boolean addUser(String username) throws SQLException {
         PreparedStatement st = null;
         st = con.prepareStatement("Insert into blacklist (username) " + "values (?)");
@@ -22,6 +22,7 @@ public class BlacklistDAO {
         return (res == 1);
     }
 
+    // returns true if blacklist contains this user
     public boolean getUser(String username) throws SQLException {
         PreparedStatement st = null;
         st = con.prepareStatement("Select * from blacklist where username = ?");
@@ -35,6 +36,7 @@ public class BlacklistDAO {
         return true;
     }
 
+    // removes user from blacklist
     public boolean removeUser(String username) throws SQLException {
         PreparedStatement st = null;
         st = con.prepareStatement("Delete from blacklist where username = ?");
@@ -44,6 +46,7 @@ public class BlacklistDAO {
         return (res == 1);
     }
 
+    // gives list of blocked users
     public List<String> getAll() throws SQLException {
         PreparedStatement st = null;
         List<String> lst = new ArrayList<>();

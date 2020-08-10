@@ -10,6 +10,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/* This DAO contains three columns. First is for usernames, second is for time, third is for
+*       computer ids. */
+
 class ReservedDAOTest {
     private final String url = "jdbc:mysql://localhost/Reservation";
     private final String username = "root";

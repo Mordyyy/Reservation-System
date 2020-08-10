@@ -6,6 +6,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+* This database has 5 fields.
+* 1. id, which is unique for challenges
+* 2. fromUser - user's username, who is challenging another user
+* 3. toUser - user's username, who is challenged
+* 4. meeting_time - reservation's time
+* 5. computerID - computer's id
+* */
+
 public class ChallengesDAO {
 
     private Connection con;
@@ -14,6 +23,7 @@ public class ChallengesDAO {
         this.con = DriverManager.getConnection(url, user_name, password);
     }
 
+    // returns challenge's id from all these information below
     public int getChallengeId(String fromUser, String toUser, int time, int compID) throws SQLException {
         String query = "select id from challenges where fromUser = ? and toUser = ?" +
                 "and meeting_time = ? and computerID = ?";
@@ -30,6 +40,7 @@ public class ChallengesDAO {
         return rs.getInt(1);
     }
 
+    // returns challenge using this id
     public Challenge getChallenge(int id) throws SQLException {
         PreparedStatement st;
         st = con.prepareStatement("select * from challenges where id = ?");
@@ -44,6 +55,7 @@ public class ChallengesDAO {
         return toRet;
     }
 
+    // adding challenge
     public boolean addChallenge(Challenge challenge) throws SQLException {
         PreparedStatement st = null;
         st = con.prepareStatement("Insert into challenges (fromUser, toUser, meeting_time," +
@@ -65,6 +77,7 @@ public class ChallengesDAO {
         return res == 1;
     }
 
+    // removes challenge if it is less than given time
     public boolean deleteTimedOutChallenges(int time) throws SQLException {
         PreparedStatement st = con.prepareStatement("delete from challenges where meeting_time <= ?");
         st.setInt(1, time);
@@ -130,6 +143,7 @@ public class ChallengesDAO {
         st.executeUpdate();
     }
 
+    // returns all challenges between these to users
     public List<Challenge> getAllForTwo(String fromUser, String toUser) throws SQLException {
         PreparedStatement st = null;
         List<Challenge> lst = new ArrayList<>();
@@ -154,6 +168,7 @@ public class ChallengesDAO {
         return challenges;
     }
 
+    // gives all challenges for this computer and time
     public List<Challenge> getAllForComputerTime(int time, int computer) throws SQLException {
         PreparedStatement st = null;
         List<Challenge> lst = new ArrayList<>();
@@ -178,6 +193,7 @@ public class ChallengesDAO {
         return challenges;
     }
 
+    // gives all challenges which is sent by this user
     public List<Challenge> getAllSent(String fromUser) throws SQLException {
         PreparedStatement st = null;
         List<Challenge> lst = new ArrayList<>();
@@ -201,6 +217,7 @@ public class ChallengesDAO {
         return challenges;
     }
 
+    // gives all received challenges for this user
     public List<Challenge> getAllReceived(String toUser) throws SQLException {
         PreparedStatement st;
         List<Challenge> lst = new ArrayList<>();
@@ -224,6 +241,7 @@ public class ChallengesDAO {
         return challenges;
     }
 
+    // removes all challenges that are connected with this user
     public boolean removeAllForUser(String user) throws SQLException {
         PreparedStatement st = con.prepareStatement("delete from challenges where fromUser = ? or toUser = ? ");
         st.setString(1, user);

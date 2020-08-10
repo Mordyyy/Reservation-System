@@ -6,6 +6,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/* This DAO contains three columns. First is for usernames, second is for time, third is for
+ *       computer ids. */
+
 public class ReservedDAO {
     private Connection con;
 
@@ -35,13 +38,14 @@ public class ReservedDAO {
         }
         return ans > 0;
     }
-
+    // removing all reservations on this time
     public void removeTimedOut(int time) throws SQLException {
         PreparedStatement st = con.prepareStatement("delete from reservations where time <= ?");
         st.setInt(1, time);
         st.executeUpdate();
     }
 
+    // removing all reservations
     public void removeAll() throws SQLException {
         PreparedStatement st;
         st = con.prepareStatement("Delete from reservations");
@@ -60,6 +64,7 @@ public class ReservedDAO {
         return getFromResultSet(res);
     }
 
+    // gives all reservations related to this username
     public List<Reservation> getAllByUser(String username) throws SQLException {
         PreparedStatement st = con.prepareStatement("select * from reservations " +
                 "where username = ?");
@@ -72,6 +77,7 @@ public class ReservedDAO {
         return getFromResultSet(res);
     }
 
+    // gives all reservations on this time
     public List<Reservation> getAllByTime(int time) throws SQLException {
         PreparedStatement st = con.prepareStatement("select * from reservations " +
                 "where time = ?");
@@ -96,6 +102,7 @@ public class ReservedDAO {
         return reservations;
     }
 
+    // removing all reservations for this user
     public boolean removeAllForUser(String user) throws SQLException {
         PreparedStatement st = con.prepareStatement("delete from reservations where username = ?");
         st.setString(1, user);
