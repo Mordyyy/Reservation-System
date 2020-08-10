@@ -62,6 +62,7 @@ class ReservedDAOTest {
         reservedDAO.removeAll();
         lst = reservedDAO.getAllByTime(-2);
         assertEquals(0,lst.size());
+        reservedDAO.getAllByUserSorted(username);
     }
 
 }

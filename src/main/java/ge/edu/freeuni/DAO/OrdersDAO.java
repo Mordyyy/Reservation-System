@@ -13,7 +13,7 @@ public class OrdersDAO {
 
     public boolean addUser(User user) throws SQLException {
         String query = "insert into orders (username, orders_num, bonus_num, today_orders) " +
-                       "values (?, ?, ?)";
+                       "values (?, ?, ?, ?)";
         PreparedStatement st = con.prepareStatement(query);
         st.setString(1,user.getUsername());
         st.setInt(2, 0);
@@ -21,7 +21,6 @@ public class OrdersDAO {
         st.setInt(4,0);
         int res = st.executeUpdate();
         return res == 1;
-
     }
 
     public void reset() throws SQLException {
@@ -75,6 +74,7 @@ public class OrdersDAO {
         st.setInt(1, user.getBonus());
         st.setString(2, user.getUsername());
         st.executeUpdate();
+        System.out.println(user.getBonus() + " " + getUserBonus(user));
         st.close();
     }
 
