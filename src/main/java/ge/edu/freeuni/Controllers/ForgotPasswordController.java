@@ -34,12 +34,13 @@ public class ForgotPasswordController {
         Randomizer randomizer = new Randomizer();
         if(usersDAO.getUserByeMail(email) != null){
             UsersDAO db = (UsersDAO)req.getServletContext().getAttribute("db");
-            String passwordMessagePref = "Your new password is: " + randomizer.getRandomInteger() + "\n";
+            int randomPassword = randomizer.getRandomInteger();
+            String passwordMessagePref = "Your new password is: " + randomPassword + "\n";
             String passwordMessageSuf = "Please log in if you want to change password";
             String passwordMessage = passwordMessagePref + passwordMessageSuf;
             mail.sendCode(email,"New password", passwordMessage);
             db.changePassword(db.getUserByeMail(email).getUsername(),
-                    hasher.generateHash(Integer.toString(randomizer.getRandomInteger())));
+                    hasher.generateHash(Integer.toString(randomPassword)));
         }else{
             modelAndView.setViewName("forgot");
             modelAndView.addObject("error", "This mail is not registered");
