@@ -47,7 +47,9 @@ public class ResetPasswordController {
             return errorMV(modelAndView, "Dude, Serious?");
         }else if(hasher.generateHash(oldpassword).equals(user.getPassword()) &&  password1.equals(password2) && password1.length() >= 6){
             usersDAO.changePassword(userName,hasher.generateHash(password1));
-            resp.sendRedirect(url);
+            //resp.sendRedirect(url);
+            modelAndView.setViewName("login");
+            resp.sendRedirect("");
             return modelAndView;
         }else if (!hasher.generateHash(oldpassword).equals(user.getPassword())){
             return errorMV(modelAndView, "Your current password is not correct");
