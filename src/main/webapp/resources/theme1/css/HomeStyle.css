@@ -80,12 +80,18 @@ body{
     position: absolute;
     left: 39%;
     color: red;
+    top: 82%;
 }
 
 .eror{
     width: 80%;
+    top: 82%;
     text-align: center;
     color: red;
+}
+
+.fa-exclamation-triangle{
+    padding-left: 38%;
 }
 
 /*.changeavatar{*/

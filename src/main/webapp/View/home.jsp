@@ -96,10 +96,10 @@
             <c:if test="${error != null}">
                 <div class="errorico">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    <div class="eror">
+                            ${error}
+                    </div>
                 </div> <br>
-                <div class="eror">
-                        ${error}
-                </div>
             </c:if>
         </div>
     </div>
