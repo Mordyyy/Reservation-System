@@ -59,8 +59,12 @@ create table time_table(
 create table orders(
 	username varchar(60) primary key,
     orders_num int,
-    bonus_num int 
+    bonus_num int,
+    today_orders int
 );
+
+insert into orders values('Bot1', 0, 0, 0);
+insert into orders values('Bot2', 0, 0, 0);
 
 create table reservations(
 	username varchar(60),

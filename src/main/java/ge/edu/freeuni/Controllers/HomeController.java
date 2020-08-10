@@ -79,6 +79,7 @@ public class HomeController {
         ReservedDAO reservedDAO = (ReservedDAO) req.getServletContext().getAttribute("reserved");
         User curUser = (User) ses.getAttribute("user");
         OrdersDAO ordersDAO = (OrdersDAO) req.getServletContext().getAttribute("orders");
+        System.out.println(ordersDAO.getUserBonus(curUser));
         curUser.setBonus(ordersDAO.getUserBonus(curUser));
         curUser.setOrders(ordersDAO.getUserOrders(curUser.getUsername()));
         colorCheck(req);
@@ -109,15 +110,16 @@ public class HomeController {
                         return errorMV(mv, "You can't challenge admin!", req, ses);
                     } else if (blacklistDAO.getUser(user)) {
                         return errorMV(mv, "Your opponent is in a blacklist, you can't reserve!", req, ses);
-                    }else if(!curUser.isReliable() && curUser.getOrders() >=3) {
+                    }else if(!curUser.isReliable() && ordersDAO.getTodayOrders(curUser.getUsername()) >=3) {
                         return errorMV(mv, "You can only reserve 3 times a day",req,ses);
                     }else if (usersDAO.contains(user)) {
                         User toUser = usersDAO.getUserByUsername(user);
-                        if(!toUser.isReliable() && ordersDAO.getUserOrders(user) >= 3){
+                        if(!toUser.isReliable() && ordersDAO.getTodayOrders(curUser.getUsername()) >= 3){
                             return errorMV(mv, "Your opponent cannot play any more games today",req,ses);
                         }
                         Challenge challenge1 = new Challenge(curUser.getUsername(), user, curTime, compIndx);
                         challengesDAO.addChallenge(challenge1);
+                        if(PlayAlone == null) ordersDAO.updateTodayOrders(curUser.getUsername());
                     }else{
                         return errorMV(mv, "User you want to challeng doesn't exist!", req, ses);
                     }
@@ -126,7 +128,7 @@ public class HomeController {
                     if (errorTimeChecker(reservedDAO, curUser, curTime)) {
                         return errorMV(mv, "You can't play by this time!", req, ses);
                     }
-                    if(!curUser.isReliable() && curUser.getOrders() >=3) {
+                    if(!curUser.isReliable() && ordersDAO.getTodayOrders(curUser.getUsername()) >= 3) {
                         return errorMV(mv, "You can only reserve 3 times a day",req,ses);
                     }
                     curCell.setColor("red");
@@ -134,6 +136,7 @@ public class HomeController {
                     tableDAO.update(curCell);
                     Reservation reservation = new Reservation(curUser.getUsername(), curTime, compIndx);
                     reservedDAO.addReservation(reservation);
+                    ordersDAO.updateTodayOrders(curUser.getUsername());
                     int orders = ordersDAO.getUserOrders(curUser.getUsername()); orders++;
                     curUser.setOrders(orders);
                     ordersDAO.updateUserOrders(curUser);
@@ -152,7 +155,7 @@ public class HomeController {
                         return errorMV(mv, "you can't play by this time!", req, ses);
                     }
 
-                    if(!curUser.isReliable() && curUser.getOrders() >=3) {
+                    if(!curUser.isReliable() && ordersDAO.getTodayOrders(curUser.getUsername()) >=3) {
                         return errorMV(mv, "You can only reserve 3 time a day",req,ses);
                     }
 
@@ -179,9 +182,9 @@ public class HomeController {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat formatter = new SimpleDateFormat("HH");
         int tm = Integer.parseInt(formatter.format(cal.getTime()));
-//        if (tm >= 21 && tm <= 24) {
-//            return true;
-//        }
+        if (tm >= 21 && tm <= 24) {
+            return true;
+        }
         return false;
     }
 
